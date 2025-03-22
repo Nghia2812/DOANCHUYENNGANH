@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WebsiteDental.Models.Service>
+
+
+<!-- Service Start -->
+<div class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">DỊCH VỤ</h4>
+            <h1 class="display-4 mb-4">Răng khỏe – Cười xinh – Tự tin tỏa sáng!</h1>
+            <p class="mb-0">
+                Chúng tôi cam kết mang đến dịch vụ nha khoa chất lượng cao với công nghệ hiện đại, đội ngũ bác sĩ giàu kinh nghiệm
+                và quy trình chăm sóc tận tâm. Mỗi khách hàng đều được thăm khám kỹ lưỡng, tư vấn giải pháp phù hợp để đảm bảo sức khỏe răng miệng tốt nhất.
+            </p>
+        </div>
+        <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="#">Xem tất cả dịch vụ</a>
+        <div class="service-slider-container">
+            <div class="service-slider">
+
+
+                @foreach (var n in Model)
+
+                {
+                    <div class="service-item wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="service-img">
+                            <img src="@n.Image" class="img-fluid rounded-top w-100" alt="">
+                            <div class="service-icon p-3">
+                                <i class="fa fa-teeth-open fa-2x"></i>
+                            </div>
+                            <div class="service-badge">
+                                <span class="price">@n.Price</span>
+                            </div>
+                        </div>
+                        <div class="service-content p-4">
+                            <div class="service-content-inner">
+                                <div class="service-title-price">
+                                    <a href="#" class="d-inline-block h4">@n.ServiceName</a>                             
+                                    <div class="service-rating">                                  
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="mb-4">@n.Description</p>
+                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="scroll-hint">
+                <span>Cuộn sang để xem thêm</span>
+                <i class="fa fa-arrow-right ms-2"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Service End -->
