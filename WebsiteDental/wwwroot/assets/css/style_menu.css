@@ -1,0 +1,161 @@
+﻿
+/*** Style_Menu ***/
+/* Navbar Styling */
+/* Loại bỏ viền và cải thiện khoảng cách cho Navbar */
+.nav-bar {
+    background-color: #fff;
+    box-shadow: none;
+    padding: 15px 0;
+}
+
+/* Container spacing */
+.container {
+    padding: 0 25px;
+}
+
+/* Logo và brand */
+.navbar-brand {
+    padding: 0;
+    margin-right: 40px; /* Tăng khoảng cách sau logo */
+}
+
+    .navbar-brand h1 {
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+/* Navigation links - tăng khoảng cách */
+/*.navbar-nav .nav-item {
+    margin: 0 15px;*/ /* Tăng khoảng cách giữa các mục menu */
+/*}*/
+
+.navbar-nav .nav-link {
+    padding: 15px 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+/* Căn chỉnh các mục menu */
+.navbar-collapse {
+    justify-content: space-between;
+}
+
+/* Căn giữa các phần tử trong menu */
+.navbar-nav {
+    align-items: center;
+}
+
+/* QUAN TRỌNG: Tăng khoảng cách lớn cho LIÊN HỆ, giỏ hàng và Account */
+.lien-he {
+    margin-right: 40px !important; /* Tăng khoảng cách sau mục LIÊN HỆ */
+}
+
+/* Tạo khoảng cách giữa giỏ hàng và account */
+.cart-icon {
+    margin-right: 30px !important; /* Tăo khoảng cách lớn giữa giỏ hàng và account */
+}
+
+/* Tăng khoảng cách trước phần gọi điện */
+.call-section {
+    margin-left: 40px !important; /* Tăng khoảng cách trước phần gọi điện */
+}
+
+/* Loại bỏ viền cho dropdown */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    margin-top: 10px;
+    min-width: 280px;
+    padding: 15px;
+}
+
+/* Tăng khoảng cách giữa các mục trong dropdown */
+.dropdown-item {
+    padding: 10px 15px;
+    transition: all 0.2s;
+    border-radius: 5px;
+    margin-bottom: 2px;
+}
+
+    .dropdown-item:hover {
+        background-color: rgba(0, 123, 255, 0.08);
+    }
+
+/* Tăng khoảng cách giữa các mục trong dropdown */
+.dropdown-divider {
+    margin: 10px 0;
+}
+
+/* Phần gọi điện - điều chỉnh khoảng cách */
+.d-none.d-xl-flex {
+    margin-left: 40px; /* Tăng khoảng cách trước phần gọi điện */
+}
+
+/* Căn chỉnh cho button gọi điện */
+.btn-lg-square {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Căn chỉnh cho form controls */
+.form-control {
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.btn {
+    border-radius: 6px;
+    padding: 10px 15px;
+}
+
+/* Điều chỉnh khoảng cách trong giỏ hàng */
+.cart-items {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+/* Các phần khác trong dropdown */
+.p-3 {
+    padding: 20px !important;
+}
+
+/* Căn chỉnh menu tiếng Việt */
+.trang-chu, .gioi-thieu, .dich-vu, .tin-tuc, .san-pham, .lien-he {
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .navbar-nav .nav-link {
+        padding: 12px 0;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0;
+    }
+
+    .dropdown-menu {
+        box-shadow: none;
+        padding: 10px;
+        margin-top: 0;
+        margin-bottom: 10px;   
+    }
+
+    .lien-he, .cart-icon {
+        margin-right: 0 !important;
+    }
+}
+
