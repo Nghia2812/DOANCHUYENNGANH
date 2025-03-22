@@ -16,4 +16,6 @@ public partial class Discount
     public DateOnly? EndDate { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public string? ImageUrl { get; set; }
 }
