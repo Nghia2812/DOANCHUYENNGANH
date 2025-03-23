@@ -18,4 +18,8 @@ public partial class Discount
     public bool? IsActive { get; set; }
 
     public string? ImageUrl { get; set; }
+
+    public string? OriginalPrice { get; set; }
+
+    public string? FinalPrice { get; set; }
 }

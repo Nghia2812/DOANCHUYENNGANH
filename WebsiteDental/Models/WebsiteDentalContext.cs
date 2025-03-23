@@ -297,12 +297,14 @@ public partial class WebsiteDentalContext : DbContext
                 .HasColumnType("decimal(5, 2)")
                 .HasColumnName("discount_percentage");
             entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.FinalPrice).HasColumnName("final_price");
             entity.Property(e => e.ImageUrl)
                 .HasMaxLength(255)
                 .HasColumnName("image_url");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
+            entity.Property(e => e.OriginalPrice).HasColumnName("original_price");
             entity.Property(e => e.StartDate).HasColumnName("start_date");
         });
 
