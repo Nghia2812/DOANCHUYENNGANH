@@ -21,5 +21,7 @@ public partial class CustomerReview
 
     public bool? IsActive { get; set; }
 
+    public string? ImageData { get; set; }
+
     public virtual User? User { get; set; }
 }
