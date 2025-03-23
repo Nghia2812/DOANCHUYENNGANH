@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebsiteDental.Models.Doctor>
+@{
+    // Lấy danh sách bác sĩ từ Model
+    var doctors = Model.ToList();
+
+    // Chia danh sách thành 2 nhóm, mỗi nhóm tối đa 6 phần tử
+    var firstRowDoctors = doctors.Take(6);  // Lấy 6 bác sĩ đầu tiên
+    var secondRowDoctors = doctors.Skip(6).Take(6);  // Lấy 6 bác sĩ tiếp theo
+}
+<!-- Team Start -->
+<div class="container-fluid team pb-5">
+    <div class="container pb-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">"Bác Sĩ"</h4>
+            <h1 class="display-4 mb-4">Những chiến binh đối diện với tử thần </h1>
+            <p class="mb-0">
+                Y đức không chỉ nằm ở kiến thức và kỹ năng, mà còn thể hiện qua lòng trắc ẩn và sự tận tâm với từng bệnh nhân
+            </p>
+        </div>
+        <!-- Hàng 1 tem Man bác sĩ -->
+        <div id="team-row-1" class="row row-team g-3 mb-3">
+
+            @foreach (var doctor in firstRowDoctors)
+
+            {
+                <div id="team-row-1-end" class="col-6 col-md-3 col-lg-2 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="@doctor.Image" class="img-fluid rounded-top w-100 doctor-photo" alt="">
+                            <div class="team-icon">
+                                <a class="btn btn-primary btn-sm-square rounded-pill mb-1" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-pill mb-1" href=""><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-title p-3">
+                            <h5 class="mb-0">@doctor.FullName</h5>
+                            <p class="mb-1 small">@doctor.Phone</p>
+                            <a href="#appointment" class="btn btn-primary btn-sm rounded-pill py-1 px-3">Đặt lịch khám</a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+        <!-- Hàng 2 team GIR ý tá -->
+        <div id="team-row-2" class="row row-team g-3">
+            @foreach (var doctor in secondRowDoctors)
+            {
+
+                <div id="team-row-2-start" class="col-6 col-md-3 col-lg-2 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="@doctor.Image" class="img-fluid rounded-top w-100 doctor-photo" alt="">
+                            <div class="team-icon">
+                                <a class="btn btn-primary btn-sm-square rounded-pill mb-1" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-primary btn-sm-square rounded-pill mb-1" href=""><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-title p-3">
+                            <h5 class="mb-0">@doctor.FullName</h5>
+                            <p class="mb-1 small">@doctor.Phone</p>
+                            <a href="#appointment" class="btn btn-primary btn-sm rounded-pill py-1 px-3">Đặt lịch khám</a>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+<!-- Team End -->
