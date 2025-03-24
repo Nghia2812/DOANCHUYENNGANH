@@ -1,4 +1,4 @@
-﻿/* CSS PHẦN DỊCH VỤ */
+﻿/* CSS PHẦN DỊCH VỤ  trong INDEX */
 .service-slider-container {
     width: 100%;
     overflow-x: auto;
@@ -202,7 +202,7 @@
 
 body {
     background-color: var(--light-bg);
-    color: var(--text-color);
+    color: #fff;
 }
 
 /* Custom Container */
@@ -477,3 +477,4 @@ body {
 }
 
 /*/////////////////////////////////////////////////////////////////////*/
+/* CSS PHẦN DỊCH VỤ  trang riêng trên thanh Menu */

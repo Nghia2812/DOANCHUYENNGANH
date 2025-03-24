@@ -1,0 +1,52 @@
+﻿@section Styles {
+    <link href="~/assets/css/Services.css" rel="stylesheet">
+}
+
+@{
+    var servicesCategories = ViewBag.ServicesCategories as List<ServiceCategory> ?? new List<ServiceCategory>();
+    var services = ViewBag.Services as List<Service> ?? new List<Service>();
+}
+
+<div class="container">
+    <!-- Sidebar - Danh mục dịch vụ -->
+    <div class="sidebar">
+        <div class="sidebar-header">Dịch Vụ Khám Sức Khỏe</div>
+        <ul>
+            @foreach (var category in servicesCategories)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Services", new { categoryId = category.Id })">
+                        @category.CategoryName
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Main content - Chi tiết dịch vụ -->
+    <div class="main-content">
+        <h1 class="service-title">Dịch Vụ Khám Sức Khỏe</h1>
+
+        <div class="service-description">
+            Dịch vụ sức khỏe bệnh viện Yersin cung cấp: bác sĩ chất lượng, phát hiện sớm các biểu hiện bệnh lý, có đủ các chuyên khoa pháp chẩn từ vật lý đến xét nghiệm. Bạn sẽ biết rõ tình trạng sức khỏe và được thầy thuốc giỏi tư vấn điều trị, sức khỏe lâu bền. Luôn sẵn sàng nghe lời, cho bạn biết chắc bệnh trạng và giúp bạn quay về với cuộc sống.
+        </div>
+
+        <div id="#" class="service-grid">
+            @foreach (var item in services)
+            {
+                <div class="service-item">
+                    <div class="service-image">
+                        <img src="@item.Image" alt="@item.ServiceName">
+                        <div class="service-heart"></div>
+                    </div>
+                    <div class="service-name">@item.ServiceName</div>
+                    <div class="service-price">@item.Price</div>
+                    <div class="service-hotline">
+                        <img src="https://cdn-img-v2.mybota.vn/uploadv2/web/65/6506/news/2021/03/20/03/44/1616223006_1616142624_kham-rang-tong-quat.jpeg" alt="phone">
+                        HOTLINE: 0933 933 933
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
