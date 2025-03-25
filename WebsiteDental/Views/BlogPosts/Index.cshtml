@@ -37,7 +37,7 @@
                 <div class="article-content">
                     <h2 class="article-title">@item.Title</h2>
                     <p class="article-excerpt">@item.Content</p>
-                    <a href="#" class="article-link">Xem thêm</a>
+                        <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@item.Id" class="article-link">Xem thêm</a>
                 </div>
             </div>
             }

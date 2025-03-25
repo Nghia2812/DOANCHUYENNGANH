@@ -25,9 +25,13 @@ public partial class BlogPost
 
     public bool? IsActive { get; set; }
 
+    public string? Description { get; set; }
+
     public virtual User? Author { get; set; }
 
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
     public virtual BlogCategory? Category { get; set; }
+  
+
 }

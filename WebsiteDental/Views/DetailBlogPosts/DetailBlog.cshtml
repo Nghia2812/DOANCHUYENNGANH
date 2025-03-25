@@ -1,0 +1,154 @@
+﻿@section Styles {
+    <link href="~/assets/css/DetailBlog.css" rel="stylesheet">
+}
+@model WebsiteDental.Models.BlogDetailViewModel
+@{
+    ViewData["Title"] = Model.BlogPost.Title;
+}
+
+<div class="main-wrapper">
+    <div class="hospital-section">
+        <div class="main-content">
+            <div class="image-category">
+                <img src="@Model.BlogPost.FeaturedImage" alt="Blog Image" class="img-fluid" />
+            </div>
+
+            <h1 class="mb-4">KHOA RĂNG - HÀM - MẶT</h1>
+
+            <h2>I. GIỚI THIỆU</h2>
+            <h3>1. Tổng quan</h3>
+            <p>Khoa Răng - Hàm - Mặt - Bệnh viện Hữu Nghị Trung ương là một trong những đơn vị chuyên sâu hàng đầu về lĩnh vực Răng Hàm Mặt tại Việt Nam, với đội ngũ chuyên gia giàu kinh nghiệm và công nghệ tiên tiến.</p>
+
+            <h3>2. Đội ngũ chuyên gia</h3>
+            <p>Quy tụ nhiều chuyên gia đầu ngành, các giáo sư, phó giáo sư, tiến sĩ với nhiều năm kinh nghiệm trong lĩnh vực chuyên môn sâu về Răng Hàm Mặt.</p>
+
+            <h2>II. DỊCH VỤ CHUYÊN KHOA</h2>
+            <ul>
+                <li>Phẫu thuật chỉnh hình hàm mặt</li>
+                <li>Điều trị các dị tật bẩm sinh</li>
+                <li>Phục hồi chức năng sau chấn thương</li>
+            </ul>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="working-time bg-primary text-white text-center p-3 rounded">
+                    <h3 style="color: white">THỜI GIAN LÀM VIỆC</h3>
+                    <p style="color: white !important;">Hành chính: 7h30 - 16h30</p>
+                    <p style="color: white !important;">Khám & Điều trị: 7h30 - 17h00</p>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="mb-3">BÀI VIẾT MỚI</h3>
+
+
+                @foreach (var post in Model.RelatedPosts)
+                {
+                    <div class="post d-flex align-items-center border-bottom pb-2">
+                        <img src="@post.FeaturedImage" alt="@post.Title" class="me-3" style="width: 80px; height: 60px; object-fit: cover;">
+                        <div>
+                            <h5 class="mb-1">@post.Title</h5>
+                            <small class="text-muted">@post.CreatedAt?.ToString("dd/MM/yyyy")</small>
+                        </div>
+                    </div>
+                }
+
+
+
+
+            </div>
+
+            <div class="sidebar-section">
+                <div class="registration-form">
+                    <h3 class="text-center mb-3">ĐĂNG KÝ NHẬN TƯ VẤN</h3>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Họ và tên (*)" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" class="form-control" placeholder="Số điện thoại (*)" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" placeholder="Triệu chứng"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">ĐĂNG KÝ NGAY</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comments-section mb-4">
+        <h3 class="mb-4">BÌNH LUẬN</h3>
+        <div class="comment mb-3">
+            <div class="d-flex">
+                <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/e093e9cfc9027d6a142358d24d2ee350-65a11ac2af785880-17061562929701875684912.jpg" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                <div>
+                    <h5 class="mb-1">Hoàng Anh <small class="text-muted ms-2">hoanganhh@gmail.com</small></h5>
+                    <p class="mb-1">Đây là nội dung bình luận của tôi. Tôi rất thích trang web này và muốn chia sẻ suy nghĩ của mình.</p>
+                    <small class="text-muted">Bình luận cách đây 5 phút</small>
+                </div>
+            </div>
+        </div>
+        <div class="comment">
+            <div class="d-flex">
+                <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/e093e9cfc9027d6a142358d24d2ee350-65a11ac2af785880-17061562929701875684912.jpg" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                <div>
+                    <h5 class="mb-1">Minh Nguyễn <small class="text-muted ms-2">minhnguyen@gmail.com</small></h5>
+                    <p class="mb-1">Một bình luận khác để minh họa cách hiển thị các bình luận trên trang web.</p>
+                    <small class="text-muted">Bình luận cách đây 2 giờ</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-form">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Để lại một bình luận</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="alert alert-info" role="alert">
+                        Email của bạn sẽ không được hiển thị công khai. Các trường bắt buộc được đánh dấu *
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="commentTextarea" class="form-label">Bình luận *</label>
+                        <textarea class="form-control" id="commentTextarea" rows="4" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="nameInput" class="form-label">Tên *</label>
+                            <input type="text" class="form-control" id="nameInput" required>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="emailInput" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="emailInput" required>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="websiteInput" class="form-label">Trang web</label>
+                            <input type="url" class="form-control" id="websiteInput">
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="saveInfoCheck">
+                        <label class="form-check-label" for="saveInfoCheck">
+                            Lưu tên của tôi, email, và trang web trong trình duyệt này cho lần bình luận kế tiếp của tôi.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Gửi Bình Luận</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
