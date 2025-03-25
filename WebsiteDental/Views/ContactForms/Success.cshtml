@@ -1,0 +1,53 @@
+﻿
+<div class="thank-you-container">
+    <h2 class="thank-you-title">Cảm ơn bạn đã liên hệ!</h2>
+    <p class="thank-you-message">Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
+    <a href="@Url.Action("Index", "ContactForms")" class="back-link">Quay lại trang liên hệ</a>
+</div>
+<style>
+    .thank-you-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        padding: 40px;
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        text-align: center;
+        z-index: 1000;
+    }
+
+    .thank-you-title {
+        color: #28a745;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .thank-you-message {
+        color: #6c757d;
+        margin-bottom: 25px;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .back-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .back-link:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+            color: white;
+        }
+</style>
+
+

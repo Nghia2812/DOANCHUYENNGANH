@@ -1,20 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebsiteDental.Models;
 using Microsoft.EntityFrameworkCore;
+using WebsiteDental.Models;
+using WebsiteDental.ViewComponents;
 
-public class BlogPostsController : Controller
+namespace WebsiteDental.Controllers
 {
-    private readonly WebsiteDentalContext _context;
-
-    public BlogPostsController(WebsiteDentalContext context)
+    public class BlogPostsController : Controller
     {
-        _context = context;
-    }
+        private readonly WebsiteDentalContext _context;
+
+        public BlogPostsController(WebsiteDentalContext context)
+        {
+            _context = context;
+        }
 
 
-    public async Task<IActionResult> Index()
-    {
-        var blogPosts = await _context.BlogPosts.ToListAsync();
-        return View();
+        public IActionResult Index(int? categoryId)
+        {
+            var categories = _context.BlogCategories?.ToList() ?? new List<BlogCategory>();
+
+            var blogPosts = categoryId.HasValue
+                ? _context.BlogPosts.Where(p => p.CategoryId == categoryId.Value).ToList()
+                : _context.BlogPosts.ToList();
+
+            ViewBag.BlogCategories = categories;
+            ViewBag.BlogPosts = blogPosts;
+
+            return View();
+        }
+
     }
 }
