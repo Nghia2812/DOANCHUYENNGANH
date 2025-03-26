@@ -27,6 +27,8 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
+    public virtual DbSet<CommentDoctor> CommentDoctors { get; set; }
+
     public virtual DbSet<ContactForm> ContactForms { get; set; }
 
     public virtual DbSet<CustomerReview> CustomerReviews { get; set; }
@@ -73,7 +75,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
- 
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -238,6 +240,20 @@ public partial class WebsiteDentalContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Cart__user_id__3A4CA8FD");
+        });
+
+        modelBuilder.Entity<CommentDoctor>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__CommentD__3214EC07A591E5C3");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Username).HasMaxLength(255);
+
+            entity.HasOne(d => d.Doctor).WithMany(p => p.CommentDoctors)
+                .HasForeignKey(d => d.DoctorId)
+                .HasConstraintName("FK_CommentDoctors_Doctors");
         });
 
         modelBuilder.Entity<ContactForm>(entity =>

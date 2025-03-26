@@ -35,7 +35,11 @@ public partial class Doctor
 
     public bool? IsActive { get; set; }
 
+    public string? Description { get; set; }
+
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+
+    public virtual ICollection<CommentDoctor> CommentDoctors { get; set; } = new List<CommentDoctor>();
 
     public virtual ICollection<DoctorCertificate> DoctorCertificates { get; set; } = new List<DoctorCertificate>();
 

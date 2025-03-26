@@ -43,39 +43,50 @@
                 </div>
             </div>
 
-
+            <!-- HIỂN THỊ NHẬN XÉT CỦA KHÁCH HÀNG SAU KHI NHẬP TỪ FORM -->
             <div class="section reviews">
                 <h2 class="section-title">Nhận xét từ bệnh nhân</h2>
-                <div class="review">
-                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Nguyễn Văn A" class="review-avatar">
-                    <div class="review-content">
-                        <strong>Nguyễn Văn A</strong>
-                        <p>Bác sĩ rất tận tâm và chuyên nghiệp. Tôi đã được điều trị rất tốt và hết sức hài lòng với sự chăm sóc.</p>
-                    </div>
-                </div>
-                <div class="review">
-                    <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Trần Thị B" class="review-avatar">
-                    <div class="review-content">
-                        <strong>Trần Thị B</strong>
-                        <p>Bác sĩ có kinh nghiệm dày dặn, giải thích rõ ràng và chi tiết về tình trạng bệnh của tôi.</p>
-                    </div>
-                </div>
+
+                @if (Model.Comments.Any())
+                {
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <div class="review">
+                            <img src="https://randomuser.me/api/portraits/men/@(comment.Id % 100).jpg" alt="@comment.Username" class="review-avatar">
+                            <div class="review-content">
+                                <strong>@comment.Username</strong>
+                                <p>@comment.CommentText</p>
+                                <small>@(comment.CreatedAt.HasValue? comment.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Không có thông tin")</small>
+
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Chưa có nhận xét nào. Hãy là người đầu tiên bình luận!</p>
+                }
             </div>
 
+            <!--FROM NHẬP NHẬN XÉT CỦA KHÁCH HÀNG -->
             <div class="section review-form">
                 <h2 class="section-title">Gửi nhận xét của bạn</h2>
-                <form>
+                <form method="post" asp-action="AddComment" asp-controller="DetailDoctors">
+                    <!-- Truyền ID bác sĩ ẩn vào form -->
+                    <input type="hidden" name="DoctorId" value="@Model.Doctor.Id" />
+
                     <div class="form-group">
                         <label>Họ và tên</label>
-                        <input type="text" required placeholder="Nhập họ và tên của bạn">
+                        <input type="text" name="AuthorName" required class="form-control" placeholder="Nhập họ và tên của bạn">
                     </div>
                     <div class="form-group">
                         <label>Nhận xét của bạn</label>
-                        <textarea rows="4" required placeholder="Chia sẻ trải nghiệm của bạn về bác sĩ"></textarea>
+                        <textarea rows="4" name="Content" required class="form-control" placeholder="Chia sẻ trải nghiệm của bạn về bác sĩ"></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">Gửi nhận xét</button>
+                    <button type="submit" class="btn btn-primary">Gửi nhận xét</button>
                 </form>
             </div>
+
         </div>
 
         <div class="sidebar">
