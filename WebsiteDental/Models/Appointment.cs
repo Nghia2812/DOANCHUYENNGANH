@@ -27,6 +27,18 @@ public partial class Appointment
 
     public bool? IsActive { get; set; }
 
+    public string? CustomerName { get; set; }
+
+    public string? Phone { get; set; }
+
+    public string? Email { get; set; }
+
+    public string? Sex { get; set; }
+
+    public string? NameDoctor { get; set; }
+
+    public DateOnly? DateOfBirth { get; set; }
+
     public virtual Doctor? Doctor { get; set; }
 
     public virtual Patient? Patient { get; set; }

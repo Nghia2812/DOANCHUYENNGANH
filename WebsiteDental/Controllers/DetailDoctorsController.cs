@@ -29,6 +29,7 @@ namespace WebsiteDental.Controllers
 
             var model = new DoctorsDetailViewModel
             {
+
                 Doctor = doctor,
                 Certificates = certificates,
                 Comments = comments

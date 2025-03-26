@@ -15,9 +15,13 @@
                     <h4 style="color: #20c997;">"Bác sĩ là những người dành cả đời để học hỏi và nâng cao trình độ chuyên môn để cung cấp cho bệnh nhân dịch vụ chăm sóc tốt nhất."</h4>
                     <h1>@Model.Doctor.FullName</h1>
                     <div class="contact-buttons">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-calendar-check"></i>Đăng ký khám
-                        </button>
+                        <a asp-controller="AppointmentsDoctors" asp-action="AppointmentsDoctors" asp-route-doctorId="@Model.Doctor.Id" class="btn btn-primary">
+                            <i class="fas fa-calendar-check"></i> Đăng ký khám
+                        </a>
+
+                       
+
+
                         <button class="btn btn-zalo">
                             <i class="fab fa-zalo"></i>Zalo
                         </button>
