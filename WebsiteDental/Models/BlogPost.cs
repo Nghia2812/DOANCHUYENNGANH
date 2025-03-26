@@ -32,6 +32,4 @@ public partial class BlogPost
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
     public virtual BlogCategory? Category { get; set; }
-  
-
 }

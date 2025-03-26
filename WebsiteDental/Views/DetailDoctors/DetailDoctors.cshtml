@@ -1,0 +1,137 @@
+﻿@model WebsiteDental.Models.DoctorsDetailViewModel
+
+@section Styles {
+    <link href="~/assets/css/DetailDoctors.css" rel="stylesheet">
+}
+<div class="container">
+    <div class="profile-grid">
+        <div class="main-content">
+            <div class="doctor-header">
+                <div class="doctor-image">
+                    <img class="fixed-image" src="@Model.Doctor.Image" alt="Bác sĩ Hoàng Đăng Mích">
+                </div>
+                <div class="doctor-info">
+                    <h3>Giáo sư, Phó giáo sư, Tiến sĩ, Cố vấn chuyên môn </h3>
+                    <h4 style="color: #20c997;">"Bác sĩ là những người dành cả đời để học hỏi và nâng cao trình độ chuyên môn để cung cấp cho bệnh nhân dịch vụ chăm sóc tốt nhất."</h4>
+                    <h1>@Model.Doctor.FullName</h1>
+                    <div class="contact-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-calendar-check"></i>Đăng ký khám
+                        </button>
+                        <button class="btn btn-zalo">
+                            <i class="fab fa-zalo"></i>Zalo
+                        </button>
+                        <button class="btn btn-messenger">
+                            <i class="fab fa-facebook-messenger"></i>Messenger
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Thông tin chi tiết</h2>
+                <p>PGS.TS. Cố vấn chuyên môn Hoàng Đăng Mích đã có hơn 32 năm kinh nghiệm trong lĩnh vực Nội Hà.</p>
+                <p>Năm 2010, ông vinh dự được phong hàm Phó giáo sư và là Ủy viên ban chấp hành Hội Nội tiết và Đái tháo đường Việt Nam, đồng thời, ông là Chủ tịch Hội Nội tiết và Đái tháo đường Hải Phòng.</p>
+                <p>Hiện tại, PGS.TS. Cố vấn chuyên môn Hoàng Đăng Mích đang giữ chức vụ là cố vấn chuyên môn khối Nội tại khoa Khám bệnh và Nội khoa - Bệnh viện Đa khoa Quốc tế Vinmec Hạ Long.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Chứng chỉ nghề nghiệp</h2>
+                <div class="certificate-container">
+                    <img class="certificate-image" src="https://jobsgo.vn/blog/wp-content/uploads/2021/06/chung-chi-hanh-nghe-y.png" alt="Chứng chỉ nghề nghiệp">
+                    <p class="certificate-note"> Đây là giấy phép hành nghề y tế, xác nhận đủ điều kiện khám chữa bệnh.</p>
+                </div>
+            </div>
+
+
+            <div class="section reviews">
+                <h2 class="section-title">Nhận xét từ bệnh nhân</h2>
+                <div class="review">
+                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Nguyễn Văn A" class="review-avatar">
+                    <div class="review-content">
+                        <strong>Nguyễn Văn A</strong>
+                        <p>Bác sĩ rất tận tâm và chuyên nghiệp. Tôi đã được điều trị rất tốt và hết sức hài lòng với sự chăm sóc.</p>
+                    </div>
+                </div>
+                <div class="review">
+                    <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Trần Thị B" class="review-avatar">
+                    <div class="review-content">
+                        <strong>Trần Thị B</strong>
+                        <p>Bác sĩ có kinh nghiệm dày dặn, giải thích rõ ràng và chi tiết về tình trạng bệnh của tôi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section review-form">
+                <h2 class="section-title">Gửi nhận xét của bạn</h2>
+                <form>
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" required placeholder="Nhập họ và tên của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label>Nhận xét của bạn</label>
+                        <textarea rows="4" required placeholder="Chia sẻ trải nghiệm của bạn về bác sĩ"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Gửi nhận xét</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section contact-info">
+                <h2 class="section-title">Thông tin liên hệ</h2>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                   @Model.Doctor.Email
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    @Model.Doctor.Phone
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                  Chuyên khoa: @Model.Doctor.Specialization
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="professional-badges">
+                    <div class="badge">
+                        <div class="badge-value">32+</div>
+                        <div class="badge-label">Năm Kinh Nghiệm</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-value">9.2</div>
+                        <div class="badge-label">Đánh Giá</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-value">500+</div>
+                        <div class="badge-label">Bệnh Nhân</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h2 class="section-title">Chuyên môn chính</h2>
+                <p>Cố vấn chuyên môn khối Nội - Nội tiết và Đái Tháo Đường</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h2 class="section-title">Địa điểm công tác</h2>
+                <p>Khoa khám bệnh & Nội khoa - Bệnh viện Đa khoa Quốc tế Vinmec Hạ Long</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h2 class="section-title">Dịch vụ chuyên môn</h2>
+                <ul>
+                    <li>Nội tiết - Đái Thảo Đường</li>
+                    <li>Rối loạn chuyển hóa</li>
+                    <li>Hội chứng chuyển hóa</li>
+                    <li>Viêm cầu thận</li>
+                    <li>Bệnh gan virus</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

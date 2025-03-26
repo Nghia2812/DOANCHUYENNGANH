@@ -17,6 +17,12 @@ public partial class BlogComment
 
     public bool? IsActive { get; set; }
 
+    public string? Email { get; set; }
+
+    public string? Img { get; set; }
+
+    public string? Name { get; set; }
+
     public virtual BlogPost? Post { get; set; }
 
     public virtual User? User { get; set; }

@@ -73,7 +73,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-
+ 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -149,9 +149,18 @@ public partial class WebsiteDentalContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .HasColumnName("email");
+            entity.Property(e => e.Img)
+                .HasMaxLength(500)
+                .HasColumnName("img");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .HasColumnName("name");
             entity.Property(e => e.PostId).HasColumnName("post_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
