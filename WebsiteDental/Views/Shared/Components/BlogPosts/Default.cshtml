@@ -23,17 +23,20 @@
                     </div>
                     <div class="blog-content p-4">
                         <div class="blog-comment d-flex justify-content-between mb-3">
-                            <div class="small"><span class="fa fa-user text-primary"></span> Martin.C</div>
-                                <div class="small">
+                                <div style="color:#2d6da3" class="small"><span class="fa fa-user text-primary"></span> Martin.C</div>
+                                <div style="color:#2d6da3" class="small">
                                     <span class="fa fa-calendar text-primary"></span>
                                     @(n.CreatedAt.HasValue? n.CreatedAt.Value.ToString("dd/MM/yyyy") : "Không có ngày")
                                 </div>
 
-                            <div class="small"><span class="fa fa-comment-alt text-primary"></span>@n.ViewCount</div>
+                                <div style="color:#2d6da3" class="small"><span class="fa fa-comment-alt text-primary"></span>@n.ViewCount</div>
                         </div>
                         <a href="#" class="h4 d-inline-block mb-3">@n.Title</a>
                             <p class="mb-3" style="color: #0a4776;">@n.Content</p>
-                        <a href="#" class="btn p-0">ĐỌC THÊM  <i class="fa fa-arrow-right"></i></a>
+                            <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@n.Id" class="btn p-0">
+                                ĐỌC THÊM <i class="fa fa-arrow-right"></i>
+                            </a>
+
                     </div>
                 </div>
             </div>

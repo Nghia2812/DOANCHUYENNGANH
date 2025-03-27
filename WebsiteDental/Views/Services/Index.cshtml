@@ -36,7 +36,9 @@
             {
                 <div class="service-item">
                     <div class="service-image">
-                        <img src="@item.Image" alt="@item.ServiceName">
+                        <a asp-controller="DetailServices" asp-action="DetailServices" asp-route-id="@item.Id">
+                            <img src="@item.Image" alt="@item.ServiceName">
+                        </a>
                         <div class="service-heart"></div>
                     </div>
                     <div class="service-name">@item.ServiceName</div>

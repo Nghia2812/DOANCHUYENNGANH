@@ -42,43 +42,34 @@ namespace WebsiteDental.Controllers
         }
 
 
-        [HttpPost("BookAppointment")]
-        public async Task<IActionResult> BookAppointment(AppointmentsDoctorsModelView model)
+        [HttpPost]
+        public IActionResult BookAppointment(int DoctorId, string CustomerName, DateTime AppointmentDate, string Phone, string Email, string Sex, string Notes)
         {
-            if (!ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(CustomerName) || string.IsNullOrWhiteSpace(Phone))
             {
-                return View("~/Views/DetailDoctors/AppointmentsDoctors.cshtml", model);
-            }
-
-            var doctor = await _context.Doctors.FindAsync(model.DoctorId);
-            if (doctor == null)
-            {
-                ModelState.AddModelError("", "Không tìm thấy bác sĩ.");
-                return View("~/Views/DetailDoctors/AppointmentsDoctors.cshtml", model);
+                return RedirectToAction("AppointmentsDoctors", new { doctorId = DoctorId });
             }
 
             var appointment = new Appointment
             {
-                DoctorId = model.DoctorId,
-                CustomerName = model.CustomerName,
-                AppointmentDate = model.AppointmentDate,
-                Phone = model.Phone,
-                Email = model.Email,
-                Sex = model.Sex,
-                Notes = model.Notes,
+                DoctorId = DoctorId,
+                CustomerName = CustomerName,
+                AppointmentDate = AppointmentDate,
+                Phone = Phone,
+                Email = Email,
+                Sex = Sex,
+                Notes = Notes,
                 Status = "Chờ xác nhận",
                 IsActive = true
             };
 
             _context.Appointments.Add(appointment);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            TempData["SuccessMessage"] = "Đặt lịch thành công! Chúng tôi sẽ liên hệ sớm.";
-            return RedirectToAction("AppointmentsDoctors", "DetailDoctors", new { id = model.DoctorId });
+            //return RedirectToAction("AppointmentsDoctors", new { doctorId = DoctorId });
+            // Trả về trang Success.cshtml sau khi đặt lịch thành công
+            return View("~/Views/DetailDoctors/Success.cshtml");
         }
-
-
-
     }
 }
 

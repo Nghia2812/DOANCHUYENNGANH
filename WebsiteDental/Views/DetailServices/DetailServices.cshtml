@@ -1,0 +1,113 @@
+﻿
+@section Styles {
+    <link href="~/assets/css/DetailServices.css" rel="stylesheet">
+}
+@model WebsiteDental.Models.DetailServicesModelView
+<div class="container">
+    <div class="main-content">
+        <div class="doctor-info">
+            <img src="https://i.pinimg.com/736x/00/50/e0/0050e0655c21d5346b6b3ba058f7d59e.jpg" alt="Bác sĩ Nguyễn Quang Tiến">
+            <div class="doctor-details">
+                <h3>Bác sĩ Nguyễn Quang Tiến</h3>
+                <p>
+                    • Cố vấn và đào tạo chuyên môn<br>
+                    • Thạc sĩ nội khoa Đại Y quốc tế,Minster, CHLB Đức<br>
+                    • Chuyên khoa Răng Hàm Mặt - Nha khoa Đăng Lưu<br>
+                    • Hơn 25 năm kinh nghiệm nha khoa
+                </p>
+                <div class="action-buttons">
+                    <button class="btn btn-call">Đặt lịch</button>
+                    <button class="btn btn-profile">Xem hồ sơ</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-header">
+            <h2>Răng Khôn Là Gì?</h2>
+            <div class="audio-player">
+                Google New ▶ 0:00 / 0:00
+            </div>
+        </div>
+
+        <p>Răng khôn là gì? Đây là chiếc răng thứ 3 hay còn gọi là răng số 8 (răng cấm), thường mọc ở tuổi 18-24. Răng khôn là răng cuối cùng mọc trong khoang miệng...</p>
+
+        <img src="@Model.Service.Image" alt="Răng Khôn Minh Họa" class="content-image">
+
+        <div class="content-navigation">
+            <h4>Nội Dung Bài Viết</h4>
+            <ol>
+                <li>Răng khôn là gì?</li>
+                <li>Biến chứng của răng khôn</li>
+                <li>Quy trình nhổ răng khôn</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="registration-form">
+            <h3>ĐĂNG KÝ TƯ VẤN MIỄN PHÍ</h3>
+            <form>
+                <input type="text" placeholder="Họ và tên">
+                <input type="tel" placeholder="Số điện thoại">
+                <input type="email" placeholder="Email (không bắt buộc)">
+                <textarea placeholder="Dịch vụ quan tâm"></textarea>
+                <button type="submit" class="submit-btn">ĐĂNG KÝ NGAY</button>
+            </form>
+        </div>
+
+        <div class="popular-posts">
+            <h3>BÀI VIẾT ĐƯỢC QUAN TÂM</h3>
+            <ul class="popular-posts-list">
+                @foreach (var post in Model.BlogPosts)
+                {
+                    <li>
+                        <div class="icon-square">🦷</div>
+                        <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@post.Id">
+                            @post.Title
+                        </a>
+                    </li>
+                }
+
+
+            </ul>
+        </div>
+
+        <div class="services-section">
+            <h3>DỊCH VỤ NỔI BẬT</h3>
+            <div class="services-list-image">
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Trồng răng Implant
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Niềng răng
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Bọc răng sứ
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Tẩy trắng răng
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Chữa tủy răng
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Cạo vôi răng
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Nhổ răng khôn
+                </div>
+                <div class="service-item-image">
+                    <span class="checkmark">✓</span>
+                    Trám răng
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

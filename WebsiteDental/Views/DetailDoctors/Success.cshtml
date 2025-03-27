@@ -1,0 +1,40 @@
+﻿@section Styles {
+    <link href="~/assets/css/SuccessAppointments.css" rel="stylesheet">
+}
+<body>
+<div class="booking-overlay">
+    <div class="booking-modal-wrapper">
+        <h3 style="color: #2196f3; margin-bottom: 20px;">XÁC NHẬN ĐẶT CHỖ</h3>
+
+        <div class="booking-qr-display">
+            <img src="https://qrcode-gen.com/images/qrcode-default.png" alt="Mã QR Đặt Lịch">
+            <p class="booking-code-text">Mã Đặt Lịch: LTN-2503</p>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <h6 style="color: #333;">Thông Tin Đặt Cọc</h6>
+            <p style="color: #666;">Đặt cọc 50% để giữ chỗ. Hoàn trả nếu không thực hiện.</p>
+            <strong style="color: #2196f3; font-size: 18px;">Số tiền: 500,000 VNĐ</strong>
+        </div>
+
+        <div class="booking-home-return" style="margin-top: 25px;">
+            <a href="/" class="btn">Quay Về Trang Chủ</a>
+        </div>
+    </div>
+</div>
+
+    <script>
+        function createConfetti() {
+            const colors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#e91e63', '#00bcd4'];
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('booking-confetti');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+            }
+        }
+        createConfetti();
+    </script>
+   </body>
