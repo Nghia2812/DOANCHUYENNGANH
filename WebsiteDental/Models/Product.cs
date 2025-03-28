@@ -19,7 +19,23 @@ public partial class Product
 
     public bool? IsActive { get; set; }
 
+    public int Quantity { get; set; }
+
+    public decimal? PriceIncrease { get; set; }
+
+    public decimal? PriceDiscount { get; set; }
+
+    public double? Rating { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
+
+    public DateTime? UpdatedAt { get; set; }
+
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+
+    public virtual ProductCategory? Category { get; set; }
 
     public virtual ICollection<ProductDetail> ProductDetails { get; set; } = new List<ProductDetail>();
 }

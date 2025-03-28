@@ -24,7 +24,7 @@
                         if (n.InverseParent != null && n.InverseParent.Any()) // Nếu có menu con
                         {
                             <div class="nav-item dropdown">
-                                <a href="@n.Url" class="nav-link" data-bs-toggle="dropdown">
+                                <a href="@n.Url" class="nav-link">
                                     @n.PageName
                                 </a>
                                 <div class="dropdown-menu">
@@ -40,6 +40,8 @@
                             <a href="@n.Url" class="nav-item nav-link">@n.PageName</a>
                         }
                     }
+
+
                 </div>
             </div>
 
