@@ -75,7 +75,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -546,10 +546,15 @@ public partial class WebsiteDentalContext : DbContext
             entity.Property(e => e.PageName)
                 .HasMaxLength(100)
                 .HasColumnName("page_name");
+            entity.Property(e => e.ParentId).HasColumnName("parent_id");
             entity.Property(e => e.Position).HasColumnName("position");
             entity.Property(e => e.Url)
                 .HasMaxLength(255)
                 .HasColumnName("url");
+
+            entity.HasOne(d => d.Parent).WithMany(p => p.InverseParent)
+                .HasForeignKey(d => d.ParentId)
+                .HasConstraintName("FK_MenuPages_Parent");
         });
 
         modelBuilder.Entity<Patient>(entity =>

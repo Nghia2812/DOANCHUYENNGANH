@@ -14,4 +14,10 @@ public partial class MenuPage
     public int? Position { get; set; }
 
     public bool? IsActive { get; set; }
+
+    public int? ParentId { get; set; }
+
+    public virtual ICollection<MenuPage> InverseParent { get; set; } = new List<MenuPage>();
+
+    public virtual MenuPage? Parent { get; set; }
 }

@@ -3,7 +3,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+    var username = HttpContextAccessor.HttpContext.Session.GetString("Username");// khai báo phương thước bên Program.cs 
 }
 
 <!-- Navbar & Hero Start -->
@@ -21,10 +21,28 @@
                 <div class="navbar-nav">
                     @foreach (var n in Model)
                     {
-                        <a href="@n.Url" class="nav-item nav-link">@n.PageName</a>
+                        if (n.InverseParent != null && n.InverseParent.Any()) // Nếu có menu con
+                        {
+                            <div class="nav-item dropdown">
+                                <a href="@n.Url" class="nav-link" data-bs-toggle="dropdown">
+                                    @n.PageName
+                                </a>
+                                <div class="dropdown-menu">
+                                    @foreach (var child in n.InverseParent)
+                                    {
+                                        <a href="@child.Url" class="dropdown-item">@child.PageName</a>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a href="@n.Url" class="nav-item nav-link">@n.PageName</a>
+                        }
                     }
                 </div>
             </div>
+
             <!-- Phần giỏ hàng -->
             <div class="navbar-nav ms-auto d-flex align-items-center;">
                 <!-- Giỏ hàng -->

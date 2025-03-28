@@ -22,7 +22,22 @@ namespace WebsiteDental.ViewComponents
                 .OrderBy(m => m.Position)       
                 .ToListAsync();
 
-            return View(items);
+            var menuHierarchy = _context.MenuPages
+     .Where(m => m.ParentId == null)
+     .Select(m => new MenuPage
+     {
+         Id = m.Id,              // Đổi MenuId = m.Id (đúng với cột id)
+         PageName = m.PageName,      // Đổi MenuName = m.PageName
+         Url = m.Url,
+         Position = m.Position,
+         IsActive = m.IsActive,
+         InverseParent = _context.MenuPages
+                         .Where(sub => sub.ParentId == m.Id)
+                         .ToList()   // Lấy danh sách menu con có ParentId = Id của menu cha
+     })
+     .ToList();
+
+            return View(menuHierarchy);
         }
     }
 }

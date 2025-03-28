@@ -1,0 +1,150 @@
+﻿:root {
+    --primary-color: #0066cc;
+    --secondary-color: #4CAF50;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.hero-video {
+    position: relative;
+    height: 80vh; /* Giảm chiều cao xuống */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+    .hero-video-container iframe {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.6); /* Tăng độ sáng từ 0.6 lên 0.8 */
+    }
+
+.hero-content {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    max-width: 600px;
+    color: white;
+    z-index: 2;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    margin-bottom: 15px;
+    line-height: 1.2;
+    transform: translateX(-50px);
+    opacity: 0;
+    animation: slideInLeft 1.5s ease-out 0.5s forwards;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    transform: translateX(50px);
+    opacity: 0;
+    animation: slideInRight 1.5s ease-out 0.7s forwards;
+}
+
+.btn-booking {
+    transform: translateY(50px);
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 0.9s forwards;
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.btn-booking {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+    .btn-booking::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient( 120deg, transparent, rgba(255,255,255,0.3), transparent );
+        transition: all 0.6s ease;
+    }
+
+    .btn-booking:hover::before {
+        left: 100%;
+    }
+
+    .btn-booking:hover {
+        transform: scale(1.05);
+        background-color: #45a049;
+        box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+    }
+
+    .btn-booking:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
