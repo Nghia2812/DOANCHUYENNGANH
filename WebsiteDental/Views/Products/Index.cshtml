@@ -1,20 +1,21 @@
 ﻿@section Styles {
-    <link href="~/assets/css/Pages/Style_Products.css" rel="stylesheet">
+<link href="~/assets/css/Pages/Style_Products.css" rel="stylesheet">
 }
-
+@{
+    var ProductCategories = ViewBag.ProductCategories as List<ProductCategory> ?? new List<ProductCategory>();
+    var Products = ViewBag.Products as List<Product> ?? new List<Product>();
+}
 <div class="page-container">
     <div class="sidebar-container">
         <div class="categories-sidebar">
             <div class="category-section">
-                <div class="category-title">Thương Hiệu</div>
-                <ul class="category-list brand-list">
-                    <li>MEGA We care</li>
-                    <li>BN PHARMA VIỆT NAM</li>
-                    <li>Công ty cổ phần sao thái dương</li>
-                    <li>Đang cập nhật</li>
-                    <li>ALC</li>
-                    <li>Orihiro</li>
-                </ul>
+                <div class="category-title">Danh Mục</div>
+                @foreach (var category in ProductCategories)
+                {
+                    <a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">
+                        @category.CategoryName
+                    </a>
+                }
             </div>
             <div class="category-section">
                 <div class="category-title">Xuất Xứ</div>
@@ -39,16 +40,21 @@
     </div>
 
     <div class="products-container">
-        <div class="product-card">
-            <div class="product-top-tag">
+
+
+
+        @foreach (var item in Products)
+        {
+            <div class="product-card">
+                <div class="product-top-tag">
                 <span class="discount-tag">2%</span>
                 <span class="product-type">Lon</span>
             </div>
             <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
+                <img src="@item.Image" alt="ColosBaby IQ Gold">
             </div>
             <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
+                <div class="product-title">@item.ProductName</div>
                 <div class="price-container">
                     <span class="price">279.000đ</span>
                     <span class="price-discount">Giảm 5k</span>
@@ -58,253 +64,8 @@
                 <button class="add-to-cart">Thêm vào giỏ</button>
             </div>
         </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="https://i.pinimg.com/736x/1d/cb/bd/1dcbbdfa2e4427273650576531b7615a.jpg" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">Sữa bột ColosBaby IQ gold 1+ VitaDairy giúp</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
-                </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
-            </div>
-        </div>
+
+}
 
     </div>
 </div>
