@@ -226,7 +226,7 @@
             /*display: flex ;*/
             justify-content: center;
             align-items: center;
-            background: var(--bs-light);
+            background: white !important;
             border-radius: 10px;
             margin-right: 30px;
         }

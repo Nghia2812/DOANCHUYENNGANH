@@ -19,11 +19,11 @@ namespace WebsiteDental.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var BlogPosts = await _context.BlogPosts
-                 .OrderByDescending(b => b.CreatedAt) // Sắp xếp theo ngày mới nhất
-                .Take(3) // Lấy 3 bài viết đầu tiên
-                .ToListAsync(); // Chuyển thành danh sách
-               
+            var BlogPosts = await _context.BlogPosts 
+            .OrderByDescending(b => b.CreatedAt) // Sắp xếp theo ngày mới nhất
+            .Take(4) // Lấy 3 bài viết đầu tiên
+            // Chuyển thành danh sách
+            .ToListAsync();
 
             return View(BlogPosts);// Trả về View
         }

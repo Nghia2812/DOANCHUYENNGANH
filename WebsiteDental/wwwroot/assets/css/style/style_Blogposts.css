@@ -1,0 +1,41 @@
+﻿<style >
+.blog-item {
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.blog-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.blog-img {
+    position: relative;
+    overflow: hidden;
+    max-height: 160px;
+}
+
+.blog-content {
+    font-size: 0.9rem;
+}
+
+.blog-comment {
+    font-size: 0.8rem !important;
+}
+
+.blog-categiry {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #0d6efd;
+    color: white;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .col-lg-3 {
+        padding: 0 8px;
+    }
+}
+
+</style >

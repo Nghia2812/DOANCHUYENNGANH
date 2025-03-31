@@ -1,0 +1,634 @@
+﻿/* CSS cho phần FAQ Sức khỏe */
+/*:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2196F3;
+    --accent-color: #FF9800;
+    --text-color: #333;
+    --light-bg: #f9f9f9;
+    --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+body {
+    background-color: var(--light-bg);
+    color: #fff;
+}*/
+
+/* Custom Container */
+/*.custom-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}*/
+
+/* Header Styles */
+/*.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+}
+
+.faq-subtitle {
+    color: #2d6da3;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.faq-title {
+    font-size: 28px;
+    color: var(--text-color);
+}
+
+.faq-decoration {
+    display: flex;
+    gap: 10px;
+}
+
+.circle-decoration {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.circle-1 {
+    background-color: var(--primary-color);
+}
+
+.circle-2 {
+    background-color: var(--secondary-color);
+}
+
+.circle-3 {
+    background-color: var(--accent-color);
+}*/
+
+/* Horizontal Scrolling Cards */
+/*.faq-cards-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 0 20px 0;
+    margin: 0 -20px;
+    padding: 0 20px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: #2d6da3;
+}
+
+    .faq-cards-row::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .faq-cards-row::-webkit-scrollbar-track {
+        background: var(--light-bg);
+        border-radius: 10px;
+    }
+
+    .faq-cards-row::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 10px;
+    }
+
+.faq-card {
+    flex: 0 0 auto;
+    width: 300px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+    .faq-card:hover {
+        transform: translateY(-5px);
+    }
+
+.faq-card-icon {
+    margin-bottom: 15px;
+    color: #013979;
+    font-size: 24px;
+}*/
+
+/* Health Tips Section */
+/*.health-tips-section {
+    margin: 40px 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+}
+
+.health-tips-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+    .health-tips-header h3 {
+        font-size: 24px;
+        color: var(--primary-color);
+    }*/
+
+/* Horizontal Tips Row */
+/*.health-tips-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 0 20px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--light-bg);
+}
+
+    .health-tips-row::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .health-tips-row::-webkit-scrollbar-track {
+        background: var(--light-bg);
+        border-radius: 10px;
+    }
+
+    .health-tips-row::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 10px;
+    }
+
+.tip-item {
+    flex: 0 0 auto;
+    width: 280px;
+    display: flex;
+    align-items: center;
+    background: var(--light-bg);
+    padding: 15px;
+    border-radius: 8px;
+    height: 100px;
+    transition: transform 0.3s ease;
+}
+
+    .tip-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--card-shadow);
+    }
+
+.tip-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-right: 15px;
+}*/
+
+/* Custom scrollbar for webkit browsers */
+/*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #388e3c;
+    }*/
+
+/* Contact Button */
+/*.contact-button {
+    background-color: #2d6da3;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+    .contact-button:hover {
+        background-color: #388e3c;
+    }*/
+
+/* Ask Question Form */
+/*.ask-question-section {
+    margin: 40px 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 30px;
+}
+
+.ask-question-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+    .ask-question-header h3 {
+        font-size: 24px;
+        color: var(--primary-color);
+    }
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+}
+
+.btn-primary {
+    background-color: #2d6da3;
+    border-color: var(--primary-color);
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #388e3c;
+        border-color: #388e3c;
+    }*/
+
+/* Scroll Indicator */
+/*.scroll-indicator {
+    text-align: center;
+    margin: 10px 0;
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-icon {
+    font-size: 18px;
+    margin: 0 5px;
+    animation: scrollAnimation 1.5s infinite;
+}
+
+@keyframes scrollAnimation {
+    0% {
+        transform: translateX(-3px);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    100% {
+        transform: translateX(-3px);
+    }
+}*/
+/* Base styles and resets */
+.custom-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+.health-faq-section {
+    background-color: #f8fcff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(10, 71, 118, 0.1);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header styling */
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.faq-title-container {
+    max-width: 70%;
+}
+
+.faq-subtitle {
+    color: #4dadee;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.faq-title {
+    color: #0a4776;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-top: 0;
+    position: relative;
+}
+
+    .faq-title::after {
+        content: '';
+        position: absolute;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #4dadee, #0a4776);
+        bottom: -15px;
+        left: 0;
+        border-radius: 2px;
+    }
+
+/* Decorative circles */
+.faq-decoration {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.circle-decoration {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle-1 {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #4dadee, #2a80c2);
+    top: 0;
+    right: 0;
+    animation-delay: 0s;
+}
+
+.circle-2 {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #6dc0ff, #4dadee);
+    bottom: 20px;
+    right: 80px;
+    animation-delay: 1s;
+}
+
+.circle-3 {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #0a4776, #083658);
+    bottom: 0;
+    right: 20px;
+    animation-delay: 2s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Cards styling */
+.faq-cards-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 1rem 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: #4dadee #f0f7ff;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -1rem;
+    padding: 1rem;
+}
+
+    .faq-cards-row::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .faq-cards-row::-webkit-scrollbar-track {
+        background: #f0f7ff;
+        border-radius: 10px;
+    }
+
+    .faq-cards-row::-webkit-scrollbar-thumb {
+        background: #4dadee;
+        border-radius: 10px;
+    }
+
+.faq-card {
+    flex: 0 0 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(10, 71, 118, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .faq-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4dadee, #0a4776);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    .faq-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(10, 71, 118, 0.15);
+    }
+
+        .faq-card:hover::before {
+            transform: scaleX(1);
+        }
+
+.faq-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f0f7ff, #e0f0ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+    .faq-card-icon i {
+        font-size: 1.5rem;
+        color: #0a4776;
+    }
+
+.faq-card-title {
+    color: #0a4776;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    min-height: 3.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.faq-card-body {
+    color: #4a5568;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+    .faq-card-body p {
+        margin: 0;
+        transition: color 0.3s ease;
+    }
+
+/* Button styling */
+.text-center {
+    text-align: center;
+}
+
+.my-5 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contact-button {
+    background: linear-gradient(45deg, #0a4776, #4dadee);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(10, 71, 118, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+    .contact-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.4s ease;
+    }
+
+    .contact-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(10, 71, 118, 0.4);
+    }
+
+        .contact-button:hover::before {
+            left: 100%;
+        }
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .faq-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .faq-title-container {
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .faq-decoration {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 768px) {
+    .health-faq-section {
+        padding: 2rem;
+    }
+
+    .faq-title {
+        font-size: 2rem;
+    }
+
+    .faq-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-container {
+        padding: 1rem;
+    }
+
+    .health-faq-section {
+        padding: 1.5rem;
+    }
+
+    .faq-card {
+        flex: 0 0 250px;
+    }
+}
+
+/* Smooth animations for card appearance */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.faq-card {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+    .faq-card:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .faq-card:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .faq-card:nth-child(4) {
+        animation-delay: 0.3s;
+    }
+
+    .faq-card:nth-child(5) {
+        animation-delay: 0.4s;
+    }
+
+/* Additional hover effects */
+.faq-card-content {
+    transition: all 0.3s ease;
+}
+
+.faq-card:hover .faq-card-icon {
+    background: linear-gradient(135deg, #e0f0ff, #c0e0ff);
+}
+
+.faq-card:hover .faq-card-body p {
+    color: #0a4776;
+}
