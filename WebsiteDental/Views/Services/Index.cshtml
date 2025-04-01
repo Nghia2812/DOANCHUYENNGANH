@@ -1,52 +1,74 @@
 ﻿@section Styles {
-    <link href="~/assets/css/Services.css" rel="stylesheet">
+    <link href="~/assets/css/ServicesDental.css" rel="stylesheet">
 }
 
 @{
     var servicesCategories = ViewBag.ServicesCategories as List<ServiceCategory> ?? new List<ServiceCategory>();
     var services = ViewBag.Services as List<Service> ?? new List<Service>();
 }
-
-<div class="container">
+<div class="ltn-container">
     <!-- Sidebar - Danh mục dịch vụ -->
-    <div class="sidebar">
-        <div class="sidebar-header">Dịch Vụ Khám Sức Khỏe</div>
+    <div class="ltn-sidebar">
+        <div class="ltn-sidebar-header">
+            <i class="fas fa-tooth ltn-mr-2"></i> Dịch Vụ Nha Khoa
+        </div>
         <ul>
             @foreach (var category in servicesCategories)
             {
                 <li>
                     <a href="@Url.Action("Index", "Services", new { categoryId = category.Id })">
-                        @category.CategoryName
+                        <i class="fas fa-angle-right ltn-mr-2"></i> @category.CategoryName
                     </a>
                 </li>
             }
         </ul>
-    </div>
-
-    <!-- Main content - Chi tiết dịch vụ -->
-    <div class="main-content">
-        <h1 class="service-title">Dịch Vụ Khám Sức Khỏe</h1>
-
-        <div class="service-description">
-            Dịch vụ sức khỏe bệnh viện Yersin cung cấp: bác sĩ chất lượng, phát hiện sớm các biểu hiện bệnh lý, có đủ các chuyên khoa pháp chẩn từ vật lý đến xét nghiệm. Bạn sẽ biết rõ tình trạng sức khỏe và được thầy thuốc giỏi tư vấn điều trị, sức khỏe lâu bền. Luôn sẵn sàng nghe lời, cho bạn biết chắc bệnh trạng và giúp bạn quay về với cuộc sống.
+        <!-- Promotions -->
+        <div class="ltn-sidebar-promotions">
+            <div class="ltn-promo-item">
+                <img src="https://img.freepik.com/free-vector/dental-care-background-design_23-2148536076.jpg" alt="Khuyến mãi khám răng">
+                <div class="ltn-promo-caption">
+                    <i class="fas fa-percentage ltn-mr-1"></i> Giảm 30% Khám Tổng Quát
+                </div>
+            </div>
+            <div class="ltn-promo-item">
+                <img src="https://img.freepik.com/free-vector/dental-care-concept_23-2148536075.jpg" alt="Chăm sóc răng miệng">
+                <div class="ltn-promo-caption">
+                    <i class="fas fa-smile ltn-mr-1"></i> Tẩy Trắng Răng Giảm 20%
+                </div>
+            </div>
         </div>
-
-        <div id="#" class="service-grid">
+    </div>
+    <!-- Main content -->
+    <div class="ltn-main-content">
+        <h1 class="ltn-service-title">
+            <i class="fas fa-teeth ltn-mr-2"></i> Dịch Vụ Nha Khoa
+        </h1>
+        <div class="service-description">
+            <p>Phòng khám nha khoa LTN-Dental cung cấp các dịch vụ chăm sóc răng miệng chất lượng cao với đội ngũ bác sĩ giỏi và trang thiết bị hiện đại. Chúng tôi cam kết mang đến cho khách hàng trải nghiệm điều trị thoải mái và hiệu quả.</p>
+        </div>
+        <div class="ltn-service-grid">
             @foreach (var item in services)
             {
-                <div class="service-item">
-                    <div class="service-image">
+                <div class="ltn-service-item ">
+                    <div class="ltn-service-image">
                         <a asp-controller="DetailServices" asp-action="DetailServices" asp-route-id="@item.Id">
                             <img src="@item.Image" alt="@item.ServiceName">
                         </a>
-                        <div class="service-heart"></div>
+                        <div class="ltn-service-heart" title="Thêm vào yêu thích"></div>
                     </div>
-                    <div class="service-name">@item.ServiceName</div>
-                    <div class="service-price">@item.Price</div>
-                    <div class="service-hotline">
-                        <img src="https://cdn-img-v2.mybota.vn/uploadv2/web/65/6506/news/2021/03/20/03/44/1616223006_1616142624_kham-rang-tong-quat.jpeg" alt="phone">
-                        HOTLINE: 0933 933 933
+                    <div class="ltn-service-name">@item.ServiceName</div>
+                    <div class="ltn-service-price">
+                        <div class="ltn-service-current-price">@item.Price?.ToString("N0") đ</div>
+                        
+                          
+                       
                     </div>
+                    <div class="ltn-service-description-short">
+                        Dịch vụ nha khoa chất lượng cao với đội ngũ bác sĩ giỏi...
+                    </div>
+                    <a href="#" class="ltn-appointment-button">
+                        <i class="fas fa-calendar-check ltn-mr-1"></i> Đặt Lịch Ngay
+                    </a>
                 </div>
             }
         </div>

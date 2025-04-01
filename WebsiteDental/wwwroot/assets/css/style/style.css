@@ -126,6 +126,7 @@
 
 
 /*** Navbar Start ***/
+
 .nav-bar {
     background: var(--bs-white);
     transition: 1s;
@@ -212,7 +213,7 @@
 
 @media (min-width: 992px) {
     .navbar {
-        padding: 20px 0;
+        padding: 3px 0;
     }
 
     .navbar .nav-btn {
