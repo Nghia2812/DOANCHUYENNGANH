@@ -169,6 +169,22 @@ body .ltn-container {
 .ltn-sidebar-promotions {
     padding: 20px 15px;
 }
+.ltn-sidebar-banner {
+    margin-top: 20px; /* Khoảng cách với phần trên */
+    text-align: center; /* Căn giữa banner nếu cần */
+    width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng sidebar */
+    display: flex; /* Dùng flex để căn chỉnh */
+    justify-content: center; /* Căn giữa ảnh */
+}
+
+    .ltn-sidebar-banner img {
+        width: 100%; /* Giữ chiều rộng theo khung */
+        max-width: 300px; /* Giới hạn tối đa chiều rộng */
+        height: auto; /* Tự động điều chỉnh chiều cao */
+        max-height: 600px; /* Giới hạn tối đa chiều cao */
+        object-fit: contain; /* Đảm bảo ảnh không bị méo hoặc vỡ */
+        border-radius: 10px; /* Bo góc nhẹ */
+    }
 
 .ltn-promo-item {
     margin-bottom: 20px;
@@ -522,6 +538,7 @@ body .ltn-container {
     color: var(--ltn-accent-color);
     font-weight: 600;
     font-size: 18px;
+    text-align: center;
 }
 
 .ltn-service-old-price {

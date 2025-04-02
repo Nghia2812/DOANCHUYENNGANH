@@ -31,12 +31,28 @@
                 </div>
             </div>
             <div class="ltn-promo-item">
-                <img src="https://img.freepik.com/free-vector/dental-care-concept_23-2148536075.jpg" alt="Chăm sóc răng miệng">
+                <img src="/assets/img/Discounts/anh8.jpg" alt="Chăm sóc răng miệng">
                 <div class="ltn-promo-caption">
                     <i class="fas fa-smile ltn-mr-1"></i> Tẩy Trắng Răng Giảm 20%
                 </div>
             </div>
+            <!-- Banner quảng cáo dọc dài -->
+            <div class="ltn-sidebar-banner">
+                <img src="/assets/img/Discounts/anh9.webp" alt="Ưu đãi đặc biệt">
+            </div>
+
         </div>
+        <!-- Banner quảng cáo dọc dài -->
+        <div class="ltn-sidebar-banner">
+            <img src="/assets/img/Discounts/anh8.jpg" alt="Ưu đãi đặc biệt">
+        </div>
+        <!-- Banner quảng cáo dọc dài -->
+        <div class="ltn-sidebar-banner">
+            <img src="/assets/img/Discounts/anh10.webp" alt="Ưu đãi đặc biệt">
+        </div>
+
+
+
     </div>
     <!-- Main content -->
     <div class="ltn-main-content">
@@ -50,25 +66,22 @@
             @foreach (var item in services)
             {
                 <div class="ltn-service-item ">
-                    <div class="ltn-service-image">
-                        <a asp-controller="DetailServices" asp-action="DetailServices" asp-route-id="@item.Id">
-                            <img src="@item.Image" alt="@item.ServiceName">
-                        </a>
+                    <div class="ltn-service-image">                      
+                            <img src="@item.Image" alt="@item.ServiceName">                     
                         <div class="ltn-service-heart" title="Thêm vào yêu thích"></div>
                     </div>
                     <div class="ltn-service-name">@item.ServiceName</div>
-                    <div class="ltn-service-price">
-                        <div class="ltn-service-current-price">@item.Price?.ToString("N0") đ</div>
-                        
-                          
-                       
+                    <div class="ltn-service-current-price">
+                        @item.Price?.ToString("#,##0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")) đ
                     </div>
+
                     <div class="ltn-service-description-short">
-                        Dịch vụ nha khoa chất lượng cao với đội ngũ bác sĩ giỏi...
+                       @item.Description
                     </div>
-                    <a href="#" class="ltn-appointment-button">
+                    <a asp-controller="DetailServices" asp-action="DetailServices" asp-route-id="@item.Id" class="ltn-appointment-button">
                         <i class="fas fa-calendar-check ltn-mr-1"></i> Đặt Lịch Ngay
                     </a>
+
                 </div>
             }
         </div>
