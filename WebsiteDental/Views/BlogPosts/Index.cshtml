@@ -14,23 +14,23 @@
         <div class="col-lg-8">
             <h1 class="dental-section-title">Bài viết mới nhất</h1>
             <div class="row">
-                <!-- Các bài viết - đã điều chỉnh thành 3 bài trên một hàng -->
+                <!-- Các bài viết - điều chỉnh thành 2 bài trên một hàng -->
                 @foreach (var item in blogPosts)
                 {
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-6 mb-4">
                         <div class="dental-article-card">
                             <div class="dental-article-image-container">
-                                <div class="article-category">Nha Khoa</div>
+                                <div class="article-category">LTN-DENTAL</div>
                                 <img src="@item.FeaturedImage" alt="Bác sĩ" class="dental-article-image">
                                 <div class="article-logo">
-                                    <img src="/images/logo-small.png" alt="Logo">
+                                    <img src="/assets/img/logo.jpg" alt="Logo">
                                 </div>
                             </div>
                             <div class="dental-article-content">
-                                <h2 class="dental-article-title" style="font-size: 16px;">@item.Title</h2>
+                                <h2 class="dental-article-title">@item.Title</h2>
                                 <div class="article-meta">
                                     <div class="article-author">
-                                        <img src="/images/author-avatar.png" alt="Tác giả" class="author-avatar">
+                                        <img src="~/assets/img/logo.jpg" alt="Tác giả" class="author-avatar">
                                         <span>Bác sĩ</span>
                                     </div>
                                     <div class="article-date">
@@ -38,8 +38,8 @@
                                         <span>@(item.CreatedAt?.ToString("dd/MM/yyyy") ?? "Không có ngày")</span>
                                     </div>
                                 </div>
-                                <p class="dental-article-excerpt" style="font-size: 13px; margin-bottom: 15px;">@item.Content</p>
-                                <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@item.Id" class="read-now-button" style="padding: 8px 16px; font-size: 12px;">
+                                <p class="dental-article-excerpt">@item.Content</p>
+                                <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@item.Id" class="read-now-button">
                                     Đọc ngay <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -48,6 +48,7 @@
                 }
             </div>
 
+            <!-- Rest of your code stays the same -->
             <!-- Quảng cáo ở giữa bài viết -->
             <div class="mid-page-ad">
                 <div class="ad-container">
@@ -68,7 +69,7 @@
             </div>
         </div>
 
-        <!-- Sidebar -->
+        <!-- Sidebar remains unchanged -->
         <div class="col-lg-4">
             <div class="dental-sidebar">
                 <div class="dental-sidebar-widget mb-4 p-4 bg-white">
@@ -84,7 +85,12 @@
                         }
                     </ul>
                 </div>
-
+                <!-- Quảng cáo trong sidebar -->
+                <div class="dental-sidebar-ad">
+                    <h4>Dịch vụ siêu âm</h4>
+                    <p>Công nghệ hiện đại, chẩn đoán chính xác</p>
+                    <a href="#" class="dental-sidebar-ad-button">Tìm hiểu thêm</a>
+                </div>
                 <div class="dental-sidebar-widget mb-4 p-4 bg-white">
                     <h3 class="dental-sidebar-title">Đánh giá từ khách hàng</h3>
                     <div class="dental-testimonial">
