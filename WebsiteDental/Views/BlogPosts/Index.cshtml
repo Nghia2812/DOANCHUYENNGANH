@@ -11,13 +11,13 @@
 <!-- Bài viết hiện thị theo danh mục -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-9">
             <h1 class="dental-section-title">Bài viết mới nhất</h1>
             <div class="row">
-                <!-- Các bài viết - điều chỉnh thành 2 bài trên một hàng -->
+                <!-- Các bài viết - điều chỉnh thành 4 bài trên một hàng -->
                 @foreach (var item in blogPosts)
                 {
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-3 col-sm-6 mb-4">
                         <div class="dental-article-card">
                             <div class="dental-article-image-container">
                                 <div class="article-category">LTN-DENTAL</div>
@@ -38,7 +38,7 @@
                                         <span>@(item.CreatedAt?.ToString("dd/MM/yyyy") ?? "Không có ngày")</span>
                                     </div>
                                 </div>
-                                <p class="dental-article-excerpt">@item.Content</p>
+                             
                                 <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@item.Id" class="read-now-button">
                                     Đọc ngay <i class="fas fa-arrow-right"></i>
                                 </a>
@@ -48,7 +48,6 @@
                 }
             </div>
 
-            <!-- Rest of your code stays the same -->
             <!-- Quảng cáo ở giữa bài viết -->
             <div class="mid-page-ad">
                 <div class="ad-container">
@@ -69,11 +68,12 @@
             </div>
         </div>
 
-        <!-- Sidebar remains unchanged -->
-        <div class="col-lg-4">
+        <!-- Improved Sidebar with better structure and image placeholders -->
+        <div class="col-lg-3">
             <div class="dental-sidebar">
-                <div class="dental-sidebar-widget mb-4 p-4 bg-white">
-                    <h3 class="dental-sidebar-title">Dịch vụ nổi bật</h3>
+                <!-- Services Widget -->
+                <div class="dental-sidebar-widget p-3 bg-white">
+                    <h3 class="dental-sidebar-title">Dịch vụ</h3>
                     <ul class="dental-service-list list-unstyled">
                         @foreach (var n in categories)
                         {
@@ -85,25 +85,70 @@
                         }
                     </ul>
                 </div>
-                <!-- Quảng cáo trong sidebar -->
+                <!-- New Promo Banner -->
+                <div class="dental-sidebar-widget p-0 bg-white overflow-hidden">
+                    <img src="/assets/img/Discounts/anh14.jpg" alt="Khuyến mãi tháng 4" class="img-fluid" />
+                </div>
+                <!-- Ultrasound Service Ad Banner -->
                 <div class="dental-sidebar-ad">
                     <h4>Dịch vụ siêu âm</h4>
                     <p>Công nghệ hiện đại, chẩn đoán chính xác</p>
                     <a href="#" class="dental-sidebar-ad-button">Tìm hiểu thêm</a>
                 </div>
-                <div class="dental-sidebar-widget mb-4 p-4 bg-white">
-                    <h3 class="dental-sidebar-title">Đánh giá từ khách hàng</h3>
+
+                <!-- Testimonials Widget -->
+                <div class="dental-sidebar-widget p-3 bg-white">
+                    <h3 class="dental-sidebar-title">Đánh giá</h3>
                     <div class="dental-testimonial">
                         <p>"Dịch vụ chăm sóc tận tình, bác sĩ giỏi và thân thiện."</p>
                         <span>- Nguyễn Văn A</span>
                     </div>
                 </div>
 
-                <div class="dental-sidebar-cta p-4 text-white text-center">
-                    <h3>Tư vấn miễn phí</h3>
-                    <p class="mb-3">Đặt lịch tư vấn ngay hôm nay</p>
-                    <a href="#" class="btn btn-light dental-cta-button">Liên hệ ngay</a>
+                <!-- New Promo Banner -->
+                <div class="dental-sidebar-widget p-0 bg-white overflow-hidden">
+                    <img src="/assets/img/Discounts/anh13.jpg" alt="Khuyến mãi tháng 4" class="img-fluid" /> 
+                </div>           
+                <!-- Promo Banners with unique class names to avoid conflicts -->
+              <!-- Vertical Promotional Cards using Bootstrap classes only -->
+                <div class="container-fluid p-0 mt-auto">
+                    <div class="row g-2">
+                        <!-- g-2 adds small gutters between rows -->
+                        <!-- First promo item -->
+                        <div class="col-12">
+                            <div class="position-relative">
+                                <img src="/assets/img/Discounts/anh15.jpg" class="w-100 rounded-3" alt="COCOXIM">
+                                <div class="position-absolute bottom-0 start-0 w-100 bg-dark text-white text-center py-2">
+                                    <span class="fw-bold">Ưu đãi</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Second promo item -->
+                        <div class="col-12">
+                            <div class="position-relative">
+                                <img src="/assets/img/Discounts/anh16.jpg" class="w-100 rounded-3" alt="COCOXIM">
+                                <div class="position-absolute bottom-0 start-0 w-100 bg-dark text-white text-center py-2">
+                                    <span class="fw-bold">Dịch vụ</span><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third promo item -->
+                        <div class="col-12">
+                            <div class="position-relative">
+                                <img src="/assets/img/Discounts/anh17.jpg" class="w-100 rounded-3" alt="Mansion View">
+                                <div class="position-absolute bottom-0 start-0 w-100 bg-dark text-white text-center py-1">
+                                 
+                                    <span class="fw-bold">Gói khám</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
