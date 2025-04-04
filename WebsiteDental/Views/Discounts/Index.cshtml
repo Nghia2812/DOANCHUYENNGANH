@@ -1,6 +1,11 @@
 ﻿@section Styles {
-    <link href="~/assets/css/Discounts.css" rel="stylesheet">
+<link href="~/assets/css/Discounts.css" rel="stylesheet">
 }
+@{
+    var DiscountsCategories = ViewBag.DiscountsCategories as List<DiscountCategory> ?? new List<DiscountCategory>();
+    var Discounts = ViewBag.Discounts as List<Discount> ?? new List<Discount>();
+}
+
 
 <!-- Bắt đầu container đầu tiên -->
 <div class="container py-4">
@@ -13,15 +18,10 @@
                     DANH MỤC
                 </div>
                 <ul class="sidebar-menu">
-                    <li><a href="#"><i class="fas fa-bolt"></i> DEAL MỚI</a></li>
-                    <li><a href="#"><i class="fas fa-store"></i> THƯƠNG HIỆU</a></li>
-                    <li><a href="#"><i class="fas fa-utensils"></i> ĂN UỐNG</a></li>
-                    <li><a href="#"><i class="fas fa-gem"></i> ĐẶC SẢN</a></li>
-                    <li><a href="#"><i class="fas fa-gift"></i> QUÀ TẶNG</a></li>
-                    <li><a href="#"><i class="fas fa-tshirt"></i> THỜI TRANG</a></li>
-                    <li><a href="#"><i class="fas fa-heartbeat"></i> SỨC KHỎE</a></li>
-                    <li><a href="#"><i class="fas fa-magic"></i> SẮC ĐẸP</a></li>
-                    <li><a href="#"><i class="fas fa-apple-alt"></i> THỰC PHẨM</a></li>
+                    @foreach (var category in DiscountsCategories)
+                    {
+                        <li><a href="#"><i class="@category.Icon"></i>@category.CategoryName</a></li>
+                    }
                 </ul>
             </div>
 
@@ -47,7 +47,7 @@
             <div id="mainCarousel" class="carousel slide banner-carousel mb-4" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://i.pinimg.com/736x/f4/82/c0/f482c0d038d486a16dded8d38455acb0.jpg" class="d-block w-100" alt="Banner">
+                        <img src="https://i.pinimg.com/736x/df/ae/f7/dfaef72ce56643ea156f47a440db7f1c.jpg" class="d-block w-100" alt="Banner">
                     </div>
                     <div class="carousel-item">
                         <img src="https://i.pinimg.com/736x/f4/82/c0/f482c0d038d486a16dded8d38455acb0.jpg" class="d-block w-100" alt="Banner">
@@ -94,77 +94,80 @@
     <div class="row">
         <div class="col-md-2 mb-4">
             <div class="promo-banner">
-                <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
+                <img src="/assets/img/Discounts/thuoc1.jpg" alt="Promo">
             </div>
         </div>
         <div class="col-md-2 mb-4">
             <div class="promo-banner">
-                <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
+                <img src="/assets/img/Discounts/thuoc2.jpg" alt="Promo">
             </div>
         </div>
         <div class="col-md-2 mb-4">
             <div class="promo-banner">
-                <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
+                <img src="/assets/img/Discounts/thuoc3.jpg" alt="Promo">
             </div>
         </div>
         <div class="col-md-2 mb-4">
             <div class="promo-banner">
-                <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
+                <img src="/assets/img/Discounts/thuoc4.jpg" alt="Promo">
             </div>
         </div>
         <div class="col-md-2 mb-4">
             <div class="promo-banner">
-                <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
+                <img src="/assets/img/Discounts/thuoc5.jpg" alt="Promo">
             </div>
         </div>
         <div class="col-md-2 mb-4">
             <div class="promo-banner">
-                <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
+                <img src="/assets/img/Discounts/thuoc1.jpg" alt="Promo">
             </div>
         </div>
     </div>
+
+    <!-- THƯƠNG HIỆU NỔI BẬT SECTION -->
     <!-- THƯƠNG HIỆU NỔI BẬT SECTION -->
     <div class="shop-category-section">
         <h3 class="shop-section-title">THƯƠNG HIỆU NỔI BẬT</h3>
         <div class="row">
             <div class="col-md-2 col-4 mb-3">
                 <div class="shop-feature-icon">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Brand 1">
-                    <p>Brand 1</p>
+                    <img src="~/assets/img/logo/anh2.png" alt="Brand 1">
+                    <p>Răng Tự Nhiên</p>
                 </div>
             </div>
             <div class="col-md-2 col-4 mb-3">
                 <div class="shop-feature-icon">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Brand 2">
-                    <p>Brand 2</p>
+                    <img src="~/assets/img/logo/anh3.png" alt="Brand 2">
+                    <p>Răng Cổ Xưa</p>
                 </div>
             </div>
             <div class="col-md-2 col-4 mb-3">
                 <div class="shop-feature-icon">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Brand 3">
-                    <p>Brand 3</p>
+                    <img src="~/assets/img/logo/anh4.png" alt="Brand 3">
+                    <p>Răng Kim Cương</p>
                 </div>
             </div>
             <div class="col-md-2 col-4 mb-3">
                 <div class="shop-feature-icon">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Brand 4">
-                    <p>Brand 4</p>
+                    <img src="~/assets/img/logo/anh5.png" alt="Brand 4">
+                    <p>Răng Công Nghệ</p>
                 </div>
             </div>
             <div class="col-md-2 col-4 mb-3">
                 <div class="shop-feature-icon">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Brand 5">
-                    <p>Brand 5</p>
+                    <img src="~/assets/img/logo/anh6.png" alt="Brand 5">
+                    <p>Răng Năng Lượng</p>
                 </div>
             </div>
             <div class="col-md-2 col-4 mb-3">
                 <div class="shop-feature-icon">
-                    <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Brand 6">
-                    <p>Brand 6</p>
+                    <img src="~/assets/img/logo/anh7.png" alt="Brand 6">
+                    <p>Răng Đất Mẹ</p>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Category section -->
     <div class="row">
         <div class="col-12">
@@ -173,49 +176,49 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2017/09/14/11/25/water-2748695_1280.png" alt="Ăn uống & ẩm thực">
+                            <img src="/assets/img/logo/anh8.png" alt="Ăn uống & ẩm thực">
                             <p>Ăn uống & ẩm thực</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2024/05/16/09/02/tea-8765463_1280.png" alt="Spa & Làm đẹp">
+                            <img src="/assets/img/logo/anh9.png" alt="Spa & Làm đẹp">
                             <p>Spa & Làm đẹp</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2022/03/31/07/45/spaceship-7102410_1280.png" alt="Du lịch & Đi lại">
+                            <img src="/assets/img/logo/anh10.png" alt="Du lịch & Đi lại">
                             <p>Du lịch & Đi lại</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2022/03/31/07/45/spaceship-7102410_1280.png" alt="Quà tặng">
+                            <img src="/assets/img/logo/anh11.png" alt="Quà tặng">
                             <p>Quà tặng</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2022/03/31/07/45/spaceship-7102410_1280.png" alt="Thời trang & Phụ kiện">
+                            <img src="/assets/img/logo/anh12.png" alt="Thời trang & Phụ kiện">
                             <p>Thời trang & Phụ kiện</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2022/03/31/07/45/spaceship-7102410_1280.png" alt="Đặc & Lạ">
+                            <img src="/assets/img/logo/anh13.png" alt="Đặc & Lạ">
                             <p>Đặc & Lạ</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2022/03/31/07/45/spaceship-7102410_1280.png" alt="Công sở">
+                            <img src="/assets/img/logo/anh14.png" alt="Công sở">
                             <p>Công sở</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                         <div class="feature-icon">
-                            <img src="https://cdn.pixabay.com/photo/2022/03/31/07/45/spaceship-7102410_1280.png" alt="Mỹ phẩm">
+                            <img src="/assets/img/logo/anh15.png" alt="Mỹ phẩm">
                             <p>Mỹ phẩm</p>
                         </div>
                     </div>
@@ -224,104 +227,68 @@
         </div>
     </div>
 
-            <!-- Promo banners -->
-            <div class="row justify-content-end">
-                <div class="col-md-2 mb-4">
-                    <div class="promo-banner">
-                        <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
-                    </div>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <div class="promo-banner">
-                        <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
-                    </div>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <div class="promo-banner">
-                        <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
-                    </div>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <div class="promo-banner">
-                        <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
-                    </div>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <div class="promo-banner">
-                        <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
-                    </div>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <div class="promo-banner">
-                        <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promo">
-                    </div>
-                </div>
+    <!-- Promo banners -->
+    <!-- Promo banners -->
+    <div class="row justify-content-end">
+        <div class="col-md-2 mb-4">
+            <div class="promo-banner featured">
+                <span class="promo-badge">HOT</span>
+                <img src="/assets/img/logo/anh17.jpg" alt="Promo">
             </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <div class="promo-banner">
+                <img src="/assets/img/logo/anh18.jpg" alt="Promo">
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <div class="promo-banner">
+                <span class="promo-badge">50%</span>
+                <img src="/assets/img/logo/anh19.jpg" alt="Promo">
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <div class="promo-banner">
+                <img src="/assets/img/logo/anh20.jpg" alt="Promo">
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <div class="promo-banner">
+                <img src="/assets/img/logo/anh21.jpg" alt="Promo">
+            </div>
+        </div>
+        <div class="col-md-2 mb-4">
+            <div class="promo-banner featured">
+                <span class="promo-badge">NEW</span>
+                <img src="/assets/img/logo/anh22.jpg" alt="Promo">
+            </div>
+        </div>
+    </div>
+
     <!-- KHUYẾN MÃI HOT SECTION -->
     <div class="category-section">
         <h3 class="section-title">KHUYẾN MÃI HOT</h3>
         <div class="row">
-            <!-- Promotion items - 4 in a row -->
-            <div class="col-md-3 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-30%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/c9/46/93/c9469383165d92ad334683f12cc2833d.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Túi xách thời trang cao cấp</h5>
-                        <div class="product-price">
-                            <span class="current-price">540.000đ</span>
-                            <span class="original-price">680.000đ</span>
+            @foreach (var n in Discounts)
+            {
+                <!-- Promotion items - 4 in a row -->
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="product-card">
+                        <div class="discount-badge">-@n.DiscountPercentage%</div>
+                        <div class="product-img">
+                            <img src="@n.ImageUrl" alt="Product">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">@n.DiscountCode</h5>
+                            <div class="product-price">
+                                <span class="current-price">@n.OriginalPrice</span>
+                                <span class="original-price">@n.FinalPrice</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-25%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Giày thể thao nam nữ</h5>
-                        <div class="product-price">
-                            <span class="current-price">450.000đ</span>
-                            <span class="original-price">600.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-40%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Ốp lưng điện thoại chống sốc</h5>
-                        <div class="product-price">
-                            <span class="current-price">120.000đ</span>
-                            <span class="original-price">200.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-20%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Tai nghe Bluetooth không dây</h5>
-                        <div class="product-price">
-                            <span class="current-price">380.000đ</span>
-                            <span class="original-price">475.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }   
+
         </div>
     </div>
 
@@ -330,22 +297,22 @@
         <h3 class="section-title">ĐỐI TÁC & THƯƠNG HIỆU</h3>
         <div class="row align-items-center">
             <div class="col-md-2 col-4 mb-3">
-                <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Brand" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/1e/68/31/1e6831ce487e62090e5550f55d7b9fe3.jpg" alt="Brand" class="img-fluid">
             </div>
             <div class="col-md-2 col-4 mb-3">
-                <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Brand" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/bc/b6/6c/bcb66c1c03828631913b7e03d4ff193f.jpg" alt="Brand" class="img-fluid">
             </div>
             <div class="col-md-2 col-4 mb-3">
-                <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Brand" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/26/cb/8e/26cb8e3a9cb460bd681ca4e30cfe74d0.jpg" alt="Brand" class="img-fluid">
             </div>
             <div class="col-md-2 col-4 mb-3">
-                <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Brand" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/20/a6/42/20a6426cafcd802911b644794014b61b.jpg" alt="Brand" class="img-fluid">
             </div>
             <div class="col-md-2 col-4 mb-3">
-                <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Brand" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/a5/5c/6d/a55c6d1d88a73af4aac8f1d644fb0f81.jpg" alt="Brand" class="img-fluid">
             </div>
             <div class="col-md-2 col-4 mb-3">
-                <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Brand" class="img-fluid">
+                <img src="https://i.pinimg.com/736x/50/cc/b8/50ccb8fcec14b4e7dd221e68877e1e9b.jpg" alt="Brand" class="img-fluid">
             </div>
         </div>
     </div>
@@ -354,129 +321,32 @@
     <div class="category-section">
         <h3 class="section-title">SẢN PHẨM BÁN CHẠY</h3>
         <div class="row">
-            <!-- Sản phẩm bán chạy -->
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-35%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Túi xách thời trang cao cấp da thật</h5>
-                        <div class="product-price">
-                            <span class="current-price">799.000đ</span>
-                            <span class="original-price">1.230.000đ</span>
+
+            @foreach (var n in Discounts)
+            {
+                <!-- Sản phẩm bán chạy -->
+                <div class="col-lg-3 col-md-4 col-6 mb-4">
+                    <div class="product-card">
+                        <div class="discount-badge">-@n.DiscountPercentage%</div>
+                        <div class="product-img">
+                            <img src="@n.ImageUrl" alt="Product">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">@n.DiscountCode</h5>
+                            <div class="product-price">
+                                <span class="current-price">@n.FinalPrice</span>
+                                <span class="original-price">@n.OriginalPrice</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-25%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Áo khoác jean unisex form rộng</h5>
-                        <div class="product-price">
-                            <span class="current-price">450.000đ</span>
-                            <span class="original-price">600.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">HOT</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Nước hoa Paris unisex 100ml</h5>
-                        <div class="product-price">
-                            <span class="current-price">1.250.000đ</span>
-                            <span class="original-price">1.650.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-15%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Giày thể thao đế mềm cao cấp</h5>
-                        <div class="product-price">
-                            <span class="current-price">820.000đ</span>
-                            <span class="original-price">965.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-40%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Balo laptop thời trang chống thấm</h5>
-                        <div class="product-price">
-                            <span class="current-price">390.000đ</span>
-                            <span class="original-price">650.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">NEW</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Quần jean nữ ống đứng co giãn</h5>
-                        <div class="product-price">
-                            <span class="current-price">475.000đ</span>
-                            <span class="original-price">520.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-30%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Đồng hồ thông minh chống nước</h5>
-                        <div class="product-price">
-                            <span class="current-price">1.190.000đ</span>
-                            <span class="original-price">1.700.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 mb-4">
-                <div class="product-card">
-                    <div class="discount-badge">-20%</div>
-                    <div class="product-img">
-                        <img src="https://i.pinimg.com/736x/07/4c/38/074c38b1f6c92e8b03b06678afae6dd4.jpg" alt="Product">
-                    </div>
-                    <div class="product-info">
-                        <h5 class="product-title">Bộ mỹ phẩm dưỡng da cao cấp</h5>
-                        <div class="product-price">
-                            <span class="current-price">1.380.000đ</span>
-                            <span class="original-price">1.725.000đ</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            } 
+
+
         </div>
     </div>
+
+
     <!-- Đăng ký nhận tin -->
     <div class="category-section" style="background: linear-gradient(to right, #f9f9f9, #ffffff);">
         <div class="row align-items-center">
@@ -505,7 +375,7 @@
         <div class="row">
             <div class="col-md-4 col-lg-2-4 mb-3">
                 <div class="shop-promotion-banner">
-                    <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promotion">
+                    <img src="https://i.pinimg.com/474x/b3/c6/7e/b3c67e5ba21baedb221150723536b5bc.jpg" alt="Promotion">
                     <div class="shop-promotion-content">
                         <div class="shop-promotion-tag">MỚI</div>
                         <h5 class="shop-promotion-title">Giảm 50% đơn đầu</h5>
@@ -519,7 +389,7 @@
             </div>
             <div class="col-md-4 col-lg-2-4 mb-3">
                 <div class="shop-promotion-banner">
-                    <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promotion">
+                    <img src="https://i.pinimg.com/474x/bb/55/00/bb550041f839d03c26f330af5f562b68.jpg" alt="Promotion">
                     <div class="shop-promotion-content">
                         <div class="shop-promotion-tag">MỚI</div>
                         <h5 class="shop-promotion-title">Mua 2 tặng 1</h5>
@@ -533,7 +403,7 @@
             </div>
             <div class="col-md-4 col-lg-2-4 mb-3">
                 <div class="shop-promotion-banner">
-                    <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promotion">
+                    <img src="https://i.pinimg.com/736x/3b/84/5e/3b845ed628976f3a55bd38bf98c570a1.jpg" alt="Promotion">
                     <div class="shop-promotion-content">
                         <div class="shop-promotion-tag">MỚI</div>
                         <h5 class="shop-promotion-title">Freeship toàn quốc</h5>
@@ -547,7 +417,7 @@
             </div>
             <div class="col-md-4 col-lg-2-4 mb-3">
                 <div class="shop-promotion-banner">
-                    <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promotion">
+                    <img src="https://i.pinimg.com/474x/81/c4/c7/81c4c72db6a1020f1ade92435ad2a0a7.jpg" alt="Promotion">
                     <div class="shop-promotion-content">
                         <div class="shop-promotion-tag">MỚI</div>
                         <h5 class="shop-promotion-title">Voucher 100k</h5>
@@ -561,7 +431,7 @@
             </div>
             <div class="col-md-4 col-lg-2-4 mb-3">
                 <div class="shop-promotion-banner">
-                    <img src="https://i.pinimg.com/736x/46/97/00/469700f9b2708f0d603607f778c07226.jpg" alt="Promotion">
+                    <img src="https://i.pinimg.com/474x/3b/0b/70/3b0b70f4522b4ff17ef456807c531616.jpg" alt="Promotion">
                     <div class="shop-promotion-content">
                         <div class="shop-promotion-tag">MỚI</div>
                         <h5 class="shop-promotion-title">Sale đồng giá</h5>

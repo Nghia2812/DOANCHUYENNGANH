@@ -15,13 +15,18 @@ namespace WebsiteDental.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryID)
         {
+            var categories = _context.DiscountCategories?.ToList() ?? new List<DiscountCategory>();
 
-            var discounts = await _context.Discounts.ToListAsync();
+            var Discounts = categoryID.HasValue
+                ? _context.Discounts.Where(s => s.CategoryId == categoryID.Value).ToList()
+                : _context.Discounts.ToList();
 
-            // Trả về View cùng với danh sách Discounts
-            return View(discounts);
+            ViewBag.DiscountsCategories = categories;
+            ViewBag.Discounts = Discounts; // sửa lại viết hoa P
+
+            return View();
         }
     }
 }

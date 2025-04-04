@@ -123,6 +123,8 @@ body {
     border-radius: 4px;
     overflow: hidden;
     transition: all 0.3s;
+    width: 170px;
+    height: 200px;
 }
 
     .promo-banner:hover {
@@ -463,33 +465,97 @@ body {
         }
 
 /* Feature icons */
-.shop-feature-icon {
-    background-color: white;
-    border-radius: 4px;
-    padding: 10px;
+/* Clean, Image-focused Feature Icons - No Background */
+.shop-category-section {
+    padding: 50px 0;
+    /* Removed background colors */
+    position: relative;
+}
+
+.shop-section-title {
+    font-size: 28px;
     text-align: center;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s;
+    margin-bottom: 40px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+    color: #00c8ff; /* Keeping the blue color for the title */
+}
+
+    .shop-section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 2px;
+        background: rgba(0, 200, 255, 0.5);
+    }
+
+.shop-feature-icon {
+    /* Removing background */
+    background: transparent;
+    border-radius: 16px;
+    padding: 25px 15px;
+    text-align: center;
+    margin-bottom: 25px;
+    /* Removing shadow */
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Removing border */
+    border: none;
 }
 
     .shop-feature-icon:hover {
         transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     .shop-feature-icon img {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 10px;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
+        object-fit: contain;
+        transition: all 0.4s;
+        filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.4));
+    }
+
+    .shop-feature-icon:hover img {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 12px rgba(0, 200, 255, 0.6));
     }
 
     .shop-feature-icon p {
-        font-size: 14px;
-        margin: 0;
-        color: #333;
+        font-size: 16px;
+        font-weight: 500;
+        margin: 10px 0 0;
+        color: #00c8ff;
     }
 
+/* Media queries for responsiveness */
+@media (min-width: 768px) {
+    .shop-feature-icon img {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+@media (max-width: 767px) {
+    .shop-feature-icon {
+        padding: 20px 10px;
+    }
+
+        .shop-feature-icon img {
+            width: 100px;
+            height: 100px;
+        }
+}
+/* end icons */
 /* Section title */
 .shop-section-title {
     margin-bottom: 20px;
@@ -500,23 +566,93 @@ body {
 }
 
 /* Promo banners */
-.shop-promo-banner {
-    margin-bottom: 20px;
-    border-radius: 4px;
+/* Promo banners */
+.promo-banner {
+    border-radius: 8px;
     overflow: hidden;
-    transition: all 0.3s;
+    transition: all 0.4s ease;
+    position: relative;
+    height: 120px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-    .shop-promo-banner:hover {
+    .promo-banner:hover {
         transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
-    .shop-promo-banner img {
+    .promo-banner::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
-        border-radius: 4px;
+        height: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.05), transparent);
+        transition: height 0.3s ease;
     }
 
+    .promo-banner:hover::after {
+        height: 100%;
+    }
+
+    .promo-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.6s ease;
+    }
+
+    .promo-banner:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Add a subtle glowing effect for featured promos */
+    .promo-banner.featured {
+        position: relative;
+    }
+
+        .promo-banner.featured::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff7a00, #ff0080, #00bfff);
+            z-index: -1;
+            border-radius: 10px;
+            animation: borderGlow 3s linear infinite;
+        }
+
+@keyframes borderGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Badge styles */
+.promo-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 59, 48, 0.9);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1;
+}
 /* Info badges */
 .shop-info-badge {
     background-color: white;

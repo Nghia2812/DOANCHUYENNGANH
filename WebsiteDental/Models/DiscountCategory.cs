@@ -17,5 +17,7 @@ public partial class DiscountCategory
 
     public DateTime? UpdatedAt { get; set; }
 
+    public string? Icon { get; set; }
+
     public virtual ICollection<Discount> Discounts { get; set; } = new List<Discount>();
 }
