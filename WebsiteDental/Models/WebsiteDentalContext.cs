@@ -35,6 +35,8 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<Discount> Discounts { get; set; }
 
+    public virtual DbSet<DiscountCategory> DiscountCategories { get; set; }
+
     public virtual DbSet<Doctor> Doctors { get; set; }
 
     public virtual DbSet<DoctorCertificate> DoctorCertificates { get; set; }
@@ -76,7 +78,6 @@ public partial class WebsiteDentalContext : DbContext
     public virtual DbSet<TreatmentPlan> TreatmentPlans { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -330,6 +331,7 @@ public partial class WebsiteDentalContext : DbContext
             entity.HasIndex(e => e.DiscountCode, "UQ__Discount__75C1F00695BDF115").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.DiscountCode)
                 .HasMaxLength(50)
                 .HasColumnName("discount_code");
@@ -346,6 +348,32 @@ public partial class WebsiteDentalContext : DbContext
                 .HasColumnName("is_active");
             entity.Property(e => e.OriginalPrice).HasColumnName("original_price");
             entity.Property(e => e.StartDate).HasColumnName("start_date");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.Discounts)
+                .HasForeignKey(d => d.CategoryId)
+                .HasConstraintName("FK_Discounts_DiscountCategories");
+        });
+
+        modelBuilder.Entity<DiscountCategory>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Discount__3213E83F489976D4");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CategoryName)
+                .HasMaxLength(100)
+                .HasColumnName("category_name");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("is_active");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("updated_at");
         });
 
         modelBuilder.Entity<Doctor>(entity =>
@@ -673,6 +701,9 @@ public partial class WebsiteDentalContext : DbContext
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.Stock).HasColumnName("stock");
+            entity.Property(e => e.Type)
+                .HasMaxLength(100)
+                .HasColumnName("type");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")

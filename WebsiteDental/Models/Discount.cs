@@ -22,4 +22,8 @@ public partial class Discount
     public string? OriginalPrice { get; set; }
 
     public string? FinalPrice { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public virtual DiscountCategory? Category { get; set; }
 }

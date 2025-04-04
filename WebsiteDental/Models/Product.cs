@@ -33,6 +33,8 @@ public partial class Product
 
     public DateTime? UpdatedAt { get; set; }
 
+    public string? Type { get; set; }
+
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual ProductCategory? Category { get; set; }

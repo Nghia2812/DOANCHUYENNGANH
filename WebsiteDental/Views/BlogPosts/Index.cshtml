@@ -1,5 +1,5 @@
 ﻿@section Styles {
-<link href="~/assets/css/BlogPostsDental.css" rel="stylesheet">
+    <link href="~/assets/css/BlogDental.css" rel="stylesheet">
 }
 @{
     var categories = ViewBag.blogcategories as List<BlogCategory> ?? new List<BlogCategory>();
@@ -9,37 +9,39 @@
 
 
 <!-- Bài viết hiện thị theo danh mục -->
-<div class="container">
+<div class="container blog-content-area">
     <div class="row">
         <div class="col-lg-9">
-            <h1 class="dental-section-title">Bài viết mới nhất</h1>
+            <h2 class="dental-section-title">Bài viết mới nhất</h2>
+            <div class="dental-section-description">
+                <p>Cập nhật những kiến thức nha khoa mới nhất từ đội ngũ chuyên gia của chúng tôi. Tìm hiểu các phương pháp điều trị tiên tiến và lời khuyên chăm sóc răng miệng hàng ngày. Đọc ngay để có hàm răng khỏe mạnh và nụ cười rạng rỡ.</p>
+            </div>
             <div class="row">
                 <!-- Các bài viết - điều chỉnh thành 4 bài trên một hàng -->
                 @foreach (var item in blogPosts)
                 {
                     <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="dental-article-card">
-                            <div class="dental-article-image-container">
-                                <div class="article-category">LTN-DENTAL</div>
-                                <img src="@item.FeaturedImage" alt="Bác sĩ" class="dental-article-image">
-                                <div class="article-logo">
+                        <div class="blog-post-card">
+                            <div class="blog-post-card__image-container">
+                                <div class="blog-post-card__category">LTN-DENTAL</div>
+                                <img src="@item.FeaturedImage" alt="Bác sĩ" class="blog-post-card__image">
+                                <div class="blog-post-card__logo">
                                     <img src="/assets/img/logo.jpg" alt="Logo">
                                 </div>
                             </div>
-                            <div class="dental-article-content">
-                                <h2 class="dental-article-title">@item.Title</h2>
-                                <div class="article-meta">
-                                    <div class="article-author">
-                                        <img src="~/assets/img/logo.jpg" alt="Tác giả" class="author-avatar">
+                            <div class="blog-post-card__content">
+                                <h2 class="blog-post-card__title">@item.Title</h2>
+                                <div class="blog-post-card__meta">
+                                    <div class="blog-post-card__author">
+                                        <img src="~/assets/img/logo.jpg" alt="Tác giả" class="blog-post-card__author-avatar">
                                         <span>Bác sĩ</span>
                                     </div>
-                                    <div class="article-date">
+                                    <div class="blog-post-card__date">
                                         <i class="far fa-calendar"></i>
                                         <span>@(item.CreatedAt?.ToString("dd/MM/yyyy") ?? "Không có ngày")</span>
                                     </div>
                                 </div>
-                             
-                                <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@item.Id" class="read-now-button">
+                                <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@item.Id" class="blog-post-card__button">
                                     Đọc ngay <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -54,7 +56,7 @@
                     <div class="ad-content text-center">
                         <h4>Lịch hẹn trực tuyến</h4>
                         <p>Đặt lịch khám nhanh chóng và tiện lợi với đội ngũ bác sĩ chuyên nghiệp</p>
-                        <a href="#" class="btn btn-primary ad-button">Đặt lịch ngay</a>
+                        <a style="color: black;" href="#" class="btn btn-primary ad-button">Đặt lịch ngay</a>
                     </div>
                 </div>
             </div>
@@ -146,9 +148,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </div>

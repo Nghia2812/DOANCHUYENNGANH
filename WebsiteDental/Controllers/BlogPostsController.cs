@@ -20,8 +20,8 @@ namespace WebsiteDental.Controllers
             var categories = _context.BlogCategories?.ToList() ?? new List<BlogCategory>();
 
             var blogPosts = categoryId.HasValue
-                ? _context.BlogPosts.Where(p => p.CategoryId == categoryId.Value).ToList()
-                : _context.BlogPosts.ToList();
+                ? _context.BlogPosts.Where(p => p.CategoryId == categoryId.Value).Take(24).ToList()
+                : _context.BlogPosts.Take(24).ToList();
 
             ViewBag.BlogCategories = categories;
             ViewBag.BlogPosts = blogPosts;

@@ -21,7 +21,7 @@ namespace WebsiteDental.Controllers
 
             var services = categoryId.HasValue
                 ? _context.Services.Where(s => s.CategoryId == categoryId.Value).ToList()
-                : _context.Services.ToList();
+                : _context.Services.Take(24).ToList();
 
             ViewBag.ServicesCategories = categories;
             ViewBag.Services = services;

@@ -1,15 +1,20 @@
 ﻿@section Styles {
-<link href="~/assets/css/Pages/Style_Products.css" rel="stylesheet">
+<link href="~/assets/css/Products.css" rel="stylesheet">
 }
 @{
     var ProductCategories = ViewBag.ProductCategories as List<ProductCategory> ?? new List<ProductCategory>();
     var Products = ViewBag.Products as List<Product> ?? new List<Product>();
 }
-<div class="page-container">
-    <div class="sidebar-container">
-        <div class="categories-sidebar">
-            <div class="category-section">
-                <div class="category-title">Danh Mục</div>
+
+<div class="shop-main-container">
+    <div class="shop-side-wrapper">
+        <div class="shop-categories-box">
+            <!-- Phần mô tả mới -->
+            <div class="shop-intro-text">
+                <p>Khám phá các sản phẩm chất lượng cao từ nhiều thương hiệu uy tín. Tìm kiếm theo danh mục hoặc xuất xứ để dễ dàng mua sắm các sản phẩm phù hợp với nhu cầu của bạn.</p>
+            </div>
+            <div class="shop-category-block">
+                <div class="shop-heading">Danh Mục</div>
                 @foreach (var category in ProductCategories)
                 {
                     <a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">
@@ -17,67 +22,59 @@
                     </a>
                 }
             </div>
-            <div class="category-section">
-                <div class="category-title">Xuất Xứ</div>
-                <ul class="category-list origin-list">
-                    <li>Việt Nam</li>
-                    <li>Nhật Bản</li>
-                    <li>Hàn Quốc</li>
-                    <li>Hoa kỳ</li>
-                    <li>Thụy Sỹ</li>
-                    <li>Úc</li>
-                    <li>Thái lan</li>
+            <div class="shop-category-block">
+                <div class="shop-heading">Xuất Xứ</div>
+                <ul class="shop-list shop-origin-items">
+                    <li data-count="156">Việt Nam</li>
+                    <li data-count="98">Nhật Bản</li>
+                    <li data-count="87">Hàn Quốc</li>
+                    <li data-count="65">Hoa Kỳ</li>
+                    <li data-count="42">Thụy Sỹ</li>
+                    <li data-count="37">Úc</li>
+                    <li data-count="28">Thái Lan</li>
                 </ul>
             </div>
         </div>
-
-        <div class="vertical-ad">
-            <img src="/assets/img/Discounts/anh11.webp" alt="Quảng cáo" style="width: 100%; height: 100%; object-fit: cover;">
+        <div class="shop-banner">
+            <img src="/assets/img/Discounts/anh11.webp" alt="Quảng cáo">
         </div>
-        <div class="vertical-ad">
-            <img src="/assets/img/Discounts/anh12.webp" alt="Quảng cáo" style="width: 100%; height: 100%; object-fit: cover;">
+        <div class="shop-banner">
+            <img src="/assets/img/Discounts/anh12.webp" alt="Quảng cáo">
         </div>
     </div>
-
-    <div class="products-container">
-
-
-
+    <div class="shop-items-wrapper">
         @foreach (var item in Products)
         {
-            <div class="product-card">
-                <div class="product-top-tag">
-                <span class="discount-tag">2%</span>
-                <span class="product-type">Lon</span>
-            </div>
-            <div class="product-image">
-                <img src="@item.Image" alt="ColosBaby IQ Gold">
-            </div>
-            <div class="product-details">
-                <div class="product-title">@item.ProductName</div>
-                <div class="price-container">
-                    <span class="price">279.000đ</span>
-                    <span class="price-discount">Giảm 5k</span>
+            <div class="shop-item">
+                <div class="shop-item-tags">
+                    <span class="shop-discount-label">2%</span>
+                    <span class="shop-item-category">Lon</span>
                 </div>
-                <span class="origin">Xuất xứ: Việt Nam</span>
-                <span class="sold-badge">Đã bán: 3</span>
-                <button class="add-to-cart">Thêm vào giỏ</button>
+                <div class="shop-item-image">
+                    <img src="@item.Image" alt="@item.ProductName">
+                </div>
+                <div class="shop-item-info">
+                    <div class="shop-item-name">@item.ProductName</div>
+                    <div class="shop-price-area">
+                        <span class="shop-current-price">279.000đ</span>
+                        <span class="shop-price-saving">Giảm 5k</span>
+                    </div>
+                    <span class="shop-item-origin">Xuất xứ: Việt Nam</span>
+                    <span class="shop-item-sales">Đã bán: 3</span>
+                    <button class="shop-add-cart-btn">Thêm vào giỏ</button>
+                </div>
             </div>
-        </div>
-
-}
-
+        }
     </div>
 </div>
-
-<div class="pagination">
-    <div class="pagination-container">
-        <button class="pagination-btn">&lt; Trước</button>
-        <button class="pagination-btn">1</button>
-        <button class="pagination-btn active">2</button>
-        <button class="pagination-btn">3</button>
-        <button class="pagination-btn ellipsis">...</button>
-        <button class="pagination-btn">5</button>
-        <button class="pagination-btn">Tiếp theo &gt;</button>
+<div class="shop-pagination">
+    <div class="shop-pagination-box">
+        <button class="shop-page-btn">&lt; Trước</button>
+        <button class="shop-page-btn">1</button>
+        <button class="shop-page-btn active">2</button>
+        <button class="shop-page-btn">3</button>
+        <button class="shop-page-btn ellipsis">...</button>
+        <button class="shop-page-btn">5</button>
+        <button class="shop-page-btn">Tiếp theo &gt;</button>
     </div>
 </div>
