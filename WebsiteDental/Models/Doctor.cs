@@ -37,7 +37,13 @@ public partial class Doctor
 
     public string? Description { get; set; }
 
+    public int? CategoryId { get; set; }
+
+    public string? DoctorNumber { get; set; }
+
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+
+    public virtual DoctorsCategory? Category { get; set; }
 
     public virtual ICollection<CommentDoctor> CommentDoctors { get; set; } = new List<CommentDoctor>();
 

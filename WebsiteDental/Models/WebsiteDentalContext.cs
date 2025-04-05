@@ -41,6 +41,8 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<DoctorCertificate> DoctorCertificates { get; set; }
 
+    public virtual DbSet<DoctorsCategory> DoctorsCategories { get; set; }
+
     public virtual DbSet<Faq> Faqs { get; set; }
 
     public virtual DbSet<ImageGallery> ImageGalleries { get; set; }
@@ -79,6 +81,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -387,6 +390,7 @@ public partial class WebsiteDentalContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Biography).HasColumnName("biography");
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.ConsultationFee)
                 .HasColumnType("decimal(15, 2)")
                 .HasColumnName("consultation_fee");
@@ -394,6 +398,7 @@ public partial class WebsiteDentalContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
+            entity.Property(e => e.DoctorNumber).HasMaxLength(50);
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnName("email");
@@ -424,6 +429,10 @@ public partial class WebsiteDentalContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.Doctors)
+                .HasForeignKey(d => d.CategoryId)
+                .HasConstraintName("FK_Doctors_DoctorsCategory");
 
             entity.HasOne(d => d.User).WithMany(p => p.Doctors)
                 .HasForeignKey(d => d.UserId)
@@ -459,6 +468,18 @@ public partial class WebsiteDentalContext : DbContext
                 .HasForeignKey(d => d.DoctorId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__DoctorCer__docto__534D60F1");
+        });
+
+        modelBuilder.Entity<DoctorsCategory>(entity =>
+        {
+            entity.HasKey(e => e.CategoryId).HasName("PK__DoctorsC__19093A2B595B1C72");
+
+            entity.ToTable("DoctorsCategory");
+
+            entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
+            entity.Property(e => e.CategoryName).HasMaxLength(100);
+            entity.Property(e => e.Icon).HasMaxLength(100);
+            entity.Property(e => e.Position).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Faq>(entity =>

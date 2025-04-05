@@ -1,0 +1,122 @@
+﻿@section Styles {
+<link href="~/assets/css/Doctors.css" rel="stylesheet">
+}
+@{
+    var DoctorsCategories = ViewBag.DoctorsCategories as List<DoctorsCategory> ?? new List<DoctorsCategory>();
+    var Doctors = ViewBag.Doctors as List<Doctor> ?? new List<Doctor>();
+}
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-4">
+            <div class="department-sidebar">
+                <h4><i class="fas fa-th-list me-2"></i>Danh mục khoa</h4>
+                <ul class="department-list">
+                    @foreach(var n in DoctorsCategories)
+                    {
+                        <li><a href="#" class="active"><i class="@n.Icon"></i>@n.CategoryName</a></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="department-sidebar">
+                <h4><i class="fas fa-filter me-2"></i>Lọc theo</h4>
+                <div class="mb-3">
+                    <label class="form-label">Chuyên khoa</label>
+                    <select class="form-select form-select-sm">
+                        <option selected>Tất cả chuyên khoa</option>
+                        <option>Tim mạch</option>
+                        <option>Thần kinh</option>
+                        <option>Chấn thương</option>
+                        <option>Nhi khoa</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Kinh nghiệm</label>
+                    <select class="form-select form-select-sm">
+                        <option selected>Tất cả</option>
+                        <option>Dưới 5 năm</option>
+                        <option>5-10 năm</option>
+                        <option>Trên 10 năm</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Xếp hạng</label>
+                    <select class="form-select form-select-sm">
+                        <option selected>Tất cả xếp hạng</option>
+                        <option>5 sao</option>
+                        <option>4 sao trở lên</option>
+                        <option>3 sao trở lên</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary w-100 btn-sm">Áp dụng</button>
+            </div>
+        </div>
+
+        <!-- Doctor List -->
+        <div class="col-lg-9">
+            <div class="mb-4 d-flex justify-content-between align-items-center">
+                <h4>Đội ngũ bác sĩ</h4>
+                <div class="d-flex">
+                    <select class="form-select form-select-sm me-2">
+                        <option selected>Sắp xếp theo đánh giá</option>
+                        <option>Theo tên A-Z</option>
+                        <option>Theo tên Z-A</option>
+                        <option>Theo kinh nghiệm</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="doctors-grid">
+
+                @foreach (var n in Doctors)
+                {
+                    <!-- Doctor 8 (Added) -->
+                    <div class="doctor-card">
+                        <div class="doctor-img-container">
+                            <img class="doctor-img" src="@n.Image" alt="PGS.TS Nguyễn Thị Mai">
+                        </div>
+                        <div class="doctor-info">
+                            <div class="doctor-info-top">
+                                <h3 class="doctor-name">PGS.TS @n.FullName <br /> MÃ: @n.LicenseNumber</h3>
+                                <div class="doctor-position">@n.Specialization</div>
+                                <div class="doctor-status">
+                                    <div class="status-indicator status-working">
+                                        <span class="status-dot dot-working"></span>
+                                        Chính thức (Đang làm)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
