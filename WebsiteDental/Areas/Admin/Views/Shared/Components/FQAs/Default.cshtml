@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebsiteDental.Models.Faq>
+@section style {
+    <link href="~/assets/css/style/style_FQA.css" rel="stylesheet">
+}
+<!-- FAQs Start -->
+<div class="custom-container">
+    <div class="health-faq-section">
+        <!-- Header -->
+        <div class="faq-header">
+            <div class="faq-title-container">
+                <h4 class="faq-subtitle">Câu hỏi thường gặp - FQA</h4>
+                <h1 class="faq-title">Giải đáp thắc mắc về sức khỏe</h1>
+            </div>
+            <div class="faq-decoration">
+                <div class="circle-decoration circle-1"></div>
+                <div class="circle-decoration circle-2"></div>
+                <div class="circle-decoration circle-3"></div>
+            </div>
+        </div>      
+        <!-- Scrolling Cards Section -->
+        <div class="faq-cards-row">
+            @foreach (var n in Model)
+            {
+                <!-- Card 6 -->
+                <div class="faq-card">
+                    <div class="faq-card-icon">
+                        <i class="fa fa-hospital"></i>
+                </div>
+                <div class="faq-card-content">
+                    <h3 class="faq-card-title">@n.Question</h3>
+                    <div class="faq-card-body">
+                            <p style="color: #0a4776;" > @n.Answer</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        <!-- Contact Button -->
+        <div class="text-center my-5">
+            <p>Bạn cần tư vấn trực tiếp về vấn đề sức khỏe?</p>
+            <button class="contact-button">Liên hệ tư vấn ngay</button>
+        </div>
+    </div>
+</div>
+<!-- FAQs End -->

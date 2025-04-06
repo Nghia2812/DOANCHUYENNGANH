@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebsiteDental.Models.Service>
+@section style {
+<link href="~/assets/css/style/style_Service.css" rel="stylesheet">
+}
+
+<div class="container">
+    <div class="header">
+        <h1>DỊCH VỤ NHA KHOA LTN-DENTAL</h1>
+        <p>Chăm sóc nụ cười - Nâng cao chất lượng cuộc sống</p>
+    </div>
+
+    <!-- Thêm gợi ý cuộn ngang -->
+    <div class="scroll-hint">
+        <span>Vuốt sang để xem thêm</span>
+        <i class="fas fa-arrow-right"></i>
+    </div>
+
+    <div class="services-wrapper">
+        <div class="services-container">
+
+
+            @foreach (var n in Model)
+
+            {
+                <!-- Dịch vụ 8 -->
+                <div class="service-card">
+                    <div class="service-image">
+                    <img src="@n.Image" alt="Chăm sóc răng trẻ em">
+                    <div class="logo">
+                        <img src="/assets/img/logo.jpg" alt="Logo Thúy Đức">
+                    </div>
+                    <div class="service-label">
+                            <h2 style="color: white">DỊCH VỤ</h2>
+                        <h3>@n.ServiceName</h3>
+                        <p style="color: white !important">Tại nha khoa LTN-DENTAL</p>
+                    </div>
+                </div>
+                <div class="service-content">
+                  @*   <h3 class="service-title">Chăm sóc răng trẻ em</h3> *@
+                    <p class="service-description">
+                      @n.Description
+                    </p>
+                  @*   <a href="#" class="view-details">
+                        Xem chi tiết
+                        <i class="fas fa-long-arrow-alt-right"></i>
+                    </a> *@
+                        <a asp-controller="Services" asp-action="DetailServices" asp-route-id="@n.Id" class="view-details">
+                            Xem chi tiết
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                        </a>
+
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+</div>
+<script>
+    // Script được đơn giản hóa vì không cần các chức năng pagination và điều hướng nữa
+    document.addEventListener('DOMContentLoaded', function() {
+        // Hiển thị hint cuộn trên mobile
+        function updateScrollHint() {
+            const scrollHint = document.querySelector('.scroll-hint');
+            if (window.innerWidth <= 767) {
+                scrollHint.style.display = 'flex';
+            } else {
+                scrollHint.style.display = 'none';
+            }
+        }
+
+        // Cập nhật khi trang tải và khi thay đổi kích thước
+        updateScrollHint();
+        window.addEventListener('resize', updateScrollHint);
+    });
+</script>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebsiteDental.Models.BlogPost>
+
+<!-- Blog Start -->
+<div class="container-fluid blog py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">Tin Tức & Cập Nhật</h4>
+            <h1 class="display-4 mb-4">Xu Hướng & Tin Mới</h1>
+            <p class="mb-0" style="color: #0a4776;">
+                Chăm sóc răng miệng đúng cách không chỉ giúp bạn có nụ cười đẹp mà còn góp phần bảo vệ sức khỏe toàn diện. Theo các chuyên gia nha khoa, việc vệ sinh răng miệng đúng cách, kết hợp khám răng định kỳ có thể giảm nguy cơ sâu răng, viêm nướu và các bệnh lý nguy hiểm như viêm nha chu.
+            </p>
+        </div>
+
+        <div class="row g-2">
+            @foreach (var n in Model)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-delay="0.6s">
+                    <div class="blog-item h-100">
+                        <div class="blog-img">
+                            <img src="@n.FeaturedImage" class="img-fluid rounded-top w-100" alt="">
+                            <div class="blog-categiry py-1 px-2">
+                                <span class="small">Business</span>
+                            </div>
+                        </div>
+                        <div class="blog-content p-3">
+                            <div class="blog-comment d-flex justify-content-between mb-2">
+                                <div style="color:#2d6da3" class="small"><span class="fa fa-user text-primary"></span> Martin.C</div>
+                                <div style="color:#2d6da3" class="small">
+                                    <span class="fa fa-calendar text-primary"></span>
+                                    @(n.CreatedAt.HasValue? n.CreatedAt.Value.ToString("dd-MM-yyyy") : "Không có ngày")
+                                </div>
+                                <div style="color:#2d6da3" class="small"><span class="fa fa-comment-alt text-primary"></span>@n.ViewCount</div>
+                            </div>
+                            <a href="#" class="h5 d-inline-block mb-2">@n.Title</a>
+                            <p class="mb-2 small" style="color: #0a4776;">@(n.Content.Length > 100 ? n.Content.Substring(0, 100) + "..." : n.Content)</p>
+                            <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@n.Id" class="btn p-0 small">
+                                ĐỌC THÊM <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+ 
+    </div>
+</div>
+<!-- Blog End -->

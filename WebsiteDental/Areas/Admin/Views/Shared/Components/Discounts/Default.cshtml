@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebsiteDental.Models.Discount>
+<!-- Discounts Start -->
+<div class="container-fluid feature bg-light py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">Khuyễn Mãi Độc Quyền</h4>
+            <h1 class="display-4 mb-4">"Hãy làm đẹp cho chính mình để tự tin toả sáng."</h1>
+            <p class="mb-0" style="color: #0a4776;">
+                Nhằm mang đến dịch vụ chăm sóc răng miệng tốt nhất với chi phí hợp lý, phòng khám răng hàm mặt của chúng tôi thường xuyên triển khai các gói khuyến mãi hấp dẫn dành cho khách hàng. Hiện tại, phòng khám đang có chương trình giảm giá lên đến 30% cho các dịch vụ tẩy trắng răng, niềng răng và cạo vôi răng trong tháng này.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="medcheck-container-wrapper" id="medcheck-wrapper">
+    <div class="medcheck-container" id="medcheck-packages">
+
+        @foreach (var n in Model)
+        {
+            <!-- Package 5 -->
+            <div class="medcheck-card" id="medcheck-package5">
+                <div class="medcheck-image">
+                <div class="medcheck-discount-badge">@n.DiscountPercentage</div>
+                <div class="medcheck-women-day-tag">LTN-Dental</div>
+                <img src="@n.ImageUrl" alt="Khám tim mạch">
+                <div class="medcheck-price-tag">@n.OriginalPrice</div>
+            </div>
+            <div class="medcheck-content">
+                <h3 class="medcheck-title">@n.DiscountCode</h3>
+                <div class="medcheck-price-container">
+                    <span class="medcheck-current-price">@n.OriginalPrice</span>
+                    <span class="medcheck-original-price">@n.FinalPrice</span>
+                </div>
+                <div class="medcheck-expiry-date">Từ @n.StartDate đến: @n.EndDate</div>
+                    <a href="/ContactForms" class="medcheck-hotline">Hotline đặt hẹn</a>
+
+                <div class="medcheck-phone-number">0835731781</div>
+                <div class="medcheck-type">Gói khám chuyên sâu</div>
+            </div>
+        </div>
+
+        }
+        <div class="medcheck-container-wrapper">
+            <div class="medcheck-container" id="medcheck-packages">
+                <!-- Các card của bạn vẫn giữ nguyên -->
+                <div class="medcheck-card" id="medcheck-package5">
+                    <!-- Nội dung card -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Tùy chọn: Thêm gợi ý cuộn -->
+    <div class="scroll-hint">Cuộn ngang để xem thêm</div>
+</div>
+<!-- Discounts End -->
