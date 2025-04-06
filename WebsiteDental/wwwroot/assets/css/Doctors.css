@@ -227,3 +227,103 @@
             height: 3px;
             background-color: var(--accent-color);
         }
+/* CSS cho phần quảng cáo sidebar */
+.department-sidebar {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.advertisement-sidebar h4 {
+    color: #2b4a9c;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.sidebar-ad {
+    transition: all 0.3s ease;
+}
+
+    .sidebar-ad:hover {
+        transform: translateY(-5px);
+    }
+
+.ad-banner {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+}
+
+.ad-title {
+    color: #145683;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.ad-description {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.ad-special {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .ad-special:before {
+        content: "HOT";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff5722;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+.ad-special-content {
+    padding: 20px 15px;
+}
+
+    .ad-special-content h5 {
+        color: #0d47a1;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .ad-special-content p {
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+.btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+}
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }

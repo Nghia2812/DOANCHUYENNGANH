@@ -39,6 +39,11 @@ app.UseAuthentication(); // Thêm dòng này nếu có hệ thống xác thực
 app.UseAuthorization();
 app.UseSession(); // Kích hoạt Session sau Authorization
 
+//dành cho Admin
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+//dành cho người dùng
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
