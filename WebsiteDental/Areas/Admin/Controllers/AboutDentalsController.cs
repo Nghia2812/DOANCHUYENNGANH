@@ -10,23 +10,22 @@ using WebsiteDental.Models;
 namespace WebsiteDental.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class MenuPagesController : Controller
+    public class AboutDentalsController : Controller
     {
         private readonly WebsiteDentalContext _context;
 
-        public MenuPagesController(WebsiteDentalContext context)
+        public AboutDentalsController(WebsiteDentalContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/MenuPages
+        // GET: Admin/AboutDentals
         public async Task<IActionResult> Index()
         {
-            var websiteDentalContext = _context.MenuPages.Include(m => m.Parent);
-            return View(await websiteDentalContext.ToListAsync());
+            return View(await _context.AboutDentals.ToListAsync());
         }
 
-        // GET: Admin/MenuPages/Details/5
+        // GET: Admin/AboutDentals/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var menuPage = await _context.MenuPages
-                .Include(m => m.Parent)
+            var aboutDental = await _context.AboutDentals
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (menuPage == null)
+            if (aboutDental == null)
             {
                 return NotFound();
             }
 
-            return View(menuPage);
+            return View(aboutDental);
         }
 
-        // GET: Admin/MenuPages/Create
+        // GET: Admin/AboutDentals/Create
         public IActionResult Create()
         {
-            ViewData["ParentId"] = new SelectList(_context.MenuPages, "Id", "Id");
             return View();
         }
 
-        // POST: Admin/MenuPages/Create
+        // POST: Admin/AboutDentals/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PageName,Url,Position,IsActive,ParentId")] MenuPage menuPage)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content,Description,IconPath,ImagePath,StatValue1,StatLabel1,CreatedDate,UpdatedDate,IsActive")] AboutDental aboutDental)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(menuPage);
+                _context.Add(aboutDental);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentId"] = new SelectList(_context.MenuPages, "Id", "Id", menuPage.ParentId);
-            return View(menuPage);
+            return View(aboutDental);
         }
 
-        // GET: Admin/MenuPages/Edit/5
+        // GET: Admin/AboutDentals/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var menuPage = await _context.MenuPages.FindAsync(id);
-            if (menuPage == null)
+            var aboutDental = await _context.AboutDentals.FindAsync(id);
+            if (aboutDental == null)
             {
                 return NotFound();
             }
-            ViewData["ParentId"] = new SelectList(_context.MenuPages, "Id", "Id", menuPage.ParentId);
-            return View(menuPage);
+            return View(aboutDental);
         }
 
-        // POST: Admin/MenuPages/Edit/5
+        // POST: Admin/AboutDentals/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PageName,Url,Position,IsActive,ParentId")] MenuPage menuPage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content,Description,IconPath,ImagePath,StatValue1,StatLabel1,CreatedDate,UpdatedDate,IsActive")] AboutDental aboutDental)
         {
-            if (id != menuPage.Id)
+            if (id != aboutDental.Id)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace WebsiteDental.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(menuPage);
+                    _context.Update(aboutDental);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MenuPageExists(menuPage.Id))
+                    if (!AboutDentalExists(aboutDental.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentId"] = new SelectList(_context.MenuPages, "Id", "Id", menuPage.ParentId);
-            return View(menuPage);
+            return View(aboutDental);
         }
 
-        // GET: Admin/MenuPages/Delete/5
+        // GET: Admin/AboutDentals/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,38 +124,34 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var menuPage = await _context.MenuPages
-                .Include(m => m.Parent)
+            var aboutDental = await _context.AboutDentals
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (menuPage == null)
+            if (aboutDental == null)
             {
                 return NotFound();
             }
 
-            return View(menuPage);
+            return View(aboutDental);
         }
 
-        // POST: Admin/MenuPages/Delete/5
+        // POST: Admin/AboutDentals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var menuPage = await _context.MenuPages.FindAsync(id);
-            if (menuPage != null)
+            var aboutDental = await _context.AboutDentals.FindAsync(id);
+            if (aboutDental != null)
             {
-                _context.MenuPages.Remove(menuPage);
+                _context.AboutDentals.Remove(aboutDental);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MenuPageExists(int id)
+        private bool AboutDentalExists(int id)
         {
-            return _context.MenuPages.Any(e => e.Id == id);
+            return _context.AboutDentals.Any(e => e.Id == id);
         }
-
-       
-
     }
 }

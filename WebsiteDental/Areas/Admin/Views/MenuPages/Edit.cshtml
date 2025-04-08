@@ -3,122 +3,54 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<style>
-    body {
-        background-color: #fff !important;
-    }
+<h1 class="text-center">Chỉnh sửa Menu</h1>
 
-    .content-wrapper {
-        margin-left: 240px; /* Adjust this value based on your sidebar width */
-        padding: 20px;
-    }
+<div class="card shadow p-4 mt-3">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" asp-for="Id" />
 
-    .form-container {
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        padding: 25px;
-        margin-top: 20px;
-    }
-
-    .page-title {
-        color: #1e3a8a;
-        margin-bottom: 5px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-control {
-        border-radius: 4px;
-        border: 1px solid #ced4da;
-    }
-
-        .form-control:focus {
-            border-color: #80bdff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-
-    .btn-primary {
-        background-color: #1e3a8a;
-        border: none;
-        padding: 8px 20px;
-    }
-
-        .btn-primary:hover {
-            background-color: #0e2d73;
-        }
-
-    .back-link {
-        color: #1e3a8a;
-        text-decoration: none;
-        font-weight: 500;
-        display: inline-block;
-        margin-top: 15px;
-    }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-</style>
-
-<div class="content-wrapper">
-    <div class="container">
-   
-        <h4>MenuPage</h4>
-        <hr />
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="form-container">
-                    <form asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="Id" />
-
-                        <div class="form-group">
-                            <label asp-for="PageName" class="control-label">Tiêu đề</label>
-                            <input asp-for="PageName" class="form-control" />
-                            <span asp-validation-for="PageName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="Url" class="control-label">Đường dẫn</label>
-                            <input asp-for="Url" class="form-control" />
-                            <span asp-validation-for="Url" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="Position" class="control-label">Vị trí</label>
-                            <input asp-for="Position" class="form-control" type="number" />
-                            <span asp-validation-for="Position" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="IsActive" class="control-label">Trạng thái</label>
-                            <select asp-for="IsActive" class="form-control">
-                                <option value="true">Kích hoạt</option>
-                                <option value="false">Không kích hoạt</option>
-                            </select>
-                            <span asp-validation-for="IsActive" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="ParentId" class="control-label">Menu cha</label>
-                            <select asp-for="ParentId" class="form-control" asp-items="ViewBag.ParentId">
-                                <option value="">-- Chọn menu cha --</option>
-                            </select>
-                            <span asp-validation-for="ParentId" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group text-center">
-                            <input type="submit" value="Lưu" class="btn btn-primary" />
-                        </div>
-                    </form>
+                <div class="mb-3">
+                    <label asp-for="PageName" class="form-label fw-bold"></label>
+                    <input asp-for="PageName" class="form-control" />
+                    <span asp-validation-for="PageName" class="text-danger"></span>
                 </div>
-                <div class="text-center">
-                    <a asp-action="Index" class="back-link">Quay lại</a>
+
+                <div class="mb-3">
+                    <label asp-for="Url" class="form-label fw-bold"></label>
+                    <input asp-for="Url" class="form-control" />
+                    <span asp-validation-for="Url" class="text-danger"></span>
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label asp-for="Position" class="form-label fw-bold"></label>
+                    <input asp-for="Position" class="form-control" />
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ParentId" class="form-label fw-bold"></label>
+                    <select asp-for="ParentId" class="form-control" asp-items="ViewBag.ParentId"></select>
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="IsActive" class="form-label fw-bold">Trạng thái</label>
+                    <select asp-for="IsActive" class="form-control">
+                        <option value="">Kích hoạt</option>
+                        <option value="">Không kích hoạt</option>
+                    </select>
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

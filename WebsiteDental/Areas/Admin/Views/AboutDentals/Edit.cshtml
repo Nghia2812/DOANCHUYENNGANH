@@ -1,0 +1,143 @@
+﻿@model WebsiteDental.Models.AboutDental
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body{
+        background-color: white;
+    }
+    .admin-content {
+        margin-left: 220px; /* Đẩy nội dung sang phải để tránh thanh menu */
+    }
+
+    @@media (max-width: 768px) {
+        .admin-content
+
+    {
+        margin-left: 0;
+    }
+
+    }
+</style>
+
+<div class="admin-content">
+    <div class="container-fluid py-3">
+        <div class="row">
+            <div class="col-md-10 col-lg-9 mx-auto">
+                <div class="card">
+                        <div style="background-color: #2A3F54 !important; " class="card-header bg-primary text-white">
+                            <h4  class="mb-0">Edit About Dental</h4>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="Edit" class="border p-3">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="Title" class="form-label fw-bold">Tiêu đề</label>
+                                        <input asp-for="Title" class="form-control" />
+                                        <span asp-validation-for="Title" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="Content" class="form-label fw-bold">Nội dung</label>
+                                        <textarea asp-for="Content" class="form-control" rows="3"></textarea>
+                                        <span asp-validation-for="Content" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="Description" class="form-label fw-bold">Mô tả</label>
+                                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="IconPath" class="form-label fw-bold">Icon</label>
+                                        <input asp-for="IconPath" class="form-control" />
+                                        <span asp-validation-for="IconPath" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="ImagePath" class="form-label fw-bold">Ảnh</label>
+                                        <input asp-for="ImagePath" class="form-control" />
+                                        <span asp-validation-for="ImagePath" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="StatValue1" class="form-label fw-bold">Giá trị thống kê</label>
+                                        <input asp-for="StatValue1" class="form-control" />
+                                        <span asp-validation-for="StatValue1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="StatLabel1" class="form-label fw-bold">Nhãn thống kê</label>
+                                        <input asp-for="StatLabel1" class="form-control" />
+                                        <span asp-validation-for="StatLabel1" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="CreatedDate" class="form-label fw-bold">Ngày tạo</label>
+                                        <input asp-for="CreatedDate" class="form-control" />
+                                        <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group border-bottom pb-2">
+                                        <label asp-for="UpdatedDate" class="form-label fw-bold">Ngày cập nhật</label>
+                                        <input asp-for="UpdatedDate" class="form-control" />
+                                        <span asp-validation-for="UpdatedDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group border-bottom pb-2">
+                                        <div class="form-check">
+                                            <input asp-for="IsActive" class="form-check-input" />
+                                            <label asp-for="IsActive" class="form-check-label fw-bold"></label>
+                                            <span asp-validation-for="IsActive" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 d-flex justify-content-between">
+                                    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+                                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

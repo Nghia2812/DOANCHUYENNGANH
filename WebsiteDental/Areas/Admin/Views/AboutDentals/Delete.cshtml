@@ -1,0 +1,147 @@
+﻿@model WebsiteDental.Models.AboutDental
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body{
+        background-color: white;
+    }
+    .content-wrapper {
+        margin-left: 220px;
+    }
+
+    @@media (max-width: 768px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="container-fluid py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-danger">                
+                    <div class="card-body">
+                            <div style="background-color: #e05c69 !important;" class="alert alert-warning">
+                            <h5 class="alert-heading">Bạn có chắc chắn muốn xóa mục này?</h5>
+                            <p>Hành động này không thể hoàn tác sau khi thực hiện.</p>
+                        </div>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th class="bg-light" style="width: 25%;">
+                                            @Html.DisplayNameFor(model => model.Title)
+                                        </th>
+                                        <td style="width: 75%;">
+                                            @Html.DisplayFor(model => model.Title)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.Content)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Content)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.Description)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Description)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.IconPath)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.IconPath)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.ImagePath)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ImagePath)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.StatValue1)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.StatValue1)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.StatLabel1)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.StatLabel1)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.CreatedDate)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.CreatedDate)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.UpdatedDate)
+                                        </th>
+                                        <td>
+                                            @Html.DisplayFor(model => model.UpdatedDate)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">
+                                            @Html.DisplayNameFor(model => model.IsActive)
+                                        </th>
+                                        <td>
+                                            @if (Model.IsActive == true)
+                                            {
+                                                <span class="badge bg-success">Hoạt động</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Không hoạt động</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <form asp-action="Delete" class="d-flex gap-2 w-100">
+                            <input type="hidden" asp-for="Id" />
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Quay lại danh sách
+                            </a>
+                            <div class="ms-auto">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Xác nhận xóa
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

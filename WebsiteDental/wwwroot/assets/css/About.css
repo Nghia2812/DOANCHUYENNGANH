@@ -215,3 +215,115 @@ footer {
 }
 
 */
+.kim-dental-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.kim-title {
+    text-align: center;
+    color: #2d6da3;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.kim-info-box {
+    background-color: #0072b5;
+    color: white;
+    padding: 25px 30px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+
+    .kim-info-box p {
+        margin: 0;
+        line-height: 1.6;
+    }
+
+.kim-highlight {
+    font-weight: 700;
+    color: white
+}
+
+.kim-description {
+    margin-bottom: 40px;
+}
+
+    .kim-description p {
+        color: #555;
+        line-height: 1.7;
+        font-size: 1.05rem;
+    }
+
+.kim-board-intro {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 40px 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.kim-board-title {
+    border: 2px solid #f7b731;
+    border-radius: 50px;
+    padding: 15px 25px;
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+    .kim-board-title h2 {
+        color: #f7b731;
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.75rem;
+    }
+
+.kim-board-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.kim-text-content {
+    flex: 1;
+    min-width: 300px;
+    text-align: left;
+}
+
+    .kim-text-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+.kim-image-gallery {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    min-width: 280px;
+}
+
+.image-item {
+    flex: 1;
+}
+
+    .image-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+@media (max-width: 768px) {
+    .kim-board-details {
+        flex-direction: column;
+    }
+
+    .kim-text-content, .kim-image-gallery {
+        width: 100%;
+    }
+}

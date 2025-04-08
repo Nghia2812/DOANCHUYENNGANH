@@ -1,0 +1,138 @@
+﻿@model IEnumerable<WebsiteDental.Models.AboutDental>
+@{
+    ViewData["Title"] = "Quản lý Thông tin Nha khoa";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* Main content spacing adjustment - increased margin */
+    .container-fluid {
+        margin-left: 250px !important; /* Increased from 220px for more space */
+        width: calc(100% - 250px) !important;
+        padding-right: 15px !important;
+        padding-left: 15px !important; /* Added left padding for inner spacing */
+    }
+
+    /* Fix header alignment */
+    .d-flex.justify-content-between {
+        margin-top: 10px;
+        padding-right: 10px;
+        position: relative;
+        z-index: 100;
+    }
+
+    /* Make sure the table is fully visible */
+    .card.shadow-sm {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Button styling */
+    .btn-success {
+        margin-right: 15px;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        .container-fluid
+
+    {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 10px !important;
+    }
+
+    }
+
+    body {
+        background-color: white !important;
+    }
+</style>
+<div class="container-fluid px-2 mt-2">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5  class="text-primary"><i class=" me-1"></i>Quản lý Thông tin</h5>
+        <a asp-action="Create" class="btn btn-sm btn-success">
+            <i class=" me-1"></i>Thêm mới
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div  class="card-header py-2 bg-primary text-white">
+            <i class=" me-1"></i>
+            Danh sách thông tin
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 40px;">STT</th>
+                            <th style="width: 100px;">Mô tả</th>
+                            <th style="width: 40px;">Icon</th>
+                            <th style="width: 40px;">Ảnh</th>                                              
+                            <th style="width: 80px;">Trạng thái</th>
+                            <th style="width: 100px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int index = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@(index++)</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Description) && item.Description.Length > 30)
+                                    {
+                                        @(item.Description.Substring(0, 30) + "...")
+                                    }
+                                    else
+                                    {
+                                        @item.Description
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.IconPath))
+                                    {
+                                        <i class="@item.IconPath"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.ImagePath))
+                                    {
+                                        <img src="@item.ImagePath" alt="Image" class="img-thumbnail" style="max-width: 30px;" />
+                                    }
+                                </td>
+                              
+                             
+                                <td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="badge bg-success">Hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Ẩn</span>
+                                    }
+                                </td>
+                                <td>
+                                        <div class="d-flex" style="gap: 5px;">
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning" title="Sửa">
+                                                <i>Sửa</i>
+                                            </a>
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info" title="Chi tiết">
+                                                <i>Chi Tiết</i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Xoá">
+                                                <i>Xoá</i>
+                                            </a>
+                                        </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,106 +8,123 @@
         background-color: #fff !important;
     }
 
-    /* Added styles for proper content positioning */
-    .content-wrapper {
+    /* Renamed class for content positioning */
+    .dental-content-area {
         margin-left: 240px; /* Adjust based on your sidebar width */
         padding: 20px;
         transition: margin-left 0.3s;
     }
 
-    /* Media query moved to CSS within style tags */
-    @@media(max - width: 768px) {
-            .content-wrapper {
-                margin-left: 0;
-            }
-        }
+    /* Media query with renamed class */
+    @@media(max - width: 768px)
 
-        /* Table responsive styles */
-        .table-responsive {
-            overflow-x: auto;
-        }
+    {
+        .dental-content-area
 
-        /* Action buttons styling */
-        .btn-action {
-            margin-right: 5px;
-        }
-    </style>
-    
-           
-      
-    <!-- Added container div with proper margin -->
-    <div class="content-wrapper">
-        <div class="container-fluid">
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>Menu - <small> Hiển thị trực quan hệ thống phân cấp</small></h3>
-                            <p>
-                                <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
-                            </p>
-                        </div>
-                    </div>                  
-                    
+    {
+        margin-left: 0;
+    }
+
+    }
+
+    /* Table responsive styles */
+    .dental-table-wrapper {
+        overflow-x: auto;
+    }
+
+    /* Action buttons styling */
+    .dental-btn-action {
+        margin-right: 5px;
+    }
+
+    /* Card styling */
+    .dental-card {
+        border-radius: 8px;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    /* Page title styling */
+    .dental-page-header h3 {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .dental-page-header small {
+        color: #6c757d;
+    }
+</style>
+
+<!-- Renamed container div -->
+<div class="dental-content-area">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="dental-page-header">
+                    <div class="mb-3">
+                        <h3>Menu - <small> Hiển thị trực quan hệ thống phân cấp</small></h3>
+                        <p>
+                            <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
+                        </p>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered">
-                                    <thead class="table-light">
+        <div class="row">
+            <div class="col-12">
+                <div class="dental-card card">
+                    <div class="card-body">
+                        <div class="dental-table-wrapper">
+                            <table class="table table-striped table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Đường dẫn</th>
+                                        <th>Vị trí</th>
+                                        <th>Trạng thái</th>
+                                        <th>Menu cha</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                @{
+                                    int i = 1;
+                                }
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Tiêu đề</th>
-                                            <th>Đường dẫn</th>
-                                            <th>Vị trí</th>                                 
-                                            <th>Trạng thái</th>
-                                            <th>Menu cha</th>
-                                            <th>Hành động</th>
-                                        </tr>
-                                    </thead>
-                                    @{
-                                        int i = 1;
-                                    }
-                                    <tbody>
-                                       
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td>@(i++)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PageName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Url)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Position)</td>
-                                                
-                                                <td>
-                                                    @if (item.IsActive == true)
-                                                    {
-                                                        <span class="badge bg-success">Hoạt động</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="badge bg-danger">Tắt</span>
-                                                    }
-                                                </td>
+                                            <td>@(i++)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PageName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Url)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Position)</td>
 
-                                                
-                                                <td>@Html.DisplayFor(modelItem => item.Parent.Id)</td>
-                                                <td>
-                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary btn-action">Sửa</a>
-                                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info btn-action">Chi Tiết</a>
-                                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger btn-action">Xoá</a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                            <td>
+                                                @if (item.IsActive == true)
+                                                {
+                                                    <span class="badge bg-success">Hoạt động</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Tắt</span>
+                                                }
+                                            </td>
+
+                                            <td>@Html.DisplayFor(modelItem => item.Parent.Id)</td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary dental-btn-action">Sửa</a>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info dental-btn-action">Chi Tiết</a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger dental-btn-action">Xoá</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

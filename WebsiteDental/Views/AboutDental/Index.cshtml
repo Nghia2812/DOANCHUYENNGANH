@@ -1,6 +1,60 @@
 ﻿@section Styles {
-    <link href="~/assets/css/AboutDental.css" rel="stylesheet">
+    <link href="~/assets/css/About.css" rel="stylesheet">
 }
+@{  
+
+    // Ép kiểu dữ liệu từ ViewBag
+    var aboutDental = ViewBag.AboutDental as WebsiteDental.Models.AboutDental;
+    var imageGallery = ViewBag.ImageGallery as List<WebsiteDental.Models.ImageGallery>;
+}
+
+
+
+<div class="kim-dental-container">
+    <!-- Header Section -->
+    <h1 class="kim-title">@aboutDental?.Title</h1>
+
+    <!-- Blue Info Box -->
+    <div class="kim-info-box">
+        <p style="color: white !important">
+            <span class="kim-highlight">@aboutDental?.Content</span> 
+        </p>
+    </div>
+
+    <!-- Description Section -->
+    <div class="kim-description">
+        <p style="color: #0a4776 !important">
+            @aboutDental?.Description
+        </p>
+    </div>
+
+    <!-- Board Introduction -->
+    <div class="kim-board-intro">
+        <div class="kim-board-title">
+            <h2>GIỚI THIỆU HỘI ĐỒNG QUẢN TRỊ<br>NHA KHOA KIM</h2>
+        </div>
+
+        <div class="kim-board-details">
+            <div class="kim-text-content">
+                <p style="color: white !important">
+                    Nha Khoa Kim, hệ thống với sự đầu tư mạnh mẽ 24 triệu USD<br>
+                    từ quỹ Temasek thuộc sở hữu của Chính phủ Singapore.<br>
+                    Sự hợp tác này không chỉ khẳng định chất lượng và uy tín của<br>
+                    Nha Khoa Kim mà còn mang đến những dịch vụ nha khoa<br>
+                    hiện đại và tiết kiệm hơn khác hẳn.
+                </p>
+            </div>
+            <div class="kim-image-gallery">
+                <div class="image-item">
+                    <img src="~/assets/img/logo.jpg" alt="Nha Khoa Kim Facility">
+                </div>
+                <div class="image-item">
+                    <img src="~/assets/img/About/anh7.jpg" alt="Dental Service">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Introduction Section -->
 <section class="py-5">
