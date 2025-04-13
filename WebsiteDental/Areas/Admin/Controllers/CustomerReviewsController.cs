@@ -10,19 +10,19 @@ using WebsiteDental.Models;
 namespace WebsiteDental.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ServicesController : Controller
+    public class CustomerReviewsController : Controller
     {
         private readonly WebsiteDentalContext _context;
 
-        public ServicesController(WebsiteDentalContext context)
+        public CustomerReviewsController(WebsiteDentalContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Services
+        // GET: Admin/CustomerReviews
         public async Task<IActionResult> Index()
         {
-            var websiteDentalContext = _context.Services.Include(s => s.Category);
+            var websiteDentalContext = _context.CustomerReviews.Include(c => c.User);
             return View(await websiteDentalContext.ToListAsync());
         }
         [HttpPost]
@@ -34,7 +34,7 @@ namespace WebsiteDental.Areas.Admin.Controllers
             }
 
             // Tạo thư mục nếu chưa tồn tại
-            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/Services");
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/CustomerReviews");
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
@@ -50,12 +50,12 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 await file.CopyToAsync(stream);
             }
             // Trả về đường dẫn ảnh đúng định dạng cho web
-            string imagePath = $"/assets/img/Services/{uniqueFileName}";
+            string imagePath = $"/assets/img/CustomerReviews/{uniqueFileName}";
             // Trả về đường dẫn ảnh để lưu vào database
 
             return Ok(imagePath);
         }
-        // GET: Admin/Services/Details/5
+        // GET: Admin/CustomerReviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -63,42 +63,42 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var service = await _context.Services
-                .Include(s => s.Category)
+            var customerReview = await _context.CustomerReviews
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (service == null)
+            if (customerReview == null)
             {
                 return NotFound();
             }
 
-            return View(service);
+            return View(customerReview);
         }
 
-        // GET: Admin/Services/Create
+        // GET: Admin/CustomerReviews/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.ServiceCategories, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Admin/Services/Create
+        // POST: Admin/CustomerReviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryId,ServiceName,Description,Price,Duration,Image,DisplayOrder,CreatedAt,UpdatedAt,IsActive")] Service service)
+        public async Task<IActionResult> Create([Bind("Id,UserId,Customer,Email,Rating,Review,CreatedAt,IsActive,ImageData")] CustomerReview customerReview)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(service);
+                _context.Add(customerReview);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.ServiceCategories, "Id", "Id", service.CategoryId);
-            return View(service);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", customerReview.UserId);
+            return View(customerReview);
         }
 
-        // GET: Admin/Services/Edit/5
+        // GET: Admin/CustomerReviews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,23 +106,23 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var service = await _context.Services.FindAsync(id);
-            if (service == null)
+            var customerReview = await _context.CustomerReviews.FindAsync(id);
+            if (customerReview == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.ServiceCategories, "Id", "Id", service.CategoryId);
-            return View(service);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", customerReview.UserId);
+            return View(customerReview);
         }
 
-        // POST: Admin/Services/Edit/5
+        // POST: Admin/CustomerReviews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryId,ServiceName,Description,Price,Duration,Image,DisplayOrder,CreatedAt,UpdatedAt,IsActive")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Customer,Email,Rating,Review,CreatedAt,IsActive,ImageData")] CustomerReview customerReview)
         {
-            if (id != service.Id)
+            if (id != customerReview.Id)
             {
                 return NotFound();
             }
@@ -131,12 +131,12 @@ namespace WebsiteDental.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(service);
+                    _context.Update(customerReview);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ServiceExists(service.Id))
+                    if (!CustomerReviewExists(customerReview.Id))
                     {
                         return NotFound();
                     }
@@ -147,11 +147,11 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.ServiceCategories, "Id", "Id", service.CategoryId);
-            return View(service);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", customerReview.UserId);
+            return View(customerReview);
         }
 
-        // GET: Admin/Services/Delete/5
+        // GET: Admin/CustomerReviews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -159,35 +159,35 @@ namespace WebsiteDental.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var service = await _context.Services
-                .Include(s => s.Category)
+            var customerReview = await _context.CustomerReviews
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (service == null)
+            if (customerReview == null)
             {
                 return NotFound();
             }
 
-            return View(service);
+            return View(customerReview);
         }
 
-        // POST: Admin/Services/Delete/5
+        // POST: Admin/CustomerReviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var service = await _context.Services.FindAsync(id);
-            if (service != null)
+            var customerReview = await _context.CustomerReviews.FindAsync(id);
+            if (customerReview != null)
             {
-                _context.Services.Remove(service);
+                _context.CustomerReviews.Remove(customerReview);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ServiceExists(int id)
+        private bool CustomerReviewExists(int id)
         {
-            return _context.Services.Any(e => e.Id == id);
+            return _context.CustomerReviews.Any(e => e.Id == id);
         }
     }
 }

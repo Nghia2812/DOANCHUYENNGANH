@@ -25,6 +25,36 @@ namespace WebsiteDental.Areas.Admin.Controllers
             var websiteDentalContext = _context.Products.Include(p => p.Category);
             return View(await websiteDentalContext.ToListAsync());
         }
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Vui lòng chọn ảnh hợp lệ!");
+            }
+
+            // Tạo thư mục nếu chưa tồn tại
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/Products");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // Tạo tên file duy nhất
+            string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            // Lưu file vào thư mục
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            // Trả về đường dẫn ảnh đúng định dạng cho web
+            string imagePath = $"/assets/img/Products/{uniqueFileName}";
+            // Trả về đường dẫn ảnh để lưu vào database
+     
+            return Ok(imagePath);
+        }
 
         // GET: Admin/Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -88,11 +118,10 @@ namespace WebsiteDental.Areas.Admin.Controllers
 
         // POST: Admin/Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598. 
-        // POST: Admin/Products/Edit/5
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductName,Description,Price,Stock,Image,IsActive,Quantity,PriceIncrease,PriceDiscount,Rating,CategoryId,CreatedAt,UpdatedAt,Type")] Product product, IFormFile ImageFile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductName,Description,Price,Stock,Image,IsActive,Quantity,PriceIncrease,PriceDiscount,Rating,CategoryId,CreatedAt,UpdatedAt,Type")] Product product)
         {
             if (id != product.Id)
             {
@@ -103,41 +132,6 @@ namespace WebsiteDental.Areas.Admin.Controllers
             {
                 try
                 {
-                    // Kiểm tra nếu người dùng có chọn file ảnh mới
-                    if (ImageFile != null && ImageFile.Length > 0)
-                    {
-                        // Đặt tên cho file ảnh mới
-                        var fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName) + DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(ImageFile.FileName);
-                        var uploadDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "assets", "img", "Products"); // Đường dẫn thư mục chứa ảnh
-                        var filePath = Path.Combine(uploadDir, fileName);
-
-                        // Kiểm tra nếu thư mục chưa tồn tại thì tạo mới
-                        if (!Directory.Exists(uploadDir))
-                        {
-                            Directory.CreateDirectory(uploadDir);
-                        }
-
-                        // Xóa ảnh cũ nếu có
-                        if (!string.IsNullOrEmpty(product.Image))
-                        {
-                            var oldFilePath = Path.Combine(uploadDir, product.Image);
-                            if (System.IO.File.Exists(oldFilePath))
-                            {
-                                System.IO.File.Delete(oldFilePath);
-                            }
-                        }
-
-                        // Lưu ảnh mới vào thư mục
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await ImageFile.CopyToAsync(stream);
-                        }
-
-                        // Cập nhật tên file ảnh vào sản phẩm
-                        product.Image = fileName;
-                    }
-
-                    // Cập nhật thông tin sản phẩm trong cơ sở dữ liệu
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
@@ -152,13 +146,12 @@ namespace WebsiteDental.Areas.Admin.Controllers
                         throw;
                     }
                 }
-
                 return RedirectToAction(nameof(Index));
             }
-
             ViewData["CategoryId"] = new SelectList(_context.ProductCategories, "Id", "Id", product.CategoryId);
             return View(product);
         }
+
         // GET: Admin/Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

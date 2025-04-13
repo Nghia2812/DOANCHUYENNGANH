@@ -1,7 +1,7 @@
-﻿@model WebsiteDental.Models.Product
+﻿@model WebsiteDental.Models.CustomerReview
 
 @{
-    ViewData["Title"] = "Xóa sản phẩm";
+    ViewData["Title"] = "Delete";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -40,14 +40,14 @@
         border-left: 4px solid #dc3545;
     }
 
-    .product-info {
+    .review-info {
         display: flex;
         margin-bottom: 20px;
         padding-bottom: 20px;
         border-bottom: 1px solid #f0f0f0;
     }
 
-    .product-image {
+    .review-image {
         width: 120px;
         height: 120px;
         border-radius: 5px;
@@ -56,24 +56,24 @@
         border: 1px solid #e0e0e0;
     }
 
-    .product-header {
+    .review-header {
         flex: 1;
     }
 
-    .product-name {
+    .customer-name {
         font-size: 22px;
         font-weight: 600;
         color: #1a3b5d;
         margin-bottom: 5px;
     }
 
-    .product-type {
+    .customer-email {
         font-size: 16px;
         color: #666;
         margin-bottom: 10px;
     }
 
-    .product-status {
+    .review-status {
         display: inline-block;
         padding: 3px 8px;
         border-radius: 12px;
@@ -206,11 +206,11 @@
         padding: 10px;
     }
 
-    .product-info {
+    .review-info {
         flex-direction: column;
     }
 
-    .product-image {
+    .review-image {
         margin-right: 0;
         margin-bottom: 15px;
         width: 100px;
@@ -222,42 +222,53 @@
     }
 
     }
+
+        .product-image {
+            width: 200px; /* Hoặc độ rộng cụ thể ví dụ: 300px */
+            height: 200px; /* Để ảnh tự động điều chỉnh chiều cao */
+            border-radius: 10px; /* Bo góc ảnh nếu muốn */
+            object-fit: cover; /* Giữ tỷ lệ khung hình nhưng cắt bớt nếu cần */
+        }
+
 </style>
 
 <div class="content-wrapper">
     <div class="page-intro">
-        <h4>Xóa sản phẩm</h4>
-        <p><i class="fa fa-exclamation-triangle"></i> Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+        <h4>Delete</h4>
+        <p><i class="fa fa-exclamation-triangle"></i> Are you sure you want to delete this?</p>
     </div>
 
     <div class="delete-container">
-        <!-- Thông tin tổng quan của sản phẩm -->
-        <div class="product-info">
-            <div class="product-image-container">
-                @if (!string.IsNullOrEmpty(Model.Image))
-                {
-                    <img src="@Model.Image" alt="@Model.ProductName" class="product-image" />
-                }
-                else
-                {
-                    <div class="product-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
-                        <i class="fa fa-shopping-bag" style="font-size: 40px; color: #aaa;"></i>
-                    </div>
-                }
-            </div>
-            <div class="product-header">
-                <h2 class="product-name">@Model.ProductName</h2>
-                <div class="product-type">@Model.Type</div>
+        <!-- Thông tin tổng quan của review -->
+        <div class="review-info">
+                <div class="review-image-container">
+                    @if (Model.ImageData != null && Model.ImageData.Length > 0)
+                    {
+                        <img src="@Model.ImageData" alt="Product Image" class="product-image" />
+
+                    }
+                    else
+                    {
+                        <div class="review-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                            <i class="fa fa-comment" style="font-size: 40px; color: #aaa;"></i>
+                        </div>
+                    }
+                </div>
+
+
+            <div class="review-header">
+                <h2 class="customer-name">@Model.Customer</h2>
+                <div class="customer-email">@Model.Email</div>
                 @if (Model.IsActive == true)
                 {
-                    <div class="product-status status-active">Còn hàng</div>
+                    <div class="review-status status-active">Active</div>
                 }
                 else
                 {
-                    <div class="product-status status-inactive">Hết hàng</div>
+                    <div class="review-status status-inactive">Inactive</div>
                 }
-                <div class="product-price">
-                    <span>Giá: <strong>@string.Format("{0:N0} đ", Model.Price)</strong></span>
+                <div class="review-rating">
+                    <span>Rating: <strong>@Model.Rating <i class="fa fa-star text-warning"></i></strong></span>
                 </div>
             </div>
         </div>
@@ -265,53 +276,53 @@
         <!-- Cảnh báo xóa -->
         <div class="warning-box">
             <div class="warning-title">
-                <i class="fa fa-exclamation-circle"></i> Lưu ý quan trọng
+                <i class="fa fa-exclamation-circle"></i> Important Note
             </div>
-            <p>Hành động này không thể hoàn tác. Khi xóa sản phẩm, tất cả dữ liệu liên quan sẽ bị xóa khỏi hệ thống.</p>
+            <p>This action cannot be undone. When you delete this review, all related data will be permanently removed from the system.</p>
         </div>
 
-        <!-- Thông tin chi tiết sản phẩm -->
+        <!-- Thông tin chi tiết review -->
         <div class="details-section">
-            <h3 class="section-title">Thông tin sản phẩm</h3>
+            <h3 class="section-title">Review Details</h3>
             <div class="info-grid">
                 <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Price)</div>
-                    <div class="info-value">@string.Format("{0:N0} đ", Model.Price)</div>
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Customer)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Customer)</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Stock)</div>
-                    <div class="info-value">@Model.Stock</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Quantity)</div>
-                    <div class="info-value">@Model.Quantity</div>
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Email)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Email)</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">@Html.DisplayNameFor(model => model.Rating)</div>
-                    <div class="info-value">@Model.Rating <i class="fa fa-star text-warning"></i></div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Rating) <i class="fa fa-star text-warning"></i></div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Type)</div>
-                    <div class="info-value">@Model.Type</div>
+                    <div class="info-label">@Html.DisplayNameFor(model => model.CreatedAt)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.CreatedAt)</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Category)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.Category.Id)</div>
+                    <div class="info-label">@Html.DisplayNameFor(model => model.IsActive)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.IsActive)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.User)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.User.Id)</div>
                 </div>
             </div>
         </div>
 
-        <!-- Mô tả sản phẩm -->
+        <!-- Nội dung review -->
         <div class="details-section">
-            <h3 class="section-title">Mô tả sản phẩm</h3>
+            <h3 class="section-title">Review Content</h3>
             <div class="text-block">
-                @if (!string.IsNullOrEmpty(Model.Description))
+                @if (!string.IsNullOrEmpty(Model.Review))
                 {
-                    @Model.Description
+                    @Model.Review
                 }
                 else
                 {
-                    <span class="text-muted">Không có mô tả</span>
+                    <span class="text-muted">No review content</span>
                 }
             </div>
         </div>
@@ -321,10 +332,10 @@
             <input type="hidden" asp-for="Id" />
             <div class="action-buttons">
                 <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Xác nhận xóa
+                    <i class="fa fa-trash"></i> Delete
                 </button>
                 <a asp-action="Index" class="btn btn-secondary">
-                    <i class="fa fa-times"></i> Hủy bỏ
+                    <i class="fa fa-arrow-left"></i> Back to List
                 </a>
             </div>
         </form>

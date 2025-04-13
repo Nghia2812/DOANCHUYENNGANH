@@ -25,7 +25,36 @@ namespace WebsiteDental.Areas.Admin.Controllers
             var websiteDentalContext = _context.BlogPosts.Include(b => b.Author).Include(b => b.Category);
             return View(await websiteDentalContext.ToListAsync());
         }
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Vui lòng chọn ảnh hợp lệ!");
+            }
 
+            // Tạo thư mục nếu chưa tồn tại
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/BlogPost");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // Tạo tên file duy nhất
+            string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            // Lưu file vào thư mục
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            // Trả về đường dẫn ảnh đúng định dạng cho web
+            string imagePath = $"/assets/img/BlogPost/{uniqueFileName}";
+            // Trả về đường dẫn ảnh để lưu vào database
+
+            return Ok(imagePath);
+        }
         // GET: Admin/BlogPosts/Details/5
         public async Task<IActionResult> Details(int? id)
         {

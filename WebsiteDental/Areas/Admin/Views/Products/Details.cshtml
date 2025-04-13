@@ -1,103 +1,316 @@
 ﻿@model WebsiteDental.Models.Product
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<style>
+    body {
+        background-color: white;
+    }
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Stock)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Stock)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PriceIncrease)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PriceIncrease)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PriceDiscount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PriceDiscount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .product-info {
+        display: flex;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .product-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 5px;
+        object-fit: cover;
+        margin-right: 20px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .product-header {
+        flex: 1;
+    }
+
+    .product-name {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 5px;
+    }
+
+    .product-type {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .product-status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .details-section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .info-item {
+        margin-bottom: 8px;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 3px;
+    }
+
+    .info-value {
+        color: #333;
+    }
+
+    .text-block {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s;
+    }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media(max - width: 992px)
+
+    {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .product-info {
+        flex-direction: column;
+    }
+
+    .product-image {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100px;
+        height: 100px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chi tiết thông tin sản phẩm</h4>
+        <p>Xem thông tin chi tiết của sản phẩm trong hệ thống</p>
+    </div>
+
+    <div class="details-container">
+        <!-- Thông tin tổng quan của sản phẩm -->
+        <div class="product-info">
+            <div class="product-image-container">
+                @if (!string.IsNullOrEmpty(Model.Image))
+                {
+                    <img src="@Model.Image" alt="@Model.ProductName" class="product-image" />
+                }
+                else
+                {
+                    <div class="product-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                        <i class="fa fa-shopping-bag" style="font-size: 50px; color: #aaa;"></i>
+                    </div>
+                }
+            </div>
+            <div class="product-header">
+                <h2 class="product-name">@Model.ProductName</h2>
+                <div class="product-type">@Model.Type</div>
+                @if (Model.IsActive == true)
+                {
+                    <div class="product-status status-active">Còn hàng</div>
+                }
+                else
+                {
+                    <div class="product-status status-inactive">Hết hàng</div>
+                }
+                <div class="product-rating">
+                    <span style="font-weight: bold;">Đánh giá: @Model.Rating</span>
+                    <i class="fa fa-star text-warning"></i>
+                </div>
+                <div class="product-price">
+                    <span>Giá: <strong>@string.Format("{0:N0} đ", Model.Price)</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin chi tiết sản phẩm -->
+        <div class="details-section">
+            <h3 class="section-title">Thông tin sản phẩm</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Price)</div>
+                    <div class="info-value">@string.Format("{0:N0} đ", Model.Price)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Stock)</div>
+                    <div class="info-value">@Model.Stock</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Quantity)</div>
+                    <div class="info-value">@Model.Quantity</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.PriceIncrease)</div>
+                    <div class="info-value">@string.Format("{0:N0} đ", Model.PriceIncrease)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.PriceDiscount)</div>
+                    <div class="info-value">@string.Format("{0:N0} đ", Model.PriceDiscount)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Type)</div>
+                    <div class="info-value">@Model.Type</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Category)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Category.Id)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mô tả sản phẩm -->
+        <div class="details-section">
+            <h3 class="section-title">Mô tả sản phẩm</h3>
+            <div class="text-block">
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    @Model.Description
+                }
+                else
+                {
+                    <span class="text-muted">Chưa cập nhật</span>
+                }
+            </div>
+        </div>
+
+        <!-- Thông tin hệ thống -->
+        <div class="details-section">
+            <h3 class="section-title">Thông tin hệ thống</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.CreatedAt)</div>
+                    <div class="info-value"> @(Model.CreatedAt != null ? Model.CreatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.UpdatedAt)</div>
+                    <div class="info-value"> @(Model.UpdatedAt != null ? Model.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="action-buttons">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                <i class="fa fa-edit"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Quay lại danh sách
+            </a>
+        </div>
+    </div>
 </div>

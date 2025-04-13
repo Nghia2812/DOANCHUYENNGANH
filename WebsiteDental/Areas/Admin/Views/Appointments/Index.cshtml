@@ -1,0 +1,270 @@
+﻿@model IEnumerable<WebsiteDental.Models.Appointment>
+@{
+    ViewData["Title"] = "Danh sách lịch hẹn";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin */
+    }
+
+        .table-header h5 {
+            margin: 0; /* Loại bỏ margin mặc định */
+        }
+
+    .table-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px; /* Giảm padding */
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+        .compact-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table th {
+            padding: 8px; /* Giảm padding */
+            color: #495057;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            padding: 6px 8px; /* Giảm padding */
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: rgba(0,123,255,0.04);
+        }
+
+    .create-btn {
+        display: inline-block;
+        background-color: #1a3b5d;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+        .create-btn:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .action-links {
+        white-space: nowrap;
+    }
+
+        .action-links a {
+            display: inline-block;
+            margin: 0 3px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #1a3b5d;
+        }
+
+            .action-links a:hover {
+                background-color: #f0f0f0;
+            }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-confirmed {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-cancelled {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-completed {
+        background-color: #cce5ff;
+        color: #004085;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .truncate {
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý lịch hẹn khám</h4>
+        <p>Xem và quản lý các lịch hẹn khám của bệnh nhân.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h5>Danh sách lịch hẹn</h5>           
+        </div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                    <th>Tên bệnh nhân</th>
+                    <th>Số điện thoại</th>
+                    <th>Dịch vụ</th>
+                    <th>Ngày hẹn</th>
+                    <th>Thời gian</th>
+                    <th>Bác sĩ</th>
+                    <th>Trạng thái</th>
+                    <th>Ghi chú</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ServiceId)
+                        </td>
+                            <td>
+                                @(item.AppointmentDate != null ? item.AppointmentDate.Value.ToString("dd/MM/yyyy") : "Chưa đặt")
+                            </td>
+
+                        <td>
+                            @(item.StartTime?.ToString("HH:mm") ?? "--:--") - @(item.EndTime?.ToString("HH:mm") ?? "--:--")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NameDoctor)
+                        </td>
+                        <td>
+                            @{
+                                string statusClass = "status-pending";
+                                string statusText = "Chờ xác nhận";
+
+                                if (item.Status != null)
+                                {
+                                    switch (item.Status.ToLower())
+                                    {
+                                        case "confirmed":
+                                            statusClass = "status-confirmed";
+                                            statusText = "Đã xác nhận";
+                                            break;
+                                        case "cancelled":
+                                            statusClass = "status-cancelled";
+                                            statusText = "Đã hủy";
+                                            break;
+                                        case "completed":
+                                            statusClass = "status-completed";
+                                            statusText = "Hoàn thành";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            <span class="@statusClass">@statusText</span>
+                        </td>
+                        <td>
+                            <div class="truncate" title="@item.Notes">
+                                @Html.DisplayFor(modelItem => item.Notes)
+                            </div>
+                        </td>
+                        <td class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.Id" title="Chỉnh sửa">
+                                <i class="fa fa-edit"></i>
+                            </a>                       
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="Xóa">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

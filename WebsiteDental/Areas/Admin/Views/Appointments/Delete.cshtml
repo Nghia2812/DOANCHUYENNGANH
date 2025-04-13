@@ -1,0 +1,325 @@
+﻿@model WebsiteDental.Models.Appointment
+@{
+    ViewData["Title"] = "Xóa lịch hẹn";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .delete-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 15px; /* Giảm padding */
+        margin-bottom: 20px;
+    }
+
+    .delete-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+        .delete-header h5 {
+            margin: 0;
+            color: #1a3b5d;
+        }
+
+    .delete-warning {
+        background-color: #fff8f8;
+        border-left: 4px solid #dc3545;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        color: #721c24;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 5px;
+    }
+
+    .info-value {
+        margin-bottom: 15px;
+    }
+
+    .info-row {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+    .btn-outline-secondary {
+        color: #6c757d;
+        background-color: transparent;
+        border-color: #6c757d;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+        .btn-outline-secondary:hover {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-pending {
+        background-color: #fff3e0;
+        color: #e65100;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-canceled {
+        background-color: #eceff1;
+        color: #546e7a;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .message-container {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xóa lịch hẹn</h4>
+        <p>Xác nhận xóa thông tin lịch hẹn này khỏi hệ thống.</p>
+    </div>
+
+    <div class="delete-container">
+        <div class="delete-warning">
+            <h5><i class="fa fa-exclamation-triangle"></i> Cảnh báo</h5>
+            <p>Bạn có chắc chắn muốn xóa thông tin lịch hẹn này? Hành động này không thể hoàn tác.</p>
+        </div>
+
+        <div class="delete-header">
+            <h5>Thông tin chi tiết</h5>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Tên khách hàng</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.CustomerName)</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Email)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Số điện thoại</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Phone)</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Giới tính</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Sex)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Bác sĩ phụ trách</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.NameDoctor)</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Mã dịch vụ</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.ServiceId)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Ngày hẹn</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.AppointmentDate)</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Thời gian</div>
+                    <div class="info-value">
+                        @Html.DisplayFor(model => model.StartTime) - @Html.DisplayFor(model => model.EndTime)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Ngày sinh</div>
+                    <div class="info-value">
+                        @(Model.DateOfBirth != null ? Model.DateOfBirth?.ToString("dd/MM/yyyy") : "Chưa có")
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-row">
+                    <div class="info-label">Trạng thái</div>
+                    <div class="info-value">
+                        @if (Model.Status == "Pending")
+                        {
+                            <span class="status-pending">Chờ xác nhận</span>
+                        }
+                        else if (Model.Status == "Confirmed")
+                        {
+                            <span class="status-active">Đã xác nhận</span>
+                        }
+                        else if (Model.Status == "Completed")
+                        {
+                            <span class="status-inactive">Đã hoàn thành</span>
+                        }
+                        else if (Model.Status == "Cancelled")
+                        {
+                            <span class="status-canceled">Đã hủy</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.Status)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.CancellationReason))
+        {
+            <div class="info-row">
+                <div class="info-label">Lý do hủy</div>
+                <div class="message-container">
+                    @Html.DisplayFor(model => model.CancellationReason)
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Notes))
+        {
+            <div class="info-row">
+                <div class="info-label">Ghi chú</div>
+                <div class="message-container">
+                    @Html.DisplayFor(model => model.Notes)
+                </div>
+            </div>
+        }
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash"></i> Xác nhận xóa
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary ml-2">
+                <i class="fa fa-arrow-left"></i> Quay lại danh sách
+            </a>
+        </form>
+    </div>
+</div>

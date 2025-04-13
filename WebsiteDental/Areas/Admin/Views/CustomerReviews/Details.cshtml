@@ -1,0 +1,281 @@
+﻿@model WebsiteDental.Models.CustomerReview
+@{
+    ViewData["Title"] = "Chi tiết đánh giá";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 15px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #1a3b5d;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #6c757d;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .details-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+        .details-header h5 {
+            margin: 0;
+            color: #1a3b5d;
+        }
+
+    .label {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .value {
+        color: #212529;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+        padding: 8px 15px;
+        border-radius: 4px;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            border-color: #2c5282;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+            color: white;
+        }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .review-image {
+        max-width: 200px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .review-content {
+        background-color: #f8f9fa;
+        border-left: 3px solid #1a3b5d;
+        padding: 15px;
+        border-radius: 0 5px 5px 0;
+        margin-bottom: 20px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .star-rating {
+        color: #ffca28;
+        font-size: 20px;
+    }
+
+    .info-section {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .info-section-title {
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    .info-row {
+        margin-bottom: 10px;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .details-container
+
+    {
+        padding: 15px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chi tiết đánh giá khách hàng</h4>
+        <p>Xem thông tin chi tiết về đánh giá của khách hàng.</p>
+    </div>
+
+    <div class="details-container">
+        <div class="details-header">
+            <h5>Thông tin đánh giá #@Model.Id</h5>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="info-section">
+                    <div class="info-section-title">
+                        <i class="fa fa-user mr-2"></i> Thông tin khách hàng
+                    </div>
+                    <div class="row info-row">
+                        <div class="col-md-4 label">Tên khách hàng:</div>
+                        <div class="col-md-8 value">@Model.Customer</div>
+                    </div>
+                    <div class="row info-row">
+                        <div class="col-md-4 label">Email:</div>
+                        <div class="col-md-8 value">@Model.Email</div>
+                    </div>
+                    <div class="row info-row">
+                        <div class="col-md-4 label">Người dùng:</div>
+                        <div class="col-md-8 value">@Model.User.Id</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-section-title">
+                        <i class="fa fa-comment mr-2"></i> Nội dung đánh giá
+                    </div>
+                    <div class="review-content">
+                        @Model.Review
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-section">
+                    <div class="info-section-title">
+                        <i class="fa fa-info-circle mr-2"></i> Thông tin bổ sung
+                    </div>
+                    <div class="row info-row">
+                        <div class="col-md-6 label">Đánh giá:</div>
+                        <div class="col-md-6 value">
+                            <div class="star-rating">
+                                @for (int i = 1; i <= Model.Rating; i++)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                                @for (int i = (int)Model.Rating + 1; i <= 5; i++)
+                                {
+                                    <i class="fa fa-star-o"></i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row info-row">
+                        <div class="col-md-6 label">Ngày tạo:</div>
+                                <div class="col-md-6 value"> @(Model.CreatedAt.HasValue ? Model.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "")</div>
+                    </div>
+                    <div class="row info-row">
+                        <div class="col-md-6 label">Trạng thái:</div>
+                        <div class="col-md-6 value">
+                            @if (Model.IsActive == true)
+                            {
+                                <span class="status-badge status-active">Đang hiển thị</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive">Đang ẩn</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.ImageData))
+                {
+                    <div class="info-section">
+                        <div class="info-section-title">
+                            <i class="fa fa-image mr-2"></i> Hình ảnh
+                        </div>
+                        <div class="text-center">
+                            <img src="@Model.ImageData" alt="Review Image" class="review-image img-fluid" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="fa fa-edit"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Quay lại danh sách
+            </a>
+        </div>
+    </div>
+</div>

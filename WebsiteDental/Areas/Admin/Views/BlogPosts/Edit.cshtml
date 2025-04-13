@@ -289,19 +289,37 @@
             </div>
 
             <div class="form-section">
-                <div class="form-section-title">Hình ảnh đại diện</div>
-                <div class="form-group">
-                    <label asp-for="FeaturedImage" class="control-label">Đường dẫn hình ảnh</label>
-                    <input asp-for="FeaturedImage" class="form-control" placeholder="Nhập đường dẫn hoặc URL hình ảnh" />
-                    <span asp-validation-for="FeaturedImage" class="text-danger"></span>
-
-                    @* <div class="image-preview" id="imagePreview" style="@(string.IsNullOrEmpty(Model.FeaturedImage) ? "" : $"background-image: url('{Model.FeaturedImage}');")">
-                        @if (string.IsNullOrEmpty(Model.FeaturedImage))
-                        {
-                            <i class="fa fa-image"></i> <span>Xem trước hình ảnh</span>
-                        }
-                    </div> *@
-                </div>
+                    @*      Xử lý ảnh  *@
+                    
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Hình ảnh sản phẩm</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label asp-for="FeaturedImage" class="form-label fw-semibold">Image</label>
+                                            <input type="file" class="form-control" id="imageUpload" name="imageFile" />
+                                            <input type="hidden" asp-for="FeaturedImage" id="ImagePath" />
+                                            <span asp-validation-for="FeaturedImage" class="text-danger small"></span>
+                                            <div class="form-text">Select image file up to 2MB. Format: JPG, PNG</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <label class="form-label fw-semibold">Current Image</label>
+                                            <div class="image-preview border rounded p-2">
+                                                <img id="currentImage" src="@Model.FeaturedImage"
+                                                     class="img-fluid rounded" alt="Product image"
+                                                     style="height: 120px; object-fit: cover;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+               
             </div>
 
             <div class="form-section">
@@ -353,29 +371,29 @@
     </a>
 </div>
 
+    <script>
+        document.getElementById("imageUpload").addEventListener("change", function (event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("currentImage").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
 
-  @*   <script>
-        // Hiển thị xem trước hình ảnh khi nhập URL
-        $(document).ready(function () {
-            $('#FeaturedImage').on('change keyup paste', function () {
-                var imageUrl = $(this).val();
-                if (imageUrl) {
-                    $('#imagePreview').css('background-image', 'url(' + imageUrl + ')');
-                    $('#imagePreview').html('');
-                } else {
-                    $('#imagePreview').css('background-image', 'none');
-                    $('#imagePreview').html('<i class="fa fa-image"></i> <span>Xem trước hình ảnh</span>');
-                }
-            });
+                // Gửi ảnh lên server
+                let formData = new FormData();
+                formData.append("file", file);
 
-            // Hiển thị trạng thái hoạt động
-            $('#IsActive').change(function() {
-                if($(this).is(':checked')) {
-                    $(this).next().next().text('Hoạt động');
-                } else {
-                    $(this).next().next().text('Ngừng hoạt động');
-                }
-            });
+                fetch("/Admin/Products/UploadImage", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(imagePath => {
+                    document.getElementById("ImagePath").value = imagePath; // Gán đường dẫn ảnh vào input ẩn
+                })
+                .catch(error => console.error("Lỗi upload ảnh:", error));
+            }
         });
     </script>
-} *@
