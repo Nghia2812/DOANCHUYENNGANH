@@ -16,7 +16,9 @@
                 <ul class="department-list">
                     @foreach(var n in DoctorsCategories)
                     {
-                        <li><a href="#" class="active"><i class="@n.Icon"></i>@n.CategoryName</a></li>
+                        <li>
+                            <a href="@Url.Action("Index", "Doctors", new { categoryID = n.CategoryId })" class="active"><i class="@n.Icon"></i>@n.CategoryName</a>
+                        </li>
                     }
                 </ul>
             </div>

@@ -1,0 +1,265 @@
+﻿```html
+@model WebsiteDental.Models.Doctor
+
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin bác sĩ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-title {
+        margin-bottom: 15px;
+        color: #1a3b5d;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #1a3b5d;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(26, 59, 93, 0.25);
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #1a3b5d;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .form-container {
+        padding: 15px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chỉnh sửa thông tin bác sĩ</h4>
+        <p>Cập nhật chi tiết và thông tin liên hệ của bác sĩ trong hệ thống</p>
+    </div>
+
+    <div class="form-container">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label">Người dùng</label>
+                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label">Họ và tên</label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Specialization" class="control-label">Chuyên khoa</label>
+                        <input asp-for="Specialization" class="form-control" />
+                        <span asp-validation-for="Specialization" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ExperienceYears" class="control-label">Số năm kinh nghiệm</label>
+                        <input asp-for="ExperienceYears" class="form-control" />
+                        <span asp-validation-for="ExperienceYears" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label">Số điện thoại</label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="LicenseNumber" class="control-label">Số giấy phép</label>
+                        <input asp-for="LicenseNumber" class="form-control" />
+                        <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DoctorNumber" class="control-label">Mã bác sĩ</label>
+                        <input asp-for="DoctorNumber" class="form-control" />
+                        <span asp-validation-for="DoctorNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ConsultationFee" class="control-label">Phí tư vấn</label>
+                        <input asp-for="ConsultationFee" class="form-control" />
+                        <span asp-validation-for="ConsultationFee" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Rating" class="control-label">Đánh giá</label>
+                        <input asp-for="Rating" class="form-control" />
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label">Hình ảnh</label>
+                        <input asp-for="Image" class="form-control" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Biography" class="control-label">Tiểu sử</label>
+                        <textarea asp-for="Biography" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Biography" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label">Mô tả</label>
+                        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label">Danh mục</label>
+                        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IsActive" class="control-label">Trạng thái hoạt động</label>
+                        <select asp-for="IsActive" class="form-control">
+                            <option value="true">Hoạt động</option>
+                            <option value="false">Ngừng hoạt động</option>
+                        </select>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CreatedAt" class="control-label">Ngày tạo</label>
+                        <input asp-for="CreatedAt" class="form-control" />
+                        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UpdatedAt" class="control-label">Ngày cập nhật</label>
+                        <input asp-for="UpdatedAt" class="form-control" />
+                        <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu thay đổi
+                </button>
+                <a asp-action="Index" class="back-link">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

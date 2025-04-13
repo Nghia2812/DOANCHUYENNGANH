@@ -1,6 +1,7 @@
-﻿@model WebsiteDental.Models.MenuPage
+﻿@model WebsiteDental.Models.Service
+
 @{
-    ViewData["Title"] = "Xóa Menu";
+    ViewData["Title"] = "Xóa dịch vụ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -61,43 +62,40 @@
         color: #555;
     }
 
-    .menu-info {
+    .service-info {
         display: flex;
         margin-bottom: 20px;
         padding-bottom: 20px;
         border-bottom: 1px solid #f0f0f0;
     }
 
-    .menu-icon {
-        width: 60px;
-        height: 60px;
+    .service-image {
+        width: 80px;
+        height: 80px;
         border-radius: 5px;
+        object-fit: cover;
         margin-right: 20px;
         border: 1px solid #e0e0e0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #f0f0f0;
     }
 
-    .menu-header {
+    .service-header {
         flex: 1;
     }
 
-    .menu-name {
+    .service-name {
         font-size: 20px;
         font-weight: 600;
         color: #1a3b5d;
         margin-bottom: 5px;
     }
 
-    .menu-url {
+    .service-category {
         font-size: 14px;
         color: #666;
         margin-bottom: 5px;
     }
 
-    .menu-status {
+    .service-status {
         display: inline-block;
         padding: 3px 8px;
         border-radius: 12px;
@@ -190,11 +188,11 @@
         padding: 10px;
     }
 
-    .menu-info {
+    .service-info {
         flex-direction: column;
     }
 
-    .menu-icon {
+    .service-image {
         margin-right: 0;
         margin-bottom: 15px;
     }
@@ -213,8 +211,8 @@
 
 <div class="content-wrapper">
     <div class="page-intro">
-        <h4>Xác nhận xóa menu</h4>
-        <p>Xem lại và xác nhận thông tin menu trước khi xóa khỏi hệ thống</p>
+        <h4>Xác nhận xóa dịch vụ</h4>
+        <p>Xem lại và xác nhận thông tin dịch vụ trước khi xóa khỏi hệ thống</p>
     </div>
 
     <div class="delete-container">
@@ -223,72 +221,85 @@
                 <i class="fa fa-exclamation-triangle"></i>
                 Cảnh báo
             </div>
-            <p class="alert-message">Bạn đang chuẩn bị xóa menu này khỏi hệ thống. Hành động này không thể hoàn tác.</p>
+            <p class="alert-message">Bạn đang chuẩn bị xóa dịch vụ này khỏi hệ thống. Hành động này không thể hoàn tác.</p>
         </div>
 
-        <!-- Thông tin tổng quan của menu -->
-        <div class="menu-info">
-            <div class="menu-icon">
-                <i class="fa fa-bars" style="font-size: 24px; color: #1a3b5d;"></i>
-            </div>
-            <div class="menu-header">
-                <h2 class="menu-name">@Model.PageName</h2>
-                <div class="menu-url">@Model.Url</div>
-                @if (Model.IsActive == true)
+        <!-- Thông tin tổng quan của dịch vụ -->
+        <div class="service-info">
+            <div class="service-image-container">
+                @if (!string.IsNullOrEmpty(Model.Image))
                 {
-                    <div class="menu-status status-active">Hoạt động</div>
+                    <img src="@Model.Image" alt="@Model.ServiceName" class="service-image" />
                 }
                 else
                 {
-                    <div class="menu-status status-inactive">Ngừng hoạt động</div>
+                    <div class="service-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                        <i class="fa fa-briefcase-medical" style="font-size: 30px; color: #aaa;"></i>
+                    </div>
                 }
-                <div>
-                    <small>Vị trí: <strong>@Model.Position</strong></small>
-                </div>
+            </div>
+            <div class="service-header">
+                <h2 class="service-name">@Model.ServiceName</h2>
+                <div class="service-category">@(Model.Category != null ? Model.Category.Id : "Không có danh mục")</div>
+                @if (Model.IsActive == true)
+                {
+                    <div class="service-status status-active">Hoạt động</div>
+                }
+                else
+                {
+                    <div class="service-status status-inactive">Ngừng hoạt động</div>
+                }
             </div>
         </div>
 
         <!-- Thông tin tóm tắt -->
         <div class="info-summary">
             <div class="info-item">
-                <div class="info-label">Tên Trang</div>
-                <div class="info-value">@Model.PageName</div>
+                <div class="info-label">@Html.DisplayNameFor(model => model.ServiceName)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.ServiceName)</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Đường Dẫn</div>
-                <div class="info-value">@Model.Url</div>
+                <div class="info-label">@Html.DisplayNameFor(model => model.Description)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.Description)</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Vị Trí</div>
-                <div class="info-value">@Model.Position</div>
+                <div class="info-label">@Html.DisplayNameFor(model => model.Price)</div>
+                <div class="info-value">@string.Format("{0:N0} đ", Model.Price)</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Trạng Thái</div>
-                <div class="info-value">
-                    @if (Model.IsActive == true)
-                    {
-                        <span class="status-active">Hoạt động</span>
-                    }
-                    else
-                    {
-                        <span class="status-inactive">Ngừng hoạt động</span>
-                    }
-                </div>
+                <div class="info-label">@Html.DisplayNameFor(model => model.Duration)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.Duration) phút</div>
             </div>
             <div class="info-item">
-                <div class="info-label">Menu Cha</div>
-                <div class="info-value">@(Model.Parent != null ? Model.Parent.Id.ToString() : "Không có")</div>
+                <div class="info-label">@Html.DisplayNameFor(model => model.DisplayOrder)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.DisplayOrder)</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.CreatedAt)</div>
+                <div class="info-value">@(Model.CreatedAt != null ? Model.CreatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.UpdatedAt)</div>
+                <div class="info-value">@(Model.UpdatedAt != null ? Model.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.IsActive)</div>
+                <div class="info-value">@(Model.IsActive == true ? "Có" : "Không")</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.Category)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.Category.Id)</div>
             </div>
         </div>
 
         <!-- Form xác nhận xóa -->
-        <form asp-action="Delete" method="post">
+        <form asp-action="Delete">
             <input type="hidden" asp-for="Id" />
             <div class="action-buttons">
                 <button type="submit" class="btn btn-danger">
                     <i class="fa fa-trash"></i> Xác nhận xóa
                 </button>
-                <a href="@Url.Action("Index")" class="btn btn-secondary">
+                <a asp-action="Index" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i> Quay lại danh sách
                 </a>
             </div>

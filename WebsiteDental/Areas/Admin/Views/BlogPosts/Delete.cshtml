@@ -1,0 +1,293 @@
+﻿@model WebsiteDental.Models.BlogPost
+@{
+    ViewData["Title"] = "Xóa bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .delete-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .delete-warning {
+        background-color: #fff5f5;
+        border-left: 4px solid #e53e3e;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+
+    .delete-warning-title {
+        color: #e53e3e;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .delete-warning-text {
+        color: #4a5568;
+        font-size: 14px;
+    }
+
+    .post-summary {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px solid #e9ecef;
+        margin-bottom: 20px;
+    }
+
+    .post-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 10px;
+    }
+
+    .post-detail {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .post-detail-label {
+        width: 120px;
+        font-weight: 500;
+        color: #4a5568;
+    }
+
+    .post-detail-value {
+        flex: 1;
+        color: #2d3748;
+    }
+
+    .featured-image-preview {
+        max-width: 200px;
+        max-height: 120px;
+        border-radius: 4px;
+        object-fit: cover;
+        margin-top: 10px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 8px 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 4px;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #e53e3e;
+        border-color: #e53e3e;
+    }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+            border-color: #c53030;
+        }
+
+    .btn-secondary {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #e9ecef;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        color: #1a3b5d;
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+    .content-truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 400px;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .post-detail {
+        flex-direction: column;
+    }
+
+    .post-detail-label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xóa bài viết</h4>
+        <p>Xác nhận xóa bài viết khỏi hệ thống.</p>
+    </div>
+
+    <div class="delete-container">
+        <div class="delete-warning">
+            <div class="delete-warning-title">Cảnh báo</div>
+            <div class="delete-warning-text">
+                Bạn có chắc chắn muốn xóa bài viết này? Hành động này không thể hoàn tác và tất cả dữ liệu liên quan đến bài viết này sẽ bị mất.
+            </div>
+        </div>
+
+        <div class="post-summary">
+            <div class="post-title">@Model.Title</div>
+                <div class="post-detail">
+                    <div class="post-detail-label">Danh mục</div>
+                    <div class="post-detail-value">
+                        @Model.Category.CategoryName
+                    </div>
+                </div>
+
+
+           @*  <div class="post-detail">
+                <div class="post-detail-label">Tác giả</div>
+                <div class="post-detail-value">
+                    @(Model.Author?.FullName ?? Model.Author?.Id.ToString() ?? "Chưa có")
+                </div>
+            </div> *@
+
+            <div class="post-detail">
+                <div class="post-detail-label">Ngày tạo</div>
+                <div class="post-detail-value">
+                    @(Model.CreatedAt.HasValue? Model.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")
+                </div>
+            </div>
+
+            <div class="post-detail">
+                <div class="post-detail-label">Lượt xem</div>
+                <div class="post-detail-value">
+                    @Model.ViewCount lượt
+                </div>
+            </div>
+
+            <div class="post-detail">
+                <div class="post-detail-label">Trạng thái</div>
+                <div class="post-detail-value">
+                    @if (Model.IsActive == true)
+                    {
+                        <span class="status-badge status-active">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge status-inactive">Ngừng hoạt động</span>
+                    }
+                </div>
+            </div>
+
+            <div class="post-detail">
+                <div class="post-detail-label">Mô tả</div>
+                <div class="post-detail-value content-truncate">
+                    @Model.Description
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.FeaturedImage))
+            {
+                <div class="post-detail">
+                    <div class="post-detail-label">Hình ảnh</div>
+                    <div class="post-detail-value">
+                        <img src="@Model.FeaturedImage" alt="@Model.Title" class="featured-image-preview" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Xóa bài viết
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-times"></i> Hủy
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="back-link">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>

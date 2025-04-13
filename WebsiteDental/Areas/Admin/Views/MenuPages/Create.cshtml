@@ -1,108 +1,202 @@
 ﻿@model WebsiteDental.Models.MenuPage
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm mới menu";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 <style>
     body {
-        background-color: #fff !important;
+        background-color: white;
     }
 
     .content-wrapper {
-        margin-left: 240px;
-        padding: 20px;
-        transition: margin-left 0.3s;
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
     }
 
-    /* Cách viết đúng trong Razor */
-    @@media(max - width: 768px) {
-            .content-wrapper {
-                margin-left: 0;
-            }
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách dưới phần giới thiệu */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
         }
 
-        /* Các style đơn giản */
-        .card {
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
         }
 
-        .form-group {
-            margin-bottom: 15px;
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 15px; /* Giảm padding */
+        margin-bottom: 20px;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px; /* Giảm margin */
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .form-header h5 {
+            margin: 0; /* Loại bỏ margin mặc định */
+            color: #1a3b5d;
         }
 
-        .form-label {
-            font-weight: 500;
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label, .form-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control, .form-select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #1a3b5d;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(26, 59, 93, 0.25);
         }
 
-        .card-header {
-            background-color: #0d6efd;
-            color: white;
-            padding: 12px 20px;
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            border-color: #2c5282;
         }
 
-        .form-actions {
-            margin-top: 20px;
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
         }
+
+    .form-check-input {
+        margin-top: 0.3rem;
+    }
+
+    .form-check-label {
+        margin-bottom: 0;
+        margin-left: 5px;
+    }
+
+    .form-actions {
+        margin-top: 20px;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
 </style>
 
-<!-- Content wrapper to push content away from sidebar -->
-    <div class="content-wrapper">
-        <div class="container-fluid">
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý menu trang website</h4>
+        <p>Thêm mới các mục menu cho trang web một cách nhanh chóng và hiệu quả.</p>
+    </div>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h5>Thêm mới menu</h5>
+        </div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Thêm mục menu mới</h5>
-                        </div>
-                        <div class="card-body">
-                            <form asp-action="Create">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PageName" class="form-label">Tiêu đề</label>
+                        <input asp-for="PageName" class="form-control" placeholder="Nhập tiêu đề menu" />
+                        <span asp-validation-for="PageName" class="text-danger"></span>
+                    </div>
 
-                                <div class="form-group">
-                                    <label asp-for="PageName" class="form-label">Tiêu đề</label>
-                                    <input asp-for="PageName" class="form-control" placeholder="Nhập tiêu đề menu" />
-                                    <span asp-validation-for="PageName" class="text-danger"></span>
-                                </div>
+                    <div class="form-group">
+                        <label asp-for="Position" class="form-label">Vị trí</label>
+                        <input asp-for="Position" class="form-control" type="number" placeholder="1" />
+                        <span asp-validation-for="Position" class="text-danger"></span>
+                    </div>
 
-                                <div class="form-group">
-                                    <label asp-for="Url" class="form-label">Đường dẫn</label>
-                                    <input asp-for="Url" class="form-control" placeholder="/example/path" />
-                                    <span asp-validation-for="Url" class="text-danger"></span>
-                                </div>
+                    <div class="form-group form-check">
+                        <input asp-for="IsActive" class="form-check-input" checked />
+                        <label asp-for="IsActive" class="form-check-label">Hoạt động</label>
+                    </div>
+                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label asp-for="Position" class="form-label">Vị trí</label>
-                                            <input asp-for="Position" class="form-control" type="number" placeholder="1" />
-                                            <span asp-validation-for="Position" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label asp-for="ParentId" class="form-label">Menu cha</label>
-                                            <select asp-for="ParentId" class="form-select" asp-items="ViewBag.ParentId">
-                                                <option value="">-- Không có menu cha --</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Url" class="form-label">Đường dẫn</label>
+                        <input asp-for="Url" class="form-control" placeholder="/example/path" />
+                        <span asp-validation-for="Url" class="text-danger"></span>
+                    </div>
 
-                                <div class="form-group form-check">
-                                    <input asp-for="IsActive" class="form-check-input" checked />
-                                    <label asp-for="IsActive" class="form-check-label">Hoạt động</label>
-                                </div>
-
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Tạo menu</button>
-                                    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="form-group">
+                        <label asp-for="ParentId" class="form-label">Menu cha</label>
+                        <select asp-for="ParentId" class="form-select" asp-items="ViewBag.ParentId">
+                            <option value="">-- Không có menu cha --</option>
+                        </select>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Tạo menu</button>
+                <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </form>
     </div>
+</div>

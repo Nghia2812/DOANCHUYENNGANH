@@ -1,0 +1,262 @@
+﻿@model WebsiteDental.Models.BlogPost
+@{
+    ViewData["Title"] = "Thêm bài viết mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-section {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .form-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+        color: #495057;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 8px 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 4px;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+
+    .btn-secondary {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #e9ecef;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    .image-preview {
+        width: 200px;
+        height: 120px;
+        border: 1px dashed #ddd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 8px;
+        background-size: cover;
+        background-position: center;
+        color: #aaa;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        color: #1a3b5d;
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Thêm bài viết mới</h4>
+        <p>Tạo nội dung mới để thu hút người đọc và cung cấp thông tin hữu ích.</p>
+    </div>
+
+    <div class="form-container">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-section">
+                <div class="form-section-title">Thông tin cơ bản</div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label">Tiêu đề</label>
+                            <input asp-for="Title" class="form-control" placeholder="Nhập tiêu đề bài viết" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label">Mô tả ngắn</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Nhập mô tả ngắn gọn về bài viết"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label">Danh mục</label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                                <option value="">-- Chọn danh mục --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AuthorId" class="control-label">Tác giả</label>
+                            <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId">
+                                <option value="">-- Chọn tác giả --</option>
+                            </select>
+                            <span asp-validation-for="AuthorId" class="text-danger"></span>
+                        </div>
+
+                            <div class="form-group">
+                                <label asp-for="ViewCount" class="control-label">Lượt xem</label>
+                                <input asp-for="ViewCount" class="form-control" placeholder="Nhập lượt xem" />
+                                <span asp-validation-for="ViewCount" class="text-danger"></span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Nội dung bài viết</div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label">Nội dung</label>
+                    <textarea asp-for="Content" class="form-control" rows="10" placeholder="Nhập nội dung chi tiết của bài viết"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+
+               
+            <div class="form-section">           
+                <div class="form-group">
+                    <label asp-for="FeaturedImage" class="control-label">Đường dẫn hình ảnh</label>
+                    <input asp-for="FeaturedImage" class="form-control" placeholder="Nhập đường dẫn hoặc URL hình ảnh" />
+                    <span asp-validation-for="FeaturedImage" class="text-danger"></span> 
+                </div>
+            </div>
+
+
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu bài viết
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-times"></i> Hủy
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="back-link">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+

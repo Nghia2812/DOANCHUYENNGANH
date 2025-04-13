@@ -1,6 +1,6 @@
-﻿@model WebsiteDental.Models.AboutDental
+﻿@model WebsiteDental.Models.Service
 @{
-    ViewData["Title"] = "Chi tiết About Dental";
+    ViewData["Title"] = "Chi tiết dịch vụ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -36,14 +36,14 @@
         margin-bottom: 20px;
     }
 
-    .about-info {
+    .service-info {
         display: flex;
         margin-bottom: 20px;
         padding-bottom: 20px;
         border-bottom: 1px solid #f0f0f0;
     }
 
-    .about-image {
+    .service-image {
         width: 150px;
         height: 150px;
         border-radius: 5px;
@@ -52,24 +52,18 @@
         border: 1px solid #e0e0e0;
     }
 
-    .about-header {
+    .service-header {
         flex: 1;
     }
 
-    .about-title {
+    .service-name {
         font-size: 24px;
         font-weight: 600;
         color: #1a3b5d;
         margin-bottom: 5px;
     }
 
-    .about-description {
-        font-size: 16px;
-        color: #666;
-        margin-bottom: 10px;
-    }
-
-    .about-status {
+    .service-status {
         display: inline-block;
         padding: 3px 8px;
         border-radius: 12px;
@@ -127,25 +121,6 @@
         margin-bottom: 10px;
     }
 
-    .stat-box {
-        background-color: #f0f7ff;
-        padding: 15px;
-        border-radius: 5px;
-        text-align: center;
-        margin-bottom: 15px;
-    }
-
-    .stat-value {
-        font-size: 24px;
-        font-weight: 700;
-        color: #1a3b5d;
-        margin-bottom: 5px;
-    }
-
-    .stat-label {
-        color: #666;
-    }
-
     .action-buttons {
         margin-top: 20px;
         display: flex;
@@ -186,7 +161,9 @@
         }
 
     /* Đáp ứng thiết bị di động */
-    @@media (max-width: 992px) {
+    @@media(max - width: 992px)
+
+    {
         .content-wrapper
 
     {
@@ -194,11 +171,11 @@
         padding: 10px;
     }
 
-    .about-info {
+    .service-info {
         flex-direction: column;
     }
 
-    .about-image {
+    .service-image {
         margin-right: 0;
         margin-bottom: 15px;
         width: 100px;
@@ -214,60 +191,82 @@
 
 <div class="content-wrapper">
     <div class="page-intro">
-        <h4>Chi tiết About Dental</h4>
-        <p>Xem thông tin chi tiết về nội dung giới thiệu của phòng khám</p>
+        <h4>Chi tiết thông tin dịch vụ</h4>
+        <p>Xem thông tin chi tiết của dịch vụ trong hệ thống</p>
     </div>
 
     <div class="details-container">
-        <!-- Thông tin tổng quan -->
-        <div class="about-info">
-            <div class="about-image-container">
-                @if (!string.IsNullOrEmpty(Model.ImagePath))
+        <!-- Thông tin tổng quan của dịch vụ -->
+        <div class="service-info">
+            <div class="service-image-container">
+                @if (!string.IsNullOrEmpty(Model.Image))
                 {
-                    <img src="@Model.ImagePath" alt="@Model.Title" class="about-image" />
+                    <img src="@Model.Image" alt="@Model.ServiceName" class="service-image" />
                 }
                 else
                 {
-                    <div class="about-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
-                        <i class="fa fa-info-circle" style="font-size: 50px; color: #aaa;"></i>
+                    <div class="service-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                        <i class="fa fa-medkit" style="font-size: 50px; color: #aaa;"></i>
                     </div>
                 }
             </div>
-            <div class="about-header">
-                <h2 class="about-title">@Model.Title</h2>
-                <div class="about-description">@(string.IsNullOrEmpty(Model.Description) ? "Không có mô tả" : Model.Description.Length > 100 ? Model.Description.Substring(0, 100) + "..." : Model.Description)</div>
+            <div class="service-header">
+                <h2 class="service-name">@Model.ServiceName</h2>
                 @if (Model.IsActive == true)
                 {
-                    <div class="about-status status-active">Hoạt động</div>
+                    <div class="service-status status-active">Hoạt động</div>
                 }
                 else
                 {
-                    <div class="about-status status-inactive">Không hoạt động</div>
+                    <div class="service-status status-inactive">Ngừng hoạt động</div>
                 }
-                <div class="about-icon">
-                    <span>Icon: <strong>@(string.IsNullOrEmpty(Model.IconPath) ? "Không có" : Model.IconPath)</strong></span>
+                <div class="service-price">
+                    <span style="font-weight: bold;">Giá: @string.Format("{0:N0} đ", Model.Price)</span>
+                </div>
+                <div class="service-duration">
+                    <span>Thời gian thực hiện: <strong>@Model.Duration phút</strong></span>
                 </div>
             </div>
         </div>
 
-        <!-- Thống kê -->
+        <!-- Thông tin chi tiết -->
         <div class="details-section">
-            <h3 class="section-title">Thống kê</h3>
+            <h3 class="section-title">Thông tin dịch vụ</h3>
             <div class="info-grid">
-                <div class="stat-box">
-                    <div class="stat-value">@Model.StatValue1</div>
-                    <div class="stat-label">@Model.StatLabel1</div>
+                <div class="info-item">
+                    <div class="info-label">Tên dịch vụ</div>
+                    <div class="info-value">@Model.ServiceName</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Giá dịch vụ</div>
+                    <div class="info-value">@string.Format("{0:N0} đ", Model.Price)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Thời gian thực hiện</div>
+                    <div class="info-value">@Model.Duration phút</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Thứ tự hiển thị</div>
+                    <div class="info-value">@Model.DisplayOrder</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Danh mục</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Category.Id)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Trạng thái</div>
+                    <div class="info-value">@(Model.IsActive == true ? "Hoạt động" : "Ngừng hoạt động")</div>
                 </div>
             </div>
         </div>
 
-        <!-- Nội dung chi tiết -->
+        <!-- Mô tả -->
         <div class="details-section">
-            <h3 class="section-title">Nội dung</h3>
+            <h3 class="section-title">Mô tả dịch vụ</h3>
             <div class="text-block">
-                @if (!string.IsNullOrEmpty(Model.Content))
+                @if (!string.IsNullOrEmpty(Model.Description))
                 {
-                    @Model.Content
+                    @Model.Description
                 }
                 else
                 {
@@ -282,11 +281,11 @@
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label">Ngày tạo</div>
-                        <div class="info-value">    @(Model.CreatedDate?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa có")</div>
+                        <div class="info-value"> @(Model.CreatedAt.HasValue ? Model.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label">Ngày cập nhật</div>
-                        <div class="info-value">    @(Model.UpdatedDate?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa có")</div>
+                        <div class="info-value"> @(Model.UpdatedAt.HasValue ? Model.UpdatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
                 </div>
             </div>
         </div>

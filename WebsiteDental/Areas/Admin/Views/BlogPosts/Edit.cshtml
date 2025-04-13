@@ -1,0 +1,381 @@
+﻿@model WebsiteDental.Models.BlogPost
+@{
+    ViewData["Title"] = "Chỉnh sửa bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-section {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .form-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+        color: #495057;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 8px 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 4px;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+
+    .btn-secondary {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #e9ecef;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    .image-preview {
+        width: 200px;
+        height: 120px;
+        border: 1px dashed #ddd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 8px;
+        background-size: cover;
+        background-position: center;
+        color: #aaa;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        color: #1a3b5d;
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+    .custom-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+    }
+
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    input:checked + .slider {
+        background-color: #2e7d32;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2e7d32;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    .date-info {
+        font-size: 12px;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chỉnh sửa bài viết</h4>
+        <p>Cập nhật nội dung, hình ảnh và các thông tin của bài viết.</p>
+    </div>
+
+    <div class="form-container">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-section">
+                <div class="form-section-title">Thông tin cơ bản</div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label">Tiêu đề</label>
+                            <input asp-for="Title" class="form-control" placeholder="Nhập tiêu đề bài viết" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label">Mô tả ngắn</label>
+                            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Nhập mô tả ngắn gọn về bài viết"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label">Danh mục</label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AuthorId" class="control-label">Tác giả</label>
+                            <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
+                            <span asp-validation-for="AuthorId" class="text-danger"></span>
+                        </div>
+                            <div class="form-group">
+                                <label asp-for="IsActive" class="control-label">Trạng thái hoạt động</label>
+                                <select asp-for="IsActive" class="form-control">
+                                    <option value="true">Hoạt động</option>
+                                    <option value="false">Ngừng hoạt động</option>
+                                </select>
+                                <span asp-validation-for="IsActive" class="text-danger"></span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Nội dung bài viết</div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label">Nội dung</label>
+                    <textarea asp-for="Content" class="form-control" rows="10" placeholder="Nhập nội dung chi tiết của bài viết"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Hình ảnh đại diện</div>
+                <div class="form-group">
+                    <label asp-for="FeaturedImage" class="control-label">Đường dẫn hình ảnh</label>
+                    <input asp-for="FeaturedImage" class="form-control" placeholder="Nhập đường dẫn hoặc URL hình ảnh" />
+                    <span asp-validation-for="FeaturedImage" class="text-danger"></span>
+
+                    @* <div class="image-preview" id="imagePreview" style="@(string.IsNullOrEmpty(Model.FeaturedImage) ? "" : $"background-image: url('{Model.FeaturedImage}');")">
+                        @if (string.IsNullOrEmpty(Model.FeaturedImage))
+                        {
+                            <i class="fa fa-image"></i> <span>Xem trước hình ảnh</span>
+                        }
+                    </div> *@
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-section-title">Thống kê và thời gian</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ViewCount" class="control-label">Lượt xem</label>
+                            <input asp-for="ViewCount" class="form-control" />
+                            <span asp-validation-for="ViewCount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="CreatedAt" class="control-label">Ngày tạo</label>
+                            <input asp-for="CreatedAt" class="form-control" type="datetime-local" />
+                            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                            <div class="date-info">
+                                @(Model.CreatedAt.HasValue ? Model.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="UpdatedAt" class="control-label">Cập nhật lần cuối</label>
+                            <input asp-for="UpdatedAt" class="form-control" type="datetime-local" />
+                            <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                            <div class="date-info">
+                                @(Model.UpdatedAt.HasValue ? Model.UpdatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu thay đổi
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-times"></i> Hủy
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="back-link">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+
+
+  @*   <script>
+        // Hiển thị xem trước hình ảnh khi nhập URL
+        $(document).ready(function () {
+            $('#FeaturedImage').on('change keyup paste', function () {
+                var imageUrl = $(this).val();
+                if (imageUrl) {
+                    $('#imagePreview').css('background-image', 'url(' + imageUrl + ')');
+                    $('#imagePreview').html('');
+                } else {
+                    $('#imagePreview').css('background-image', 'none');
+                    $('#imagePreview').html('<i class="fa fa-image"></i> <span>Xem trước hình ảnh</span>');
+                }
+            });
+
+            // Hiển thị trạng thái hoạt động
+            $('#IsActive').change(function() {
+                if($(this).is(':checked')) {
+                    $(this).next().next().text('Hoạt động');
+                } else {
+                    $(this).next().next().text('Ngừng hoạt động');
+                }
+            });
+        });
+    </script>
+} *@

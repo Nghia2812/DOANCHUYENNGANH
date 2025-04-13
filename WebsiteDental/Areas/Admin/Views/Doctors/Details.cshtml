@@ -1,0 +1,339 @@
+﻿```html
+@model WebsiteDental.Models.Doctor
+
+@{
+    ViewData["Title"] = "Chi tiết bác sĩ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .doctor-info {
+        display: flex;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .doctor-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 5px;
+        object-fit: cover;
+        margin-right: 20px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .doctor-header {
+        flex: 1;
+    }
+
+    .doctor-name {
+        font-size: 24px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 5px;
+    }
+
+    .doctor-specialization {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .doctor-status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .details-section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .info-item {
+        margin-bottom: 8px;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 3px;
+    }
+
+    .info-value {
+        color: #333;
+    }
+
+    .text-block {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s;
+    }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media(max - width: 992px) {
+            .content-wrapper {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .doctor-info {
+                flex-direction: column;
+            }
+
+            .doctor-image {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 100px;
+                height: 100px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <div class="content-wrapper">
+        <div class="page-intro">
+            <h4>Chi tiết thông tin bác sĩ</h4>
+            <p>Xem thông tin chi tiết và thông tin liên hệ của bác sĩ trong hệ thống</p>
+        </div>
+
+        <div class="details-container">
+            <!-- Thông tin tổng quan của bác sĩ -->
+            <div class="doctor-info">
+                <div class="doctor-image-container">
+                    @if (!string.IsNullOrEmpty(Model.Image))
+                    {
+                        <img src="@Model.Image" alt="@Model.FullName" class="doctor-image" />
+                    }
+                    else
+                    {
+                        <div class="doctor-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                            <i class="fa fa-user-md" style="font-size: 50px; color: #aaa;"></i>
+                        </div>
+                    }
+                </div>
+                <div class="doctor-header">
+                    <h2 class="doctor-name">@Model.FullName</h2>
+                    <div class="doctor-specialization">@Model.Specialization</div>
+                    @if (Model.IsActive == true)
+                    {
+                        <div class="doctor-status status-active">Hoạt động</div>
+                    }
+                    else
+                    {
+                        <div class="doctor-status status-inactive">Ngừng hoạt động</div>
+                    }
+                    <div class="doctor-rating">
+                        <span style="font-weight: bold;">Đánh giá: @Model.Rating</span>
+                        <i class="fa fa-star text-warning"></i>
+                    </div>
+                    <div class="doctor-code">
+                        <span>Mã bác sĩ: <strong>@Model.DoctorNumber</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin liên hệ -->
+            <div class="details-section">
+                <h3 class="section-title">Thông tin liên hệ</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value">@Model.Email</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Số điện thoại</div>
+                        <div class="info-value">@Model.Phone</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin chuyên môn -->
+            <div class="details-section">
+                <h3 class="section-title">Thông tin chuyên môn</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Chuyên khoa</div>
+                        <div class="info-value">@Model.Specialization</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Số năm kinh nghiệm</div>
+                        <div class="info-value">@Model.ExperienceYears năm</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Số giấy phép</div>
+                        <div class="info-value">@Model.LicenseNumber</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Phí tư vấn</div>
+                        <div class="info-value">@string.Format("{0:N0} đ", Model.ConsultationFee)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Danh mục</div>
+                        <div class="info-value">@Html.DisplayFor(model => model.Category.CategoryId)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ID người dùng</div>
+                        <div class="info-value">@Html.DisplayFor(model => model.User.Id)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tiểu sử -->
+            <div class="details-section">
+                <h3 class="section-title">Tiểu sử</h3>
+                <div class="text-block">
+                    @if (!string.IsNullOrEmpty(Model.Biography))
+                    {
+                        @Model.Biography
+                    }
+                    else
+                    {
+                        <span class="text-muted">Chưa cập nhật</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Mô tả -->
+            <div class="details-section">
+                <h3 class="section-title">Mô tả</h3>
+                <div class="text-block">
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        @Model.Description
+                    }
+                    else
+                    {
+                        <span class="text-muted">Chưa cập nhật</span>
+                    }
+                </div>
+            </div>
+
+            <!-- Thông tin hệ thống -->
+            <div class="details-section">
+                <h3 class="section-title">Thông tin hệ thống</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Ngày tạo</div>
+                        <div class="info-value"> @(Model.UpdatedAt != null ? Model.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngày cập nhật</div>
+                        <div class="info-value"> @(Model.UpdatedAt != null ? Model.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="action-buttons">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                    <i class="fa fa-edit"></i> Chỉnh sửa
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>
+    ```

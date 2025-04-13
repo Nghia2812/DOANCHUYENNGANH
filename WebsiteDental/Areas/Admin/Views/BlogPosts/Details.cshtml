@@ -1,0 +1,321 @@
+﻿@model WebsiteDental.Models.BlogPost
+@{
+    ViewData["Title"] = "Chi tiết bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .details-section {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .details-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+    }
+
+    .detail-row {
+        margin-bottom: 10px;
+        display: flex;
+    }
+
+    .detail-label {
+        font-weight: 500;
+        color: #495057;
+        width: 200px;
+        min-width: 200px;
+    }
+
+    .detail-value {
+        flex: 1;
+        color: #212529;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .featured-image {
+        max-width: 250px;
+        max-height: 150px;
+        border-radius: 4px;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 8px 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 4px;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+
+    .btn-secondary {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #e9ecef;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        color: #1a3b5d;
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+    .content-preview {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        padding: 15px;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #e9ecef;
+        font-size: 14px;
+    }
+
+    .description-preview {
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        padding: 10px;
+        border: 1px solid #e9ecef;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .date-time {
+        color: #6c757d;
+        font-size: 13px;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .detail-label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chi tiết bài viết</h4>
+        <p>Xem thông tin chi tiết của bài viết trong hệ thống.</p>
+    </div>
+
+    <div class="details-container">
+        <div class="details-section">
+            <div class="details-section-title">Thông tin cơ bản</div>
+
+            <div class="detail-row">
+                <div class="detail-label">Tiêu đề</div>
+                <div class="detail-value">
+                    <strong>@Html.DisplayFor(model => model.Title)</strong>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Mô tả ngắn</div>
+                <div class="detail-value">
+                    <div class="description-preview">
+                        @Html.DisplayFor(model => model.Description)
+                    </div>
+                </div>
+            </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Danh mục</div>
+                    <div class="detail-value">
+                        @(Model.Category?.CategoryName ?? "Chưa có")
+                    </div>
+                </div>
+
+              @*   <div class="detail-row">
+                    <div class="detail-label">Tác giả</div>
+                    <div class="detail-value">
+                        @(Model.Author?.FullName ?? Model.Author?.Username ?? "Chưa có")
+                    </div>
+                </div>
+ *@
+
+            <div class="detail-row">
+                <div class="detail-label">Trạng thái</div>
+                <div class="detail-value">
+                    @if (Model.IsActive == true)
+                    {
+                        <span class="status-badge status-active">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge status-inactive">Ngừng hoạt động</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-title">Hình ảnh đại diện</div>
+            <div class="detail-row">
+                <div class="detail-value">
+                    @if (!string.IsNullOrEmpty(Model.FeaturedImage))
+                    {
+                        <img src="@Model.FeaturedImage" alt="@Model.Title" class="featured-image" />
+                    }
+                    else
+                    {
+                        <p>Chưa có hình ảnh</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-title">Nội dung bài viết</div>
+            <div class="detail-row">
+                <div class="detail-value">
+                    <div class="content-preview">
+                        @Html.DisplayFor(model => model.Content)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <div class="details-section-title">Thông tin thống kê</div>
+            <div class="detail-row">
+                <div class="detail-label">Lượt xem</div>
+                <div class="detail-value">
+                    <strong>@Html.DisplayFor(model => model.ViewCount)</strong> lượt
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Ngày tạo</div>
+                <div class="detail-value">
+                    <span class="date-time">
+                        @(Model.CreatedAt.HasValue? Model.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")
+                    </span>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Cập nhật lần cuối</div>
+                <div class="detail-value">
+                    <span class="date-time">
+                        @(Model.UpdatedAt.HasValue? Model.UpdatedAt.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa có")
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                <i class="fa fa-edit"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa fa-list"></i> Danh sách
+            </a>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="back-link">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
