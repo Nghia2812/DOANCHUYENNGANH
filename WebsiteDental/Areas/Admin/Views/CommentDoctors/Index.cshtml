@@ -1,0 +1,271 @@
+﻿@model IEnumerable<WebsiteDental.Models.CommentDoctor>
+@{
+    ViewData["Title"] = "Danh sách bình luận bác sĩ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin */
+    }
+
+        .table-header h5 {
+            margin: 0; /* Loại bỏ margin mặc định */
+        }
+
+    .table-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px; /* Giảm padding */
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+        .compact-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table th {
+            padding: 8px; /* Giảm padding */
+            color: #495057;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            padding: 6px 8px; /* Giảm padding */
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: rgba(0,123,255,0.04);
+        }
+
+    .create-btn {
+        display: inline-block;
+        background-color: #1a3b5d;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+        .create-btn:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .action-links {
+        white-space: nowrap;
+    }
+
+        .action-links a {
+            display: inline-block;
+            margin: 0 3px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #1a3b5d;
+        }
+
+            .action-links a:hover {
+                background-color: #f0f0f0;
+            }
+
+    .comment-text {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .search-box {
+        margin-bottom: 10px;
+    }
+
+        .search-box .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .comment-text {
+        max-width: 150px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý bình luận bác sĩ</h4>
+        <p>Quản lý tất cả bình luận của người dùng về bác sĩ trong hệ thống</p>
+    </div>
+
+    <div class="table-container">
+        <div class="search-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm bình luận...">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-header">
+            <h5>Danh sách bình luận bác sĩ</h5>
+            <a asp-action="Create" class="create-btn">
+                <i class="fa fa-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+
+        <table class="compact-table" id="commentTable">
+            <thead>
+                <tr>
+                    <th width="5%">STT</th>
+                    <th width="15%">
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th width="35%">
+                        @Html.DisplayNameFor(model => model.CommentText)
+                    </th>
+                    <th width="15%">
+                        @Html.DisplayNameFor(model => model.CreatedAt)
+                    </th>
+                    <th width="15%">
+                        @Html.DisplayNameFor(model => model.Doctor)
+                    </th>
+                    <th width="15%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            <div class="comment-text" title="@item.CommentText">
+                                @Html.DisplayFor(modelItem => item.CommentText)
+                            </div>
+                        </td>
+                        <td>
+                            @item.CreatedAt?.ToString("dd/MM/yyyy HH:mm")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Doctor.FullName)
+                        </td>
+                        <td class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.Id" title="Chỉnh sửa">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" title="Chi tiết">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="Xóa">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Tìm kiếm trong bảng
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            table = document.getElementById('commentTable');
+            tr = table.getElementsByTagName('tr');
+
+            for (i = 1; i < tr.length; i++) {
+                var found = false;
+                // Tìm trong tất cả các cột (ngoại trừ cột thao tác)
+                for (var j = 1; j < tr[i].cells.length - 1; j++) {
+                    td = tr[i].cells[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (found) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        });
+    });
+</script>

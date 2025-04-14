@@ -15,5 +15,5 @@ public partial class CommentDoctor
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual Doctor Doctor { get; set; } = null!;
+    public virtual Doctor? Doctor { get; set; }
 }

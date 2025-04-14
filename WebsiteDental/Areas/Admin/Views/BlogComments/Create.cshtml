@@ -1,0 +1,274 @@
+﻿@model WebsiteDental.Models.BlogComment
+@{
+    ViewData["Title"] = "Thêm bình luận";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+            color: #1a3b5d;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-section {
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 8px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .form-check-input {
+        margin-right: 8px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 8px 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 4px;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            border-color: #2c5282;
+        }
+
+    .btn-secondary {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #ced4da;
+    }
+
+        .btn-secondary:hover {
+            color: #495057;
+            background-color: #dae0e5;
+            border-color: #b8c2cc;
+        }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        color: #1a3b5d;
+        text-decoration: none;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+        .back-link i {
+            margin-right: 5px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Thêm bình luận mới</h4>
+        <p>Tạo bình luận mới cho bài viết từ quản trị viên.</p>
+    </div>
+
+    <div class="form-container">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-section">
+                <h5>Thông tin bài viết và người dùng</h5>
+
+                <div class="form-group">
+                    <label asp-for="PostId" class="form-label">Bài viết</label>
+                    <select asp-for="PostId" class="form-control" asp-items="ViewBag.PostId"></select>
+                    <span asp-validation-for="PostId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserId" class="form-label">Người dùng</label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h5>Thông tin người bình luận</h5>
+
+                <div class="form-group">
+                    <label asp-for="Name" class="form-label">Tên người bình luận</label>
+                    <input asp-for="Name" class="form-control" placeholder="Nhập tên người bình luận" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="Nhập địa chỉ email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+     
+            <div class="form-section">
+                <h5>Nội dung bình luận</h5>
+
+                <div class="form-group">
+                    <label asp-for="Comment" class="form-label">Nội dung</label>
+                    <textarea asp-for="Comment" class="form-control" placeholder="Nhập nội dung bình luận"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                </div>
+
+                <div class="form-group form-check">
+                    <input asp-for="IsActive" class="form-check-input" />
+                    <label asp-for="IsActive" class="form-check-label">Hiển thị bình luận</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu bình luận
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-times"></i> Hủy
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="back-link">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+
+
+
+@* <script>
+    document.getElementById("imageUpload").addEventListener("change", function (event) {
+        let file = event.target.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("currentImage").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Gửi ảnh lên server
+            let formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/Admin/Products/UploadImage", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(imagePath => {
+                document.getElementById("ImagePath").value = imagePath; // Gán đường dẫn ảnh vào input ẩn
+            })
+            .catch(error => console.error("Lỗi upload ảnh:", error));
+        }
+    });
+</script> *@

@@ -1,0 +1,273 @@
+﻿@model WebsiteDental.Models.CommentDoctor
+
+@{
+    ViewData["Title"] = "Xóa bình luận";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 15px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #dc3545;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .delete-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 4px solid #dc3545;
+    }
+
+    .delete-warning {
+        background-color: #fff8f8;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #ffcdd2;
+    }
+
+        .delete-warning i {
+            color: #dc3545;
+            margin-right: 8px;
+        }
+
+    .comment-info {
+        display: flex;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+        margin-right: 20px;
+    }
+
+    .comment-header {
+        flex: 1;
+    }
+
+    .username {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 5px;
+    }
+
+    .comment-date {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .details-section {
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .info-item {
+        margin-bottom: 8px;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 3px;
+    }
+
+    .info-value {
+        color: #333;
+    }
+
+    .text-block {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media(max - width: 992px)
+
+    {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .comment-info {
+        flex-direction: column;
+    }
+
+    .user-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xóa bình luận</h4>
+        <p>Xác nhận xóa bình luận khỏi hệ thống</p>
+    </div>
+
+    <div class="delete-container">
+        <div class="delete-warning">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span>Bạn có chắc chắn muốn xóa bình luận này? Hành động này không thể hoàn tác.</span>
+        </div>
+
+        <!-- Thông tin tổng quan của comment -->
+        <div class="comment-info">
+            <div class="user-avatar">
+                <i class="fa fa-user" style="font-size: 30px; color: #aaa;"></i>
+            </div>
+            <div class="comment-header">
+                <h2 class="username">@Model.Username</h2>
+                <div class="comment-date">
+                    <i class="fa fa-calendar"></i> @(Model.CreatedAt != null ? Model.CreatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")
+                </div>
+                <div>
+                    <span>Bác sĩ: <strong>@(Model.Doctor?.FullName ?? Model.Doctor?.Id.ToString() ?? "Không có thông tin")</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nội dung bình luận -->
+        <div class="details-section">
+            <h3 class="section-title">Nội dung bình luận</h3>
+            <div class="text-block">
+                @if (!string.IsNullOrEmpty(Model.CommentText))
+                {
+                    @Model.CommentText
+                }
+                else
+                {
+                    <span class="text-muted">Không có nội dung</span>
+                }
+            </div>
+        </div>
+
+        <!-- Thông tin chi tiết -->
+        <div class="details-section">
+            <h3 class="section-title">Thông tin chi tiết</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Username)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Username)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.CreatedAt)</div>
+                    <div class="info-value">@(Model.CreatedAt != null ? Model.CreatedAt?.ToString("dd/MM/yyyy HH:mm") : "Chưa có")</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">@Html.DisplayNameFor(model => model.Doctor)</div>
+                    <div class="info-value">@Html.DisplayFor(model => model.Doctor.Id)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action buttons -->
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Xóa bình luận
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

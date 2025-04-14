@@ -92,9 +92,9 @@
                                 <li>
                                     <a><i class="fa fa-table"></i> Quản lý Danh Mục <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="tables.html">Danh mục dịch vụ</a></li>
-                                        <li><a href="tables_dynamic.html">Danh mục tin tức</a></li>
-                                        <li><a href="tables_dynamic.html">Danh mục sản phẩm</a></li>
+                                        <li><a href="@Url.Action("Index", "ServiceCategories")">Danh mục dịch vụ</a></li>
+                                        <li><a href="@Url.Action("Index", "BlogCategories")">Danh mục tin tức</a></li>
+                                        <li><a href="@Url.Action("Index", "ProductCategories")">Danh mục sản phẩm</a></li>
                                         <li><a href="tables_dynamic.html">Danh mục bác sĩ</a></li>
                                     </ul>
                                 </li>
@@ -102,10 +102,8 @@
                                     <a><i class="fa fa-bar-chart-o"></i> Quản lý Bình Luận <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="@Url.Action("Index", "CustomerReviews")">Reviews từ Khách Hàng</a></li>
-                                        <li><a href="chartjs2.html">Bình luận bài viết</a></li>
-                                        <li><a href="morisjs.html">Đánh giá Bác sĩ</a></li>
-                                        <li><a href="echarts.html">ECharts</a></li>
-                                        <li><a href="other_charts.html">Other Charts</a></li>
+                                        <li><a href="@Url.Action("Index", "BlogComments")">Bình luận bài viết</a></li>
+                                        <li><a href="@Url.Action("Index", "CommentDoctors")">Đánh giá Bác sĩ</a></li>                                    
                                     </ul>
                                 </li>
                                 <li>

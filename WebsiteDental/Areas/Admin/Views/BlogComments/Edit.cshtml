@@ -1,0 +1,276 @@
+﻿@model WebsiteDental.Models.BlogComment
+@{
+    ViewData["Title"] = "Chỉnh sửa bình luận";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-title {
+        margin-bottom: 15px;
+        color: #1a3b5d;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #1a3b5d;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(26, 59, 93, 0.25);
+        }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        border-color: #1a3b5d;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #1a3b5d;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .form-container {
+        padding: 15px;
+    }
+
+    }
+
+    .image-preview {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 100%;
+        max-height: 150px;
+        overflow: hidden;
+    }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chỉnh sửa bình luận</h4>
+        <p>Cập nhật thông tin bình luận bài viết trong hệ thống</p>
+    </div>
+
+    <div class="form-container">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PostId" class="control-label">Bài viết</label>
+                        <select asp-for="PostId" class="form-control" asp-items="ViewBag.PostId"></select>
+                        <span asp-validation-for="PostId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="UserId" class="control-label">Người dùng</label>
+                        <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Tên người bình luận</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Hình ảnh người bình luận</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label asp-for="Img" class="form-label fw-semibold">Ảnh đại diện</label>
+                                            <input type="file" class="form-control" id="imageUpload" name="imageFile" />
+                                            <input type="hidden" asp-for="Img" id="ImagePath" />
+                                            <span asp-validation-for="Img" class="text-danger small"></span>
+                                            <div class="form-text">Chọn file ảnh tối đa 2MB. Định dạng: JPG, PNG</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <label class="form-label fw-semibold">Ảnh hiện tại</label>
+                                            <div class="image-preview border rounded p-2">
+                                                <img id="currentImage" src="@Model.Img"
+                                                     class="img-fluid rounded" alt="User image"
+                                                     style="height: 120px; object-fit: cover;" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Comment" class="control-label">Nội dung bình luận</label>
+                        <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IsActive" class="control-label">Trạng thái</label>
+                        <select asp-for="IsActive" class="form-control">
+                            <option value="true">Hiển thị</option>
+                            <option value="false">Ẩn</option>
+                        </select>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CreatedAt" class="control-label">Ngày tạo</label>
+                        <input asp-for="CreatedAt" class="form-control" />
+                        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Lưu thay đổi
+                </button>
+                <a asp-action="Index" class="back-link">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById("imageUpload").addEventListener("change", function (event) {
+        let file = event.target.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("currentImage").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Gửi ảnh lên server
+            let formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/Admin/BlogComments/UploadImage", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(imagePath => {
+                document.getElementById("ImagePath").value = imagePath; // Gán đường dẫn ảnh vào input ẩn
+            })
+            .catch(error => console.error("Lỗi upload ảnh:", error));
+        }
+    });
+</script>
+

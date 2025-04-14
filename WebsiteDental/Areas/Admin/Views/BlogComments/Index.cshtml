@@ -1,7 +1,7 @@
-﻿@model IEnumerable<WebsiteDental.Models.Product>
+﻿@model IEnumerable<WebsiteDental.Models.BlogComment>
 
 @{
-    ViewData["Title"] = "Danh sách Sản phẩm";
+    ViewData["Title"] = "Danh sách bình luận";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,15 +13,6 @@
     .content-wrapper {
         margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
         padding: 15px 20px 0 20px; /* Giảm padding phía trên */
-    }
-
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 5px; /* Giảm margin bottom */
-        padding-bottom: 5px; /* Giảm padding bottom */
-        border-bottom: 1px solid #e0e0e0;
     }
 
     .page-intro {
@@ -138,17 +129,39 @@
         white-space: nowrap;
     }
 
-    .product-img {
+    .comment-img {
         width: 35px;
         height: 35px;
-        border-radius: 4px;
+        border-radius: 50%;
         object-fit: cover;
     }
 
-    .rating {
+    .user-info {
         display: flex;
         align-items: center;
-        gap: 2px;
+        gap: 8px;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .user-email {
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    .comment-text {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     /* Đáp ứng thiết bị di động */
@@ -161,36 +174,29 @@
     }
 
     }
-
-     
 </style>
 
 <div class="content-wrapper">
     <div class="page-intro">
-        <h4>Quản lý thông tin sản phẩm một cách dễ dàng và hiệu quả</h4>
-        <p>Cập nhật thông tin, giá cả và tình trạng kho hàng nhanh chóng.</p>
+        <h4>Quản lý bình luận blog hiệu quả</h4>
+        <p>Kiểm duyệt và quản lý bình luận của người dùng trên các bài viết blog.</p>
     </div>
 
     <div class="table-container">
         <div class="table-header">
-            <h5>Danh sách sản phẩm</h5>
+            <h5>Danh sách bình luận</h5>
             <a asp-action="Create" class="create-btn">
                 <i class="fa fa-plus-circle"></i> Thêm mới
-            </a>         
+            </a>
         </div>
         <table class="compact-table">
             <thead>
                 <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Giảm giá</th>
-                    <th>Tồn kho</th>
-                    <th>Loại</th>
-                    <th>Danh mục</th>
-                    <th>Đánh giá</th>
-                    <th>Hình ảnh</th>
-                    <th>Trạng thái</th>
+                    <th>Người dùng</th>
+                    <th>Bình luận</th>
+                    <th>Bài viết</th>
                     <th>Ngày tạo</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -199,60 +205,41 @@
                 {
                     <tr>
                         <td>
-                            <div style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                @Html.DisplayFor(modelItem => item.ProductName)
+                            <div class="user-info">
+                                @if (!string.IsNullOrEmpty(item.Img))
+                                {
+                                    <img src="@item.Img" alt="@item.Name" class="comment-img" />
+                                }
+                                else
+                                {
+                                    <div class="comment-img" style="display: flex; align-items: center; justify-content: center; background-color: #e9ecef;">
+                                        <i class="fa fa-user" style="font-size: 16px; color: #adb5bd;"></i>
+                                    </div>
+                                }
+                                <div class="user-details">
+                                    <div class="user-name">@item.Name</div>
+                                    <div class="user-email">@item.Email</div>
+                                </div>
                             </div>
                         </td>
                         <td>
-                            @string.Format("{0:N0} đ", item.Price)
+                            <div class="comment-text" title="@item.Comment">@item.Comment</div>
                         </td>
                         <td>
-                            @if (item.PriceDiscount > 0)
-                            {
-                                @string.Format("{0:N0} đ", item.PriceDiscount)
-                            }
-                            else
-                            {
-                                <span>-</span>
-                            }
+                            @Html.DisplayFor(modelItem => item.Post.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Stock)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.Id)
-                        </td>
-                        <td>
-                            <div class="rating">
-                                <span class="text-warning" style="font-weight: bold;">@item.Rating</span>
-                                <i class="fa fa-star text-warning"></i>
-                            </div>
-                        </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.Image))
-                            {
-                                <img src="@item.Image" alt="@item.ProductName" class="product-img" />
-                            }
-                            else
-                            {
-                                <span>N/A</span>
-                            }
+                            @(item.CreatedAt != null ? item.CreatedAt?.ToString("dd/MM/yyyy") : "Chưa có")
                         </td>
                         <td>
                             @if (item.IsActive == true)
                             {
-                                <span class="status-active">Còn hàng</span>
+                                <span class="status-active">Hiển thị</span>
                             }
                             else
                             {
-                                <span class="status-inactive">Hết hàng</span>
+                                <span class="status-inactive">Ẩn</span>
                             }
-                        </td>
-                        <td>
-                       @(item.CreatedAt != null ? item.CreatedAt?.ToString("dd/MM/yyyy") : "Chưa có")
                         </td>
                         <td class="action-links">
                             <a asp-action="Edit" asp-route-id="@item.Id" title="Chỉnh sửa">
@@ -271,36 +258,3 @@
         </table>
     </div>
 </div>
-@*     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Tìm kiếm trong bảng
-            document.getElementById('searchInput').addEventListener('keyup', function () {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById('searchInput');
-                filter = input.value.toUpperCase();
-                table = document.getElementById('commentTable');
-                tr = table.getElementsByTagName('tr');
-
-                for (i = 1; i < tr.length; i++) {
-                    var found = false;
-                    // Tìm trong tất cả các cột (ngoại trừ cột thao tác)
-                    for (var j = 1; j < tr[i].cells.length - 1; j++) {
-                        td = tr[i].cells[j];
-                        if (td) {
-                            txtValue = td.textContent || td.innerText;
-                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                found = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (found) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            });
-        });
-    </script> *@

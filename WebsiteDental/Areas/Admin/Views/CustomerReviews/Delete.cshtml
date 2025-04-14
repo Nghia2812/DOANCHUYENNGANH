@@ -40,11 +40,38 @@
         border-left: 4px solid #dc3545;
     }
 
+    .alert-box {
+        background-color: #fff4f5;
+        border-left: 4px solid #dc3545;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+    }
+
+    .alert-title {
+        color: #dc3545;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+        .alert-title i {
+            margin-right: 8px;
+        }
+
+    .alert-message {
+        margin-bottom: 0;
+        color: #555;
+    }
+
+    /* Customer review card styles */
     .review-info {
         display: flex;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         padding-bottom: 20px;
         border-bottom: 1px solid #f0f0f0;
+        align-items: flex-start; /* Align items to the top */
     }
 
     .review-image {
@@ -52,33 +79,37 @@
         height: 120px;
         border-radius: 5px;
         object-fit: cover;
-        margin-right: 20px;
+        margin-right: 25px; /* Increased margin */
         border: 1px solid #e0e0e0;
     }
 
     .review-header {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px; /* Add consistent spacing between elements */
     }
 
     .customer-name {
         font-size: 22px;
         font-weight: 600;
         color: #1a3b5d;
-        margin-bottom: 5px;
+        margin: 0 0 4px 0; /* Adjusted margins */
     }
 
     .customer-email {
         font-size: 16px;
         color: #666;
-        margin-bottom: 10px;
+        margin: 0 0 8px 0; /* Adjusted margins */
     }
 
     .review-status {
         display: inline-block;
-        padding: 3px 8px;
+        padding: 4px 10px; /* Slightly larger padding */
         border-radius: 12px;
         font-size: 12px;
-        margin-bottom: 10px;
+        margin: 0 0 8px 0; /* Adjusted margins */
+        font-weight: 500; /* Make it slightly bolder */
     }
 
     .status-active {
@@ -91,37 +122,36 @@
         color: #c62828;
     }
 
-    .details-section {
-        margin-bottom: 30px;
+    .review-rating {
+        margin-top: 5px;
     }
 
-    .section-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #1a3b5d;
-        margin-bottom: 15px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .info-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+    /* Make the info summary more spaced out */
+    .info-summary {
+        background-color: #f9f9f9;
+        padding: 20px; /* Increased padding */
+        border-radius: 5px;
+        margin-bottom: 25px; /* Increased margin */
     }
 
     .info-item {
-        margin-bottom: 8px;
+        display: flex;
+        margin-bottom: 12px; /* Increased spacing between items */
+        font-size: 14px;
+        align-items: baseline;
     }
 
     .info-label {
         font-weight: 500;
-        color: #666;
-        margin-bottom: 3px;
+        color: #555; /* Slightly darker */
+        width: 150px;
+        flex-shrink: 0;
     }
 
     .info-value {
         color: #333;
+        flex: 1;
+        padding-left: 15px; /* Add left padding for better separation */
     }
 
     .text-block {
@@ -196,9 +226,7 @@
         }
 
     /* Đáp ứng thiết bị di động */
-    @@media(max - width: 992px)
-
-    {
+    @@media (max-width: 992px) {
         .content-wrapper
 
     {
@@ -217,19 +245,23 @@
         height: 100px;
     }
 
-    .info-grid {
-        grid-template-columns: 1fr;
+    .info-item {
+        flex-direction: column;
+    }
+
+    .info-label {
+        width: 100%;
+        margin-bottom: 3px;
     }
 
     }
 
-        .product-image {
-            width: 200px; /* Hoặc độ rộng cụ thể ví dụ: 300px */
-            height: 200px; /* Để ảnh tự động điều chỉnh chiều cao */
-            border-radius: 10px; /* Bo góc ảnh nếu muốn */
-            object-fit: cover; /* Giữ tỷ lệ khung hình nhưng cắt bớt nếu cần */
-        }
-
+    .product-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 5px;
+        object-fit: cover;
+    }
 </style>
 
 <div class="content-wrapper">
@@ -239,22 +271,28 @@
     </div>
 
     <div class="delete-container">
+        <div class="alert-box">
+            <div class="alert-title">
+                <i class="fa fa-exclamation-triangle"></i>
+                Warning
+            </div>
+            <p class="alert-message">You are about to delete this review from the system. This action cannot be undone.</p>
+        </div>
+
         <!-- Thông tin tổng quan của review -->
         <div class="review-info">
-                <div class="review-image-container">
-                    @if (Model.ImageData != null && Model.ImageData.Length > 0)
-                    {
-                        <img src="@Model.ImageData" alt="Product Image" class="product-image" />
-
-                    }
-                    else
-                    {
-                        <div class="review-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
-                            <i class="fa fa-comment" style="font-size: 40px; color: #aaa;"></i>
-                        </div>
-                    }
-                </div>
-
+            <div class="review-image-container">
+                @if (Model.ImageData != null && Model.ImageData.Length > 0)
+                {
+                    <img src="@Model.ImageData" alt="Product Image" class="product-image" />
+                }
+                else
+                {
+                    <div class="review-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                        <i class="fa fa-comment" style="font-size: 40px; color: #aaa;"></i>
+                    </div>
+                }
+            </div>
 
             <div class="review-header">
                 <h2 class="customer-name">@Model.Customer</h2>
@@ -273,42 +311,31 @@
             </div>
         </div>
 
-        <!-- Cảnh báo xóa -->
-        <div class="warning-box">
-            <div class="warning-title">
-                <i class="fa fa-exclamation-circle"></i> Important Note
+        <!-- Thông tin tóm tắt -->
+        <div class="info-summary">
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.Customer)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.Customer)</div>
             </div>
-            <p>This action cannot be undone. When you delete this review, all related data will be permanently removed from the system.</p>
-        </div>
-
-        <!-- Thông tin chi tiết review -->
-        <div class="details-section">
-            <h3 class="section-title">Review Details</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Customer)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.Customer)</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Email)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.Email)</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.Rating)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.Rating) <i class="fa fa-star text-warning"></i></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.CreatedAt)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.CreatedAt)</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.IsActive)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.IsActive)</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">@Html.DisplayNameFor(model => model.User)</div>
-                    <div class="info-value">@Html.DisplayFor(model => model.User.Id)</div>
-                </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.Email)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.Email)</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.Rating)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.Rating) <i class="fa fa-star text-warning"></i></div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.CreatedAt)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.CreatedAt)</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.IsActive)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.IsActive)</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">@Html.DisplayNameFor(model => model.User)</div>
+                <div class="info-value">@Html.DisplayFor(model => model.User.Id)</div>
             </div>
         </div>
 
@@ -327,7 +354,7 @@
             </div>
         </div>
 
-        <!-- Action buttons -->
+        <!-- Form xác nhận xóa -->
         <form asp-action="Delete">
             <input type="hidden" asp-for="Id" />
             <div class="action-buttons">
