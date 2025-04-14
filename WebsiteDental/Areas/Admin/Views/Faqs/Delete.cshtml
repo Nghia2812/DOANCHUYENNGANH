@@ -1,0 +1,192 @@
+﻿@model WebsiteDental.Models.Faq
+@{
+    ViewData["Title"] = "Xóa câu hỏi thường gặp";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 10px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .detail-item {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+        .detail-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+    .detail-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 5px;
+    }
+
+    .detail-value {
+        color: #333;
+        line-height: 1.5;
+    }
+
+    .btn-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .details-container
+
+    {
+        padding: 15px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xóa câu hỏi thường gặp</h4>
+        <p><i class="fa fa-exclamation-triangle"></i> Bạn có chắc chắn muốn xóa câu hỏi này không?</p>
+    </div>
+
+    <div class="details-container">
+        <div class="detail-item">
+            <div class="detail-label">
+                @Html.DisplayNameFor(model => model.Question)
+            </div>
+            <div class="detail-value">
+                @Html.DisplayFor(model => model.Question)
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-label">
+                @Html.DisplayNameFor(model => model.Answer)
+            </div>
+            <div class="detail-value">
+                @Html.DisplayFor(model => model.Answer)
+            </div>
+        </div>
+
+        <div class="detail-item">
+            <div class="detail-label">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </div>
+            <div class="detail-value">
+                @if (Model.IsActive == true)
+                {
+                    <span class="badge badge-success">Đang hiển thị</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Không hiển thị</span>
+                }
+            </div>
+        </div>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="btn-container">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Xác nhận xóa
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

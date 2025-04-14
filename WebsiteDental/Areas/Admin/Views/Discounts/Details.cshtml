@@ -1,0 +1,200 @@
+﻿@model WebsiteDental.Models.Discount
+@{
+    ViewData["Title"] = "Chi tiết mã giảm giá";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 15px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .details-row {
+        display: flex;
+        border-bottom: 1px solid #e9ecef;
+        padding: 10px 0;
+    }
+
+    .details-label {
+        width: 25%;
+        font-weight: 500;
+        color: #495057;
+        padding-right: 15px;
+    }
+
+    .details-value {
+        width: 75%;
+        color: #212529;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        color: white;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+
+    @@media(max - width: 992px) {
+            .content-wrapper {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .details-container {
+                padding: 15px;
+            }
+
+            .details-label {
+                width: 35%;
+            }
+
+            .details-value {
+                width: 65%;
+            }
+        }
+
+        .doctor-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 1px solid #e0e0e0;
+        }
+    </style>
+
+    <div class="content-wrapper">
+        <div class="page-intro">
+            <h4>Chi tiết mã giảm giá</h4>
+            <p>Xem thông tin chi tiết của mã giảm giá.</p>
+        </div>
+
+        <div class="details-container">
+            <div class="details-row">
+                <div class="details-label">Mã giảm giá</div>
+                <div class="details-value">@Html.DisplayFor(model => model.DiscountCode)</div>
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Phần trăm giảm</div>
+                <div class="details-value">@Html.DisplayFor(model => model.DiscountPercentage)%</div>
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Ngày bắt đầu</div>
+                <div class="details-value">@Html.DisplayFor(model => model.StartDate)</div>
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Ngày kết thúc</div>
+                <div class="details-value">@Html.DisplayFor(model => model.EndDate)</div>
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Trạng thái</div>
+                @if (Model.IsActive == true)
+                {
+                    <div class="doctor-status status-active">Hoạt động</div>
+                }
+                else
+                {
+                    <div class="doctor-status status-inactive">Ngừng hoạt động</div>
+                }
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Đường dẫn hình ảnh</div>
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="#" class="doctor-image" />
+                }
+                else
+                {
+                    <div class="doctor-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f0f0;">
+                        <i class="fa fa-user-md" style="font-size: 50px; color: #aaa;"></i>
+                    </div>
+                }
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Giá gốc</div>
+                <div class="details-value">@Html.DisplayFor(model => model.OriginalPrice)</div>
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Giá cuối cùng</div>
+                <div class="details-value">@Html.DisplayFor(model => model.FinalPrice)</div>
+            </div>
+
+            <div class="details-row">
+                <div class="details-label">Danh mục</div>
+                <div class="details-value">@Html.DisplayFor(model => model.CategoryId)</div>
+            </div>
+
+            <div class="action-buttons">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                    <i class="fa fa-edit"></i> Chỉnh sửa
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>

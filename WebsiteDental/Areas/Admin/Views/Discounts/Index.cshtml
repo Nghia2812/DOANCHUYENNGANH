@@ -1,0 +1,271 @@
+﻿@model IEnumerable<WebsiteDental.Models.Discount>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin */
+    }
+
+        .table-header h5 {
+            margin: 0; /* Loại bỏ margin mặc định */
+        }
+
+    .table-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px; /* Giảm padding */
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+        .compact-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table th {
+            padding: 8px; /* Giảm padding */
+            color: #495057;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            padding: 6px 8px; /* Giảm padding */
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: rgba(0,123,255,0.04);
+        }
+
+    .create-btn {
+        display: inline-block;
+        background-color: #1a3b5d;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+        .create-btn:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .action-links {
+        white-space: nowrap;
+    }
+
+        .action-links a {
+            display: inline-block;
+            margin: 0 3px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #1a3b5d;
+        }
+
+            .action-links a:hover {
+                background-color: #f0f0f0;
+            }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+
+        .product-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý mã giảm giá</h4>
+        <p>Cập nhật thông tin mã giảm giá nhanh chóng và hiệu quả.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h5>Danh sách mã giảm giá</h5>
+            <a asp-action="Create" class="create-btn">
+                <i class="fa fa-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+        <table class="compact-table">
+            <thead>
+                    <tr>
+                        <th>Mã giảm giá</th>
+                        <th>Phần trăm giảm</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Trạng thái</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá gốc</th>
+                        <th>Giá sau giảm</th>
+                        <th>Danh mục</th>
+                        <th>Thao tác</th>
+                    </tr>
+
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    @Html.DisplayFor(modelItem => item.DiscountCode)
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DiscountPercentage)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                                <td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <span class="status-active">Hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-inactive">Ngừng hoạt động</span>
+                                    }
+                                </td>
+                            <td>
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <img src="@item.ImageUrl" alt="#" class="product-img" />
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OriginalPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FinalPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category.Id)
+                            </td>
+                            <td class="action-links">
+                                <a asp-action="Edit" asp-route-id="@item.Id" title="Chỉnh sửa">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.Id" title="Chi tiết">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" title="Xóa">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10" style="text-align: center; padding: 15px;">
+                            Chưa có mã giảm giá nào. Vui lòng thêm mới!
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*     <script>
+        document.getElementById("imageUpload").addEventListener("change", function (event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("currentImage").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                // Gửi ảnh lên server
+                let formData = new FormData();
+                formData.append("file", file);
+
+                fetch("/Admin/Products/UploadImage", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(imagePath => {
+                    document.getElementById("ImagePath").value = imagePath; // Gán đường dẫn ảnh vào input ẩn
+                })
+                .catch(error => console.error("Lỗi upload ảnh:", error));
+            }
+        });
+    </script> *@

@@ -1,0 +1,252 @@
+﻿@model WebsiteDental.Models.Discount
+@{
+    ViewData["Title"] = "Xóa mã giảm giá";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #dc3545;
+        }
+
+    .delete-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .warning-box {
+        background-color: #fff8f8;
+        border-left: 4px solid #dc3545;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .warning-title {
+        font-size: 18px;
+        color: #dc3545;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .warning-message {
+        color: #555;
+        font-size: 14px;
+    }
+
+    .details-section {
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .info-item {
+        margin-bottom: 8px;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #666;
+        margin-bottom: 3px;
+    }
+
+    .info-value {
+        color: #333;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media(max - width: 992px)
+
+    {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xóa mã giảm giá</h4>
+        <p>Xác nhận xóa mã giảm giá khỏi hệ thống</p>
+    </div>
+
+    <div class="delete-container">
+        <div class="warning-box">
+            <div class="warning-title">Cảnh báo!</div>
+            <div class="warning-message">Bạn có chắc chắn muốn xóa mã giảm giá này? Hành động này không thể hoàn tác.</div>
+        </div>
+
+        <!-- Thông tin cơ bản -->
+        <div class="details-section">
+            <h3 class="section-title">Thông tin mã giảm giá</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Mã giảm giá</div>
+                    <div class="info-value"><strong>@Model.DiscountCode</strong></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Phần trăm giảm giá</div>
+                    <div class="info-value">@Model.DiscountPercentage%</div>
+                </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngày bắt đầu</div>
+                        <div class="info-value">@Model.StartDate?.ToString("dd/MM/yyyy")</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ngày kết thúc</div>
+                        <div class="info-value">@Model.EndDate?.ToString("dd/MM/yyyy")</div>
+                    </div>
+
+            </div>
+        </div>
+
+        <!-- Thông tin giá -->
+        <div class="details-section">
+            <h3 class="section-title">Thông tin giá</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Giá gốc</div>
+                    <div class="info-value">@String.Format("{0:N0}", Model.OriginalPrice) đ</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Giá sau giảm</div>
+                    <div class="info-value">@String.Format("{0:N0}", Model.FinalPrice) đ</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Trạng thái</div>
+                    <div class="info-value">
+                        @if (Model.IsActive == true)
+                        {
+                            <span class="status-badge status-active">Đang hoạt động</span>
+                        }
+                        else
+                        {
+                            <span class="status-badge status-inactive">Không hoạt động</span>
+                        }
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Thuộc danh mục</div>
+                    <div class="info-value">@Model.Category.CategoryName</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form xóa -->
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Xác nhận xóa
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

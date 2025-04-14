@@ -227,7 +227,36 @@
         </div>
     </div>
 
-    <!-- Promo banners -->
+    <!-- Các loại khuyễn mãi -->
+    <!-- Sản phẩm bán chạy -->
+    <div class="category-section">
+        <h3 class="section-title">SẢN PHẨM BÁN CHẠY</h3>
+        <div class="row">
+
+            @foreach (var n in Discounts)
+            {
+                <!-- Sản phẩm bán chạy -->
+                <div class="col-lg-3 col-md-4 col-6 mb-4">
+                    <div class="product-card">
+                        <div class="discount-badge">-@n.DiscountPercentage%</div>
+                        <div class="product-img">
+                            <img src="@n.ImageUrl" alt="Product">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">@n.DiscountCode</h5>
+                            <div class="product-price">
+                                <span class="current-price">@n.FinalPrice</span>
+                                <span class="original-price">@n.OriginalPrice</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+
     <!-- Promo banners -->
     <div class="row justify-content-end">
         <div class="col-md-2 mb-4">
@@ -266,31 +295,7 @@
     </div>
 
     <!-- KHUYẾN MÃI HOT SECTION -->
-    <div class="category-section">
-        <h3 class="section-title">KHUYẾN MÃI HOT</h3>
-        <div class="row">
-            @foreach (var n in Discounts)
-            {
-                <!-- Promotion items - 4 in a row -->
-                <div class="col-md-3 col-6 mb-4">
-                    <div class="product-card">
-                        <div class="discount-badge">-@n.DiscountPercentage%</div>
-                        <div class="product-img">
-                            <img src="@n.ImageUrl" alt="Product">
-                        </div>
-                        <div class="product-info">
-                            <h5 class="product-title">@n.DiscountCode</h5>
-                            <div class="product-price">
-                                <span class="current-price">@n.OriginalPrice</span>
-                                <span class="original-price">@n.FinalPrice</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }   
-
-        </div>
-    </div>
+ 
 
     <!-- Đối tác & Thương hiệu -->
     <div class="category-section">
@@ -316,36 +321,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Sản phẩm bán chạy -->
-    <div class="category-section">
-        <h3 class="section-title">SẢN PHẨM BÁN CHẠY</h3>
-        <div class="row">
-
-            @foreach (var n in Discounts)
-            {
-                <!-- Sản phẩm bán chạy -->
-                <div class="col-lg-3 col-md-4 col-6 mb-4">
-                    <div class="product-card">
-                        <div class="discount-badge">-@n.DiscountPercentage%</div>
-                        <div class="product-img">
-                            <img src="@n.ImageUrl" alt="Product">
-                        </div>
-                        <div class="product-info">
-                            <h5 class="product-title">@n.DiscountCode</h5>
-                            <div class="product-price">
-                                <span class="current-price">@n.FinalPrice</span>
-                                <span class="original-price">@n.OriginalPrice</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            } 
-
-
-        </div>
-    </div>
-
 
     <!-- Đăng ký nhận tin -->
     <div class="category-section" style="background: linear-gradient(to right, #f9f9f9, #ffffff);">
@@ -445,7 +420,4 @@
             </div>
         </div>
     </div>
-
-
-
 </div>

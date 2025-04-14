@@ -1,6 +1,6 @@
-﻿@model WebsiteDental.Models.ServiceCategory
+﻿@model WebsiteDental.Models.DoctorsCategory
 @{
-    ViewData["Title"] = "Xóa danh mục dịch vụ";
+    ViewData["Title"] = "Xóa danh mục bác sĩ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,23 +10,23 @@
     }
 
     .content-wrapper {
-        margin-left: 230px;
-        padding: 15px 20px 0 20px;
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
     }
 
     .page-intro {
-        margin-bottom: 15px;
+        margin-bottom: 15px; /* Khoảng cách với form */
     }
 
         .page-intro h4 {
-            margin-top: 0;
-            margin-bottom: 5px;
-            color: #dc3545;
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
         }
 
         .page-intro p {
             margin-top: 0;
             margin-bottom: 10px;
+            color: #dc3545;
         }
 
     .delete-container {
@@ -35,66 +35,26 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         padding: 20px;
         margin-bottom: 20px;
-        border-left: 4px solid #dc3545;
     }
 
-    .delete-warning {
+    .warning-box {
         background-color: #fff8f8;
-        border-radius: 5px;
+        border-left: 4px solid #dc3545;
         padding: 15px;
         margin-bottom: 20px;
-        border: 1px solid #ffcccc;
+        border-radius: 0 5px 5px 0;
     }
 
-        .delete-warning i {
-            color: #dc3545;
-            margin-right: 10px;
-            font-size: 18px;
-        }
-
-    .category-info {
-        display: flex;
-        margin-bottom: 20px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .category-image {
-        width: 100px;
-        height: 100px;
-        border-radius: 5px;
-        object-fit: cover;
-        margin-right: 20px;
-        border: 1px solid #e0e0e0;
-    }
-
-    .category-header {
-        flex: 1;
-    }
-
-    .category-name {
-        font-size: 20px;
+    .warning-title {
+        font-size: 18px;
+        color: #dc3545;
         font-weight: 600;
-        color: #1a3b5d;
         margin-bottom: 5px;
     }
 
-    .category-status {
-        display: inline-block;
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-size: 12px;
-        margin-bottom: 10px;
-    }
-
-    .status-active {
-        background-color: #e8f5e9;
-        color: #2e7d32;
-    }
-
-    .status-inactive {
-        background-color: #ffebee;
-        color: #c62828;
+    .warning-message {
+        color: #555;
+        font-size: 14px;
     }
 
     .details-section {
@@ -130,13 +90,6 @@
         color: #333;
     }
 
-    .text-block {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
-
     .action-buttons {
         margin-top: 20px;
         display: flex;
@@ -152,6 +105,7 @@
         transition: all 0.3s;
         border: none;
         cursor: pointer;
+        font-size: 14px;
     }
 
         .btn i {
@@ -179,21 +133,14 @@
         }
 
     /* Đáp ứng thiết bị di động */
-    @@media (max-width: 992px) {
+    @@media(max - width: 992px)
+
+    {
         .content-wrapper
 
     {
         margin-left: 0;
         padding: 10px;
-    }
-
-    .category-info {
-        flex-direction: column;
-    }
-
-    .category-image {
-        margin-right: 0;
-        margin-bottom: 15px;
     }
 
     .info-grid {
@@ -205,47 +152,38 @@
 
 <div class="content-wrapper">
     <div class="page-intro">
-        <h4>Xóa danh mục dịch vụ</h4>
-        <p>Bạn có chắc chắn muốn xóa danh mục dịch vụ này?</p>
+        <h4>Xóa danh mục bác sĩ</h4>
+        <p>Xác nhận xóa thông tin danh mục bác sĩ từ hệ thống</p>
     </div>
 
     <div class="delete-container">
-        <div class="delete-warning">
-            <i class="fa fa-exclamation-triangle"></i>
-            <strong>Cảnh báo:</strong> Hành động này không thể hoàn tác. Việc xóa danh mục có thể ảnh hưởng đến các dịch vụ liên quan.
+        <div class="warning-box">
+            <div class="warning-title">Cảnh báo!</div>
+            <div class="warning-message">Bạn có chắc chắn muốn xóa danh mục này? Hành động này không thể hoàn tác.</div>
         </div>
-
-      
 
         <!-- Thông tin chi tiết -->
         <div class="details-section">
-            <h3 class="section-title">Thông tin danh mục</h3>
+            <h3 class="section-title">Thông tin danh mục sẽ bị xóa</h3>
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label">Tên danh mục</div>
                     <div class="info-value">@Model.CategoryName</div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">Thứ tự hiển thị</div>
-                    <div class="info-value">@Model.DisplayOrder</div>
-                </div>          
+                    <div class="info-label">Icon</div>
+                    <div class="info-value">@Model.Icon</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Vị trí</div>
+                    <div class="info-value">@Model.Position</div>
+                </div>
             </div>
         </div>
 
-        <!-- Mô tả -->
-        @if (!string.IsNullOrEmpty(Model.Description))
-        {
-            <div class="details-section">
-                <h3 class="section-title">Mô tả danh mục</h3>
-                <div class="text-block">
-                    @Model.Description
-                </div>
-            </div>
-        }
-
-        <!-- Action buttons -->
+        <!-- Form xóa -->
         <form asp-action="Delete">
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CategoryId" />
             <div class="action-buttons">
                 <button type="submit" class="btn btn-danger">
                     <i class="fa fa-trash"></i> Xác nhận xóa

@@ -1,0 +1,471 @@
+﻿@model WebsiteDental.Models.DoctorsCategory
+@{
+    ViewData["Title"] = "Cập nhật chuyên khoa bác sĩ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 15px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #1a3b5d;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #6c757d;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+        .form-header h5 {
+            margin: 0;
+            color: #1a3b5d;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        padding: 8px 12px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    .btn-submit {
+        background-color: #1a3b5d;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .btn-submit:hover {
+            background-color: #2c5282;
+        }
+
+    .back-link {
+        display: inline-block;
+        color: #1a3b5d;
+        text-decoration: none;
+        margin-top: 15px;
+        font-weight: 500;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    /* Icon picker styles */
+    .icon-picker-container {
+        position: relative;
+    }
+
+    .selected-icon-display {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+        .selected-icon-display i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+    .icon-picker-dropdown {
+        display: none;
+        position: absolute;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: white;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+        padding: 10px;
+        margin-top: 5px;
+    }
+
+    .icon-search {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .icon-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+    }
+
+    .icon-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .icon-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .icon-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .icon-item span {
+            font-size: 10px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+
+    .icon-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .icon-category {
+        padding: 5px 10px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+        .icon-category.active {
+            background-color: #1a3b5d;
+            color: white;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .icon-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý chuyên khoa bác sĩ</h4>
+        <p>Cập nhật thông tin chuyên khoa bác sĩ trong hệ thống.</p>
+    </div>
+
+    <div class="form-container">
+        <div class="form-header">
+            <h5>Cập nhật chuyên khoa</h5>
+        </div>
+
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategoryId" />
+
+            <div class="form-group">
+                <label asp-for="CategoryName" class="control-label">Tên chuyên khoa</label>
+                <input asp-for="CategoryName" class="form-control" placeholder="Nhập tên chuyên khoa" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Icon" class="control-label">Icon</label>
+                <div class="icon-picker-container">
+                    <input asp-for="Icon" type="hidden" id="selectedIcon" />
+                    <div class="selected-icon-display" id="iconDisplay">
+                        <i class="fa @(string.IsNullOrEmpty(Model.Icon) ? "fa-plus" : Model.Icon)" id="selectedIconPreview"></i>
+                        <span id="selectedIconName">@(string.IsNullOrEmpty(Model.Icon) ? "Chọn icon" : Model.Icon)</span>
+                    </div>
+                    <div class="icon-picker-dropdown" id="iconPickerDropdown">
+                        <input type="text" class="icon-search" id="iconSearch" placeholder="Tìm kiếm icon..." />
+                        <div class="icon-categories" id="iconCategories">
+                            <div class="icon-category active" data-category="medical">Y tế</div>
+                            <div class="icon-category" data-category="communication">Giao tiếp</div>
+                            <div class="icon-category" data-category="interface">Giao diện</div>
+                            <div class="icon-category" data-category="general">Tổng hợp</div>
+                        </div>
+                        <div class="icon-grid" id="iconGrid">
+                            <!-- Icons will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <span asp-validation-for="Icon" class="text-danger"></span>
+                <small class="text-muted">Chọn biểu tượng phù hợp với chuyên khoa</small>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Position" class="control-label">Vị trí</label>
+                <input asp-for="Position" class="form-control" type="number" placeholder="Nhập số thứ tự hiển thị" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+                <small class="text-muted">Số thứ tự hiển thị chuyên khoa (thấp hơn sẽ hiển thị trước)</small>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit">
+                    <i class="fa fa-save"></i> Lưu thay đổi
+                </button>
+                <a asp-action="Index" class="btn btn-secondary ml-2">
+                    <i class="fa fa-times"></i> Hủy bỏ
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <a asp-action="Index" class="back-link">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dental and medical icons
+            const medicalIcons = [
+                { name: 'fa-tooth', label: 'Răng' },
+                { name: 'fa-stethoscope', label: 'Ống nghe' },
+                { name: 'fa-user-md', label: 'Bác sĩ' },
+                { name: 'fa-hospital', label: 'Bệnh viện' },
+                { name: 'fa-heartbeat', label: 'Nhịp tim' },
+                { name: 'fa-ambulance', label: 'Cứu thương' },
+                { name: 'fa-pills', label: 'Thuốc' },
+                { name: 'fa-prescription-bottle-alt', label: 'Lọ thuốc' },
+                { name: 'fa-microscope', label: 'Kính hiển vi' },
+                { name: 'fa-brain', label: 'Não' },
+                { name: 'fa-lungs', label: 'Phổi' },
+                { name: 'fa-bone', label: 'Xương' },
+                { name: 'fa-wheelchair', label: 'Xe lăn' },
+                { name: 'fa-procedures', label: 'Giường bệnh' },
+                { name: 'fa-syringe', label: 'Ống tiêm' },
+                { name: 'fa-notes-medical', label: 'Hồ sơ y tế' },
+                { name: 'fa-medkit', label: 'Hộp y tế' },
+                { name: 'fa-heart', label: 'Tim' }
+            ];
+
+            // Communication icons
+            const communicationIcons = [
+                { name: 'fa-phone', label: 'Điện thoại' },
+                { name: 'fa-envelope', label: 'Thư' },
+                { name: 'fa-comment', label: 'Bình luận' },
+                { name: 'fa-comments', label: 'Trò chuyện' },
+                { name: 'fa-video', label: 'Video' },
+                { name: 'fa-headset', label: 'Tai nghe' },
+                { name: 'fa-bell', label: 'Chuông' },
+                { name: 'fa-calendar', label: 'Lịch' }
+            ];
+
+            // Interface icons
+            const interfaceIcons = [
+                { name: 'fa-search', label: 'Tìm kiếm' },
+                { name: 'fa-home', label: 'Trang chủ' },
+                { name: 'fa-user', label: 'Người dùng' },
+                { name: 'fa-cog', label: 'Cài đặt' },
+                { name: 'fa-info-circle', label: 'Thông tin' },
+                { name: 'fa-question-circle', label: 'Trợ giúp' },
+                { name: 'fa-clock', label: 'Đồng hồ' },
+                { name: 'fa-map-marker-alt', label: 'Địa điểm' }
+            ];
+
+            // General icons
+            const generalIcons = [
+                { name: 'fa-star', label: 'Sao' },
+                { name: 'fa-check', label: 'Đánh dấu' },
+                { name: 'fa-plus', label: 'Thêm' },
+                { name: 'fa-minus', label: 'Trừ' },
+                { name: 'fa-times', label: 'Đóng' },
+                { name: 'fa-exclamation-triangle', label: 'Cảnh báo' },
+                { name: 'fa-thumbs-up', label: 'Thích' },
+                { name: 'fa-award', label: 'Giải thưởng' }
+            ];
+
+            // All categories
+            const allIcons = {
+                'medical': medicalIcons,
+                'communication': communicationIcons,
+                'interface': interfaceIcons,
+                'general': generalIcons
+            };
+
+            const iconDisplay = document.getElementById('iconDisplay');
+            const iconPickerDropdown = document.getElementById('iconPickerDropdown');
+            const iconGrid = document.getElementById('iconGrid');
+            const iconSearch = document.getElementById('iconSearch');
+            const iconCategories = document.getElementById('iconCategories');
+            const selectedIcon = document.getElementById('selectedIcon');
+            const selectedIconPreview = document.getElementById('selectedIconPreview');
+            const selectedIconName = document.getElementById('selectedIconName');
+
+            let currentCategory = 'medical';
+
+            // Toggle dropdown
+            iconDisplay.addEventListener('click', function() {
+                iconPickerDropdown.style.display = iconPickerDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!iconDisplay.contains(event.target) && !iconPickerDropdown.contains(event.target)) {
+                    iconPickerDropdown.style.display = 'none';
+                }
+            });
+
+            // Search functionality
+            iconSearch.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                renderIcons(currentCategory, searchTerm);
+            });
+
+            // Category selection
+            iconCategories.addEventListener('click', function(event) {
+                if (event.target.classList.contains('icon-category')) {
+                    const category = event.target.getAttribute('data-category');
+                    currentCategory = category;
+
+                    // Update active class
+                    document.querySelectorAll('.icon-category').forEach(cat => {
+                        cat.classList.remove('active');
+                    });
+                    event.target.classList.add('active');
+
+                    // Render icons
+                    renderIcons(category, iconSearch.value.toLowerCase());
+                }
+            });
+
+            // Render icons for a category
+            function renderIcons(category, searchTerm = '') {
+                iconGrid.innerHTML = '';
+
+                const icons = allIcons[category].filter(icon =>
+                    icon.name.toLowerCase().includes(searchTerm) ||
+                    icon.label.toLowerCase().includes(searchTerm)
+                );
+
+                icons.forEach(icon => {
+                    const iconItem = document.createElement('div');
+                    iconItem.className = 'icon-item';
+                    iconItem.setAttribute('data-icon', icon.name);
+
+                    iconItem.innerHTML = `
+                        <i class="fa ${icon.name}"></i>
+                        <span>${icon.label}</span>
+                    `;
+
+                    iconItem.addEventListener('click', function() {
+                        selectedIcon.value = icon.name;
+                        selectedIconPreview.className = `fa ${icon.name}`;
+                        selectedIconName.textContent = icon.label;
+                        iconPickerDropdown.style.display = 'none';
+                    });
+
+                    iconGrid.appendChild(iconItem);
+                });
+            }
+
+            // Initial render
+            renderIcons('medical');
+
+            // Check if we have a previously selected icon
+            if (selectedIcon.value) {
+                const currentIcon = selectedIcon.value;
+
+                // Find the icon in our collections
+                let foundIcon = null;
+                let foundCategory = 'medical';
+
+                for (const category in allIcons) {
+                    const icon = allIcons[category].find(i => i.name === currentIcon);
+                    if (icon) {
+                        foundIcon = icon;
+                        foundCategory = category;
+                        break;
+                    }
+                }
+
+                if (foundIcon) {
+                    selectedIconPreview.className = `fa ${foundIcon.name}`;
+                    selectedIconName.textContent = foundIcon.label;
+
+                    // Set active category
+                    currentCategory = foundCategory;
+                    document.querySelectorAll('.icon-category').forEach(cat => {
+                        cat.classList.remove('active');
+                        if (cat.getAttribute('data-category') === foundCategory) {
+                            cat.classList.add('active');
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+}
