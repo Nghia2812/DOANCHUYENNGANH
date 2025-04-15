@@ -177,6 +177,9 @@
                 <i class="fa fa-plus-circle"></i> Thêm mới
             </a>
         </div>
+            <div style="margin-bottom: 10px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên..." onkeyup="filterTable()" style="width: 100%; padding: 6px; border: 1px solid #ced4da; border-radius: 4px;">
+            </div>
         <table class="compact-table">
             <thead>
                     <tr>
@@ -255,3 +258,28 @@
         </table>
     </div>
 </div>
+    <script>
+             function filterTable() {
+            var input, filter, table, tr, tdName, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".compact-table"); // Chọn bảng bằng class thay vì id
+            tr = table.getElementsByTagName("tr");
+
+            // Bắt đầu từ i = 1 để bỏ qua hàng tiêu đề
+            for (i = 1; i < tr.length; i++) {
+                // Lấy ô đầu tiên chứa tên sản phẩm (index 0)
+                tdName = tr[i].getElementsByTagName("td")[0];
+
+                if (tdName) {
+                    txtValue = tdName.textContent || tdName.innerText;
+
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>

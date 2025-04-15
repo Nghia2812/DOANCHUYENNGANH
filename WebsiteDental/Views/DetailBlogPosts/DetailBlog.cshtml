@@ -1,4 +1,4 @@
-﻿@section Styles {
+﻿@* @section Styles {
     <link href="~/assets/css/DetailBlog.css" rel="stylesheet">
 }
 @model WebsiteDental.Models.BlogDetailViewModel
@@ -237,4 +237,321 @@
 
 
 
+</div> *@
+
+@section Styles {
+    <link href="~/assets/css/DetailBlogPosts.css" rel="stylesheet">
+}
+@model WebsiteDental.Models.BlogDetailViewModel
+@{
+    ViewData["Title"] = Model.BlogPost.Title;
+}
+
+<div class="main-wrapper">
+    <!-- Advertisement Banner Top -->
+    <div class="ad-banner">
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="badge bg-secondary text-white">Quảng cáo</span>
+            <a href="#" class="text-muted small">X</a>
+        </div>
+        <p class="mb-1 fw-bold">Khám Răng Định Kỳ - Ưu Đãi 30% Tháng 4</p>
+        <a href="#" class="btn btn-sm btn-outline-primary">Đặt lịch ngay</a>
+    </div>
+
+    <div class="hospital-section">
+        <div class="main-content">
+            <div class="image-category">
+                <img src="@Model.BlogPost.FeaturedImage" alt="Blog Image" class="img-fluid" />
+            </div>
+
+            <h1 class="mb-3 mt-3">@Model.BlogPost.Title</h1>
+           
+           <h2>I. GIỚI THIỆU</h2>
+            <h3>1. Tổng quan</h3>
+            <p>Khoa Răng - Hàm - Mặt - Bệnh viện Hữu Nghị Trung ương là một trong những đơn vị chuyên sâu hàng đầu về lĩnh vực Răng Hàm Mặt tại Việt Nam, với đội ngũ chuyên gia giàu kinh nghiệm và công nghệ tiên tiến.</p>
+
+            <h3>2. Đội ngũ chuyên gia</h3>
+            <p>Quy tụ nhiều chuyên gia đầu ngành, các giáo sư, phó giáo sư, tiến sĩ với nhiều năm kinh nghiệm trong lĩnh vực chuyên môn sâu về Răng Hàm Mặt.</p>
+
+            <h2>II. DỊCH VỤ CHUYÊN KHOA</h2>
+            <ul>
+                <li>Phẫu thuật chỉnh hình hàm mặt</li>
+                <li>Điều trị các dị tật bẩm sinh</li>
+                <li>Phục hồi chức năng sau chấn thương</li>
+            </ul>
+
+            <!-- Newsletter Signup -->
+            <div class="newsletter-signup mb-4">
+                <p class="fw-bold mb-2">Đăng ký nhận bản tin sức khỏe răng miệng hàng tuần</p>
+                <div class="input-group">
+                    <input type="email" class="form-control form-control-sm" placeholder="Email của bạn">
+                    <button class="btn btn-sm btn-primary">Đăng ký</button>
+                </div>
+            </div>
+
+            <div class="container py-3">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="text-center fw-bold mb-3">
+                            Sáng 5/10, tại Hội nghị biểu dương điển hình tiên tiến, người tốt, việc tốt tiêu biểu vinh danh
+                            Công dân Thủ đô ưu tú của TP Hà Nội, GS Nguyễn Thanh Liêm - Viện trưởng
+                            Viện Nghiên cứu Tế bào gốc & công nghệ gen Vinmec đã được trao tặng danh hiệu Công dân
+                            thủ đô ưu tú năm 2019.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <p>
+                            Công dân Thủ đô ưu tú là danh hiệu được UBND TP Hà Nội lần đầu tiên năm 2010 xét tặng cho
+                            những cá nhân có thành tích đặc biệt xuất sắc, tiêu biểu, nổi bật trong sáng tạo trong nhiều lĩnh vực
+                            của đời sống Thủ đô. Đây chính là một đợt phong cao của Hà Nội, thể hiện sự trân trọng và thành kính
+                            dành cho những tấm gương tiêu biểu học tập và lao động hết mình, vì một tình yêu thật thiết với
+                            Hà Nội.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12 text-center">
+                        <img src="https://th.bing.com/th/id/OIP.C2ICK2Ko7Y6VSx4UKJibgQHaEK?rs=1&pid=ImgDetMain" alt="Hình ảnh GS Nguyễn Thanh Liêm" class="img-fluid rounded mb-2">
+                    </div>
+                </div>
+
+                <!-- In-Content Advertisement -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="ad-banner">
+                            <small class="text-muted">Nội dung được tài trợ</small>
+                            <p class="mb-1">Công nghệ nha khoa hiện đại - Tại Nha Khoa ABC</p>
+                            <a href="#" class="btn btn-sm btn-outline-success">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <p>
+                            GS.TS Thầy thuốc nhân dân Nguyễn Thanh Liêm là bác sĩ và nhà khoa học đã có nhiều đóng góp
+                            nghiên cứu cấp nhà nước về trẻ em mắc bệnh nhiễm nghiêm và được nhận giải thưởng lớn, đã
+                            có 6 cuốn sách được xuất bản, hơn 200 công trình nghiên cứu y học, 75 công trình nghiên cứu
+                            được xuất bản trên các tạp chí y học quốc tế và trong nước.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12 text-center">
+                        <img src="https://th.bing.com/th/id/OIP.C2ICK2Ko7Y6VSx4UKJibgQHaEK?rs=1&pid=ImgDetMain" alt="Hình ảnh nghiên cứu khoa học" class="img-fluid rounded mb-2">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <p>
+                            Năm 2018, GS Liêm là bác sĩ đầu tiên và duy nhất đến điểm này của Việt Nam đã được trao
+                            giải thưởng Nikkei châu Á và những đóng góp trong lĩnh vực phẫu thuật nội soi và nghiên cứu
+                            ứng dụng để bào gốc, đặc phái đoàn Y khoa quốc tế, 40 công trình về phẫu thuật nổi bật được giới thiệu trên nhiều tạp chí quốc tế...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12 text-center">
+                        <img src="https://nhathuoc365.vn/images/banners/original/chinh-sach-cau-nha-thuoc-365-1657620319.jpg" alt="Hình ảnh giải thưởng" class="img-fluid rounded mb-2">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <p>
+                            Với những cống hiến xuất sắc trong ngành y, ông được phong tặng danh hiệu Anh hùng Lao động
+                            năm 2006, tặng Giải thưởng Hồ Chí Minh năm 2005, danh hiệu Thầy thuốc nhân dân. Năm 2019,
+                            GS Liêm là một trong Top 100 nhà khoa học châu Á tiêu biểu 2019.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="fw-bold small">
+                            Để đặt lịch khám tại Viện, Quý khách vui lòng bấm số HOTLINE hoặc đặt trực tiếp TẠI ĐÂY.
+                            Tải và đặt lịch nhanh trên ứng dụng MyVinmec để quản lý, theo dõi lịch hẹn một cách nhanh
+                            lẹ mọi lúc mọi nơi.
+                        </p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="working-time bg-primary text-white text-center rounded">
+                    <h3 style="color: white !important;">THỜI GIAN LÀM VIỆC</h3>
+                    <p style="color: white !important;">Hành chính: 7h30 - 16h30</p>
+                    <p style="color: white !important;">Khám & Điều trị: 7h30 - 17h00</p>
+                </div>
+            </div>
+
+            <!-- Advertisement in Sidebar -->
+            <div class="ad-sidebar mb-3">
+                <span class="badge bg-secondary text-white mb-1">Quảng cáo</span>
+                <img src="https://nhathuoc365.vn/images/banners/original/chinh-sach-cau-nha-thuoc-365-1657620319.jpg" alt="advertisement" class="img-fluid mb-2">
+                <p class="mb-1 small">Trồng răng Implant - Công nghệ Đức</p>
+                <a href="#" class="btn btn-sm btn-outline-primary">Tìm hiểu thêm</a>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="mb-3">BÀI VIẾT MỚI</h3>
+
+                @foreach (var post in Model.RelatedPosts)
+                {
+                    <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@post.Id" class="text-decoration-none text-dark">
+                        <div class="post d-flex align-items-center border-bottom pb-2">
+                            <img src="@post.FeaturedImage" alt="@post.Title" class="me-3" style="width: 80px; height: 60px; object-fit: cover;">
+                            <div>
+                                <h5 class="mb-1">@post.Title</h5>
+                                <small class="text-muted">@post.CreatedAt?.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+
+
+
+            <div class="sidebar-section">
+                <div class="registration-form">
+                    <h3 class="text-center mb-2">ĐĂNG KÝ NHẬN TƯ VẤN</h3>
+                    <form>
+                        <div class="mb-2">
+                            <input type="text" class="form-control form-control-sm" placeholder="Họ và tên (*)" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="tel" class="form-control form-control-sm" placeholder="Số điện thoại (*)" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="email" class="form-control form-control-sm" placeholder="Email">
+                        </div>
+                        <div class="mb-2">
+                            <textarea class="form-control form-control-sm" placeholder="Triệu chứng" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm w-100">ĐĂNG KÝ NGAY</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Popular Services Box -->
+            <div class="sidebar-section">
+                <h3 class="mb-2">DỊCH VỤ PHỔ BIẾN</h3>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0 py-2 border-bottom">
+                        <a href="#" class="d-flex align-items-center text-decoration-none">
+                            <span class="badge bg-primary rounded-pill me-2">1</span>
+                            <span class="text-dark small">Nhổ răng khôn an toàn</span>
+                        </a>
+                    </li>
+                    <li class="list-group-item px-0 py-2 border-bottom">
+                        <a href="#" class="d-flex align-items-center text-decoration-none">
+                            <span class="badge bg-primary rounded-pill me-2">2</span>
+                            <span class="text-dark small">Niềng răng thẩm mỹ</span>
+                        </a>
+                    </li>
+                    <li class="list-group-item px-0 py-2 border-bottom">
+                        <a href="#" class="d-flex align-items-center text-decoration-none">
+                            <span class="badge bg-primary rounded-pill me-2">3</span>
+                            <span class="text-dark small">Trồng răng Implant</span>
+                        </a>
+                    </li>
+                    <li class="list-group-item px-0 py-2">
+                        <a href="#" class="d-flex align-items-center text-decoration-none">
+                            <span class="badge bg-primary rounded-pill me-2">4</span>
+                            <span class="text-dark small">Tẩy trắng răng</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--HIỆN THỊ COMMENT CỦA KHÁCH HÀNG COMMENT LÊN BÀI VIÊT-->
+    <div class="comments-section mb-3">
+        <h3 class="mb-3">BÌNH LUẬN</h3>
+
+        @if (Model.Comments.Any())
+        {
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment mb-2">
+                    <div class="d-flex">
+                        <img src="~/assets/img/Services/anh1.jpg" class="rounded-circle me-2" style="width: 40px; height: 40px; object-fit: cover;">
+                        <div>
+                            <h5 class="mb-0">@comment.Name <small class="text-muted ms-1">(@comment.Email)</small></h5>
+                            <p class="mb-1">@comment.Comment</p>
+                            <small class="text-muted">
+                                @(comment.CreatedAt?.ToString("dd/MM/yyyy HH:mm") ?? "Không xác định")
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="small">Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+        }
+    </div>
+
+    <!--PHẦN BÌNH LUẬN COMMENT CỦA CHI TIẾT BÀI VIÊT-->
+    <div class="comment-form">
+        <div class="card">
+            <div class="card-header bg-secondary text-white py-2">
+                <h5 class="mb-0 fs-6">Để lại một bình luận</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/DetailBlogPosts/AddComment">
+                    <div class="alert alert-info py-2" role="alert">
+                        <small>Email của bạn sẽ không được hiển thị công khai. Các trường bắt buộc được đánh dấu *</small>
+                    </div>
+
+                    <input type="hidden" name="BlogId" value="@Model.BlogPost.Id" />
+
+                    <div class="mb-2">
+                        <label for="commentTextarea" class="form-label small">Bình luận *</label>
+                        <textarea class="form-control form-control-sm" id="commentTextarea" name="CommentText" rows="3" required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label for="nameInput" class="form-label small">Tên *</label>
+                            <input type="text" class="form-control form-control-sm" id="nameInput" name="UserName" required>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <label for="emailInput" class="form-label small">Email *</label>
+                            <input type="email" class="form-control form-control-sm" id="emailInput" name="UserEmail" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary btn-sm">Gửi Bình Luận</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Advertisement -->
+    <div class="ad-banner mb-3">
+        <span class="badge bg-secondary text-white mb-1">Quảng cáo</span>
+        <div class="row align-items-center">
+            <div class="col-3">
+                <img src="https://nhathuoc365.vn/images/banners/original/chinh-sach-cau-nha-thuoc-365-1657620319.jpg" alt="dental clinic ad" class="img-fluid rounded">
+            </div>
+            <div class="col-9 text-start">
+                <p class="mb-1 fw-bold">Ưu đãi khám răng toàn diện - Giảm 20% khi đặt lịch online</p>
+                <p class="small mb-1">Áp dụng từ 15/04/2025 đến 30/04/2025</p>
+                <a href="#" class="btn btn-sm btn-primary">Đặt lịch ngay</a>
+            </div>
+        </div>
+    </div>
 </div>

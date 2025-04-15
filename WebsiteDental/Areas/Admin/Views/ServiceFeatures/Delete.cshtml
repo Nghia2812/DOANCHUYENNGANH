@@ -1,0 +1,202 @@
+﻿@model WebsiteDental.Models.ServiceFeature
+@{
+    ViewData["Title"] = "Xóa tính năng dịch vụ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 15px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #1a3b5d;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+    .delete-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 4px solid #dc3545;
+    }
+
+    .warning-icon {
+        color: #dc3545;
+        font-size: 24px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .details-table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+        .details-table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .details-table tr:last-child {
+                border-bottom: none;
+            }
+
+        .details-table th {
+            padding: 12px 15px 12px 0;
+            width: 25%;
+            text-align: left;
+            color: #495057;
+            font-weight: 600;
+            vertical-align: top;
+        }
+
+        .details-table td {
+            padding: 12px 0;
+            color: #212529;
+        }
+
+    .action-button {
+        display: inline-block;
+        padding: 8px 16px;
+        margin-right: 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
+    .back-btn {
+        background-color: #f8f9fa;
+        color: #1a3b5d;
+        border: 1px solid #dee2e6;
+        text-decoration: none;
+    }
+
+        .back-btn:hover {
+            background-color: #e9ecef;
+            text-decoration: none;
+            color: #1a3b5d;
+        }
+
+    .status-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .icon-preview {
+        font-size: 24px;
+        margin-right: 10px;
+        color: #1a3b5d;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xóa tính năng dịch vụ</h4>
+        <p><i class="fa fa-exclamation-triangle warning-icon"></i> Bạn có chắc chắn muốn xóa tính năng này?</p>
+    </div>
+
+    <div class="delete-container">
+        <table class="details-table">
+            <tr>
+                <th>Tiêu đề:</th>
+                <td>@Html.DisplayFor(model => model.Title)</td>
+            </tr>
+            <tr>
+                <th>Mô tả:</th>
+                <td>@Html.DisplayFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <th>Biểu tượng:</th>
+                <td>
+                    @if (!string.IsNullOrEmpty(Model.Icon))
+                    {
+                        <i class="@Model.Icon icon-preview"></i>
+                    }
+                    @Html.DisplayFor(model => model.Icon)
+                </td>
+            </tr>
+            <tr>
+                <th>Thứ tự hiển thị:</th>
+                <td>@Html.DisplayFor(model => model.Order)</td>
+            </tr>
+            <tr>
+                <th>Trạng thái:</th>
+                <td>
+                    @if (Model.IsActive == true)
+                    {
+                        <span class="status-badge status-active">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge status-inactive">Ngừng hoạt động</span>
+                    }
+                </td>
+            </tr>
+        </table>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="action-button delete-btn">
+                <i class="fa fa-trash"></i> Xác nhận xóa
+            </button>
+            <a asp-action="Index" class="action-button back-btn">
+                <i class="fa fa-arrow-left"></i> Quay lại danh sách
+            </a>
+        </form>
+    </div>
+</div>
