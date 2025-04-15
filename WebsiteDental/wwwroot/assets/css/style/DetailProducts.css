@@ -883,3 +883,16 @@
     color: #999;
     margin: 0;
 }
+/* Hiệu ứng nhẹ nhàng */
+.card {
+    transition: box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+.card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
