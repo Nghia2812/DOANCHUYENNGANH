@@ -1,0 +1,885 @@
+﻿/* Các class riêng để tránh ghi đè */
+.prod-detail-container {
+    padding: 30px 0;
+}
+
+/* Danh mục bên trái */
+.prod-category-sidebar {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+    .prod-category-sidebar:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transform: translateY(-3px);
+    }
+
+.prod-category-title {
+    background-color: #0a58ca;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.prod-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.prod-category-item {
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s;
+}
+
+    .prod-category-item:last-child {
+        border-bottom: none;
+    }
+
+    .prod-category-item a {
+        display: block;
+        padding: 12px 15px;
+        color: #444;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+        .prod-category-item a:hover {
+            background-color: #f8f9fa;
+            color: #0a58ca;
+            padding-left: 20px;
+        }
+
+    .prod-category-item i {
+        margin-right: 8px;
+        color: #0a58ca;
+    }
+
+/* Banner quảng cáo */
+.prod-promo-banner {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+    .prod-promo-banner:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .prod-promo-banner img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+/* Chi tiết sản phẩm */
+.prod-product-main {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.prod-product-image {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+    .prod-product-image img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.5s ease;
+    }
+
+    .prod-product-image:hover img {
+        transform: scale(1.03);
+    }
+
+.prod-discount-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-weight: bold;
+    z-index: 2;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.prod-product-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.prod-product-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+    .prod-product-thumb.active {
+        border-color: #0a58ca;
+    }
+
+    .prod-product-thumb:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .prod-product-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.prod-product-info h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #222;
+    line-height: 1.3;
+}
+
+.prod-price {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.prod-price-old {
+    font-size: 18px;
+    color: #888;
+    text-decoration: line-through;
+}
+
+.prod-price-current {
+    font-size: 26px;
+    font-weight: 700;
+    color: #e41b23;
+}
+
+.prod-product-desc {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #0a58ca;
+}
+
+    .prod-product-desc p {
+        margin: 0;
+        line-height: 1.6;
+    }
+
+.prod-product-features {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.prod-feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ddd;
+}
+
+    .prod-feature-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+.prod-feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #e7f1ff;
+    color: #0a58ca;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.prod-quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    max-width: 150px;
+}
+
+.prod-quantity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+}
+
+    .prod-quantity-btn:first-child {
+        border-radius: 6px 0 0 6px;
+    }
+
+    .prod-quantity-btn:last-child {
+        border-radius: 0 6px 6px 0;
+    }
+
+    .prod-quantity-btn:hover {
+        background-color: #e9e9e9;
+    }
+
+.prod-quantity-input {
+    width: 70px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+.prod-add-cart {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #0a58ca;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+    .prod-add-cart:hover {
+        background-color: #084298;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(10,88,202,0.3);
+    }
+
+.prod-category {
+    color: #666;
+    font-size: 14px;
+}
+
+    .prod-category a {
+        color: #0a58ca;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+        .prod-category a:hover {
+            color: #084298;
+            text-decoration: underline;
+        }
+
+/* Responsive */
+@media (max-width: 991px) {
+    .prod-product-info h1 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 767px) {
+    .prod-product-image {
+        margin-bottom: 20px;
+    }
+
+    .prod-product-thumbnails {
+        justify-content: center;
+    }
+}
+
+.vshop-consultant {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.vshop-consultant-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.vshop-consultant-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+    .vshop-consultant-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.vshop-consultant-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.vshop-consultant-title {
+    color: #777;
+    font-size: 14px;
+}
+
+.vshop-contact-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+    .vshop-contact-btn:hover {
+        background-color: #218838;
+    }
+
+.vshop-consultant-contact {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.vshop-contact-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+/* CSS cho các phần hiện có */
+.prod-category-sidebar {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.prod-category-title {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+    color: #333;
+}
+
+.prod-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.prod-category-item {
+    border-bottom: 1px solid #f1f1f1;
+}
+
+    .prod-category-item a {
+        display: block;
+        padding: 10px 15px;
+        color: #555;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+        .prod-category-item a:hover {
+            background-color: #f9f9f9;
+            color: #007bff;
+        }
+
+    .prod-category-item i {
+        margin-right: 8px;
+        color: #999;
+    }
+
+.prod-promo-banner {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+    .prod-promo-banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+.vshop-consultant {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.vshop-consultant-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.vshop-consultant-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    border: 2px solid #28a745;
+}
+
+    .vshop-consultant-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.vshop-consultant-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.vshop-consultant-title {
+    color: #666;
+    font-size: 14px;
+}
+
+.vshop-contact-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+    .vshop-contact-btn:hover {
+        background-color: #218838;
+    }
+
+.vshop-consultant-contact {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.vshop-contact-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 10px;
+}
+
+/* CSS cho các phần quảng cáo mới */
+.ad-flash-sale {
+    border: 1px solid #ff6b6b;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.ad-flash-sale-header {
+    background-color: #ff6b6b;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flash-sale-title {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.flash-sale-timer {
+    display: flex;
+    align-items: center;
+}
+
+.timer-box {
+    background-color: #333;
+    color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.flash-sale-products {
+    padding: 15px;
+}
+
+.flash-sale-product {
+    display: flex;
+    position: relative;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.discount-tag {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 3px 7px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.flash-sale-product img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 5px;
+}
+
+.flash-sale-product-info {
+    flex: 1;
+}
+
+.flash-sale-product-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 14px;
+}
+
+.flash-sale-product-price {
+    margin-bottom: 5px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.current-price {
+    color: #ff6b6b;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.flash-sale-product-sold {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.certification-banner {
+    border: 1px solid #4caf50;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.certification-title {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 14px;
+}
+
+.certification-content {
+    display: flex;
+    padding: 15px;
+    background-color: #f9f9f9;
+    align-items: center;
+}
+
+.certification-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+.certification-text p {
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.promotion-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.promotion-card-header {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+    color: #333;
+}
+
+.promotion-card-content {
+    padding: 15px;
+}
+
+.promotion-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+    .promotion-item:last-child {
+        margin-bottom: 0;
+    }
+
+.promotion-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 10px;
+}
+
+.promotion-text {
+    font-size: 13px;
+    color: #555;
+}
+
+.new-product-banner {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.new-product-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.new-product-banner img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.new-product-info {
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+    .new-product-info h5 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .new-product-info p {
+        margin: 0 0 15px 0;
+        font-size: 14px;
+        color: #666;
+    }
+
+.new-product-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+    .new-product-btn:hover {
+        background-color: #0069d9;
+    }
+
+.service-banner {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.service-title {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+    color: #333;
+    text-align: center;
+}
+
+.service-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.service-item {
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.service-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #007bff;
+}
+
+.service-name {
+    font-size: 13px;
+    color: #555;
+}
+
+.health-magazine {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.health-magazine-header {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+    color: #333;
+}
+
+.health-magazine-item {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+    .health-magazine-item:last-child {
+        border-bottom: none;
+    }
+
+    .health-magazine-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 15px;
+        border-radius: 5px;
+    }
+
+.health-magazine-content h6 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.health-magazine-date {
+    font-size: 12px;
+    color: #999;
+    margin: 0;
+}

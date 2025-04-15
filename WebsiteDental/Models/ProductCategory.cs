@@ -15,5 +15,7 @@ public partial class ProductCategory
 
     public DateTime? UpdatedAt { get; set; }
 
+    public virtual ICollection<ProductDetail> ProductDetails { get; set; } = new List<ProductDetail>();
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

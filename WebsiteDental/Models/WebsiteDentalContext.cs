@@ -81,7 +81,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-     
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -762,11 +762,55 @@ public partial class WebsiteDentalContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__ProductD__3213E83FE1EEA880");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CategoryId).HasColumnName("category_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DeliveryInfo)
+                .HasMaxLength(255)
+                .HasColumnName("delivery_info");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.DiscountPercent).HasColumnName("discount_percent");
+            entity.Property(e => e.ExpiryDate).HasColumnName("expiry_date");
+            entity.Property(e => e.GalleryImages).HasColumnName("gallery_images");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .HasColumnName("image_url");
+            entity.Property(e => e.Ingredients).HasColumnName("ingredients");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
+            entity.Property(e => e.Manufacturer)
+                .HasMaxLength(255)
+                .HasColumnName("manufacturer");
+            entity.Property(e => e.OldPrice)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("old_price");
+            entity.Property(e => e.Origin)
+                .HasMaxLength(255)
+                .HasColumnName("origin");
+            entity.Property(e => e.Preservation)
+                .HasMaxLength(255)
+                .HasColumnName("preservation");
+            entity.Property(e => e.Price)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("price");
             entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.ShortDescription).HasColumnName("short_description");
+            entity.Property(e => e.Slug)
+                .HasMaxLength(255)
+                .HasColumnName("slug");
             entity.Property(e => e.Specification).HasColumnName("specification");
+            entity.Property(e => e.Usage).HasColumnName("usage");
+            entity.Property(e => e.UsageInstructions).HasColumnName("usage_instructions");
+            entity.Property(e => e.WarrantyInfo)
+                .HasMaxLength(255)
+                .HasColumnName("warranty_info");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.ProductDetails)
+                .HasForeignKey(d => d.CategoryId)
+                .HasConstraintName("FK_ProductDetails_ProductCategories");
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductDetails)
                 .HasForeignKey(d => d.ProductId)

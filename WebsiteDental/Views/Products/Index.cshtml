@@ -54,7 +54,10 @@
                     <img src="@item.Image" alt="@item.ProductName">
                 </div>
                 <div class="shop-item-info">
-                    <div class="shop-item-name">@item.ProductName</div>
+                    <a asp-controller="DetailProducts" asp-action="Index" asp-route-id="@item.Id" class="shop-item-name">
+                        @item.ProductName
+                    </a>
+
                     <div class="shop-price-area">
                         <span class="shop-current-price">279.000đ</span>
                         <span class="shop-price-saving">Giảm 5k</span>
