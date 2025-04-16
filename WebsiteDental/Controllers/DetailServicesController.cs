@@ -22,8 +22,14 @@ namespace WebsiteDental.Controllers
             var service = await _context.Services.FindAsync(id); // Lấy dịch vụ theo ID
             var blogPosts = await _context.BlogPosts
                                           .OrderByDescending(b => b.CreatedAt)
-                                          .Take(3)
-                                          .ToListAsync(); // Lấy 3 bài viết mới nhất
+                                          .Take(12)
+                                          .ToListAsync();
+            // ✅ Đổi tên biến này để tránh trùng với property trong ViewModel
+            var serviceFeatures = await _context.ServiceFeatures
+                .Where(s => s.Id != id && s.IsActive == true)
+                .OrderBy(s => s.Order)
+                .Take(4)
+                .ToListAsync();
 
             if (service == null)
             {
@@ -32,6 +38,7 @@ namespace WebsiteDental.Controllers
 
             var viewModel = new DetailServicesModelView
             {
+                ServiceFeatures = serviceFeatures, // Gán đúng biến tên khác
                 Service = service,
                 BlogPosts = blogPosts
             };

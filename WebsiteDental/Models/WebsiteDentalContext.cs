@@ -71,6 +71,8 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
 
+    public virtual DbSet<ServiceComment> ServiceComments { get; set; }
+
     public virtual DbSet<ServiceFeature> ServiceFeatures { get; set; }
 
     public virtual DbSet<Staff> Staff { get; set; }
@@ -81,6 +83,9 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-8C82E3H\\LETRONGNGHIA;Database=WebsiteDental;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -900,6 +905,23 @@ public partial class WebsiteDentalContext : DbContext
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
+        });
+
+        modelBuilder.Entity<ServiceComment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ServiceC__3214EC07C098E39D");
+
+            entity.ToTable("ServiceComment");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Name).HasMaxLength(100);
+
+            entity.HasOne(d => d.Service).WithMany(p => p.ServiceComments)
+                .HasForeignKey(d => d.ServiceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ServiceCo__Servi__0D44F85C");
         });
 
         modelBuilder.Entity<ServiceFeature>(entity =>

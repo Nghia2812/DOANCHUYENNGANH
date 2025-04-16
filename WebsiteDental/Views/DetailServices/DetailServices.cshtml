@@ -1,129 +1,27 @@
 ﻿@section Styles {
-    <link href="~/assets/css/DetailService.css" rel="stylesheet">
+<link href="~/assets/css/DetailServices.css" rel="stylesheet">
 }
 @model WebsiteDental.Models.DetailServicesModelView
 
-<div class="service-detail-wrapper">
-
+<div class="dental-service-detail-wrapper">
     <div class="container">
-        <div class="service-detail-container">
-            <!-- Cột nội dung chính -->
-            <div class="service-main-content">
-                <!-- Hình ảnh dịch vụ -->
-                <div class="service-feature-image">
-                    <img src="@Model.Service.Image" alt="@Model.Service.ServiceName" class="img-fluid rounded">
-                </div>
-
-                <!-- Nội dung chi tiết dịch vụ -->
-                <div class="service-content-box">
-                    <div class="service-intro">
-                        <h2>Giới thiệu về: @Model.Service.ServiceName</h2>
-                        <div class="service-description">
-                            @Html.Raw(Model.Service.Description)
-                        </div>
-                    </div>
-
-                    <!-- Ưu điểm dịch vụ -->
-                 
-
-                    <!-- Quy trình thực hiện -->
-               
-
-                    <!-- Bảng giá dịch vụ -->
-                  
-
-                    <!-- Câu hỏi thường gặp -->
-                   
-                </div>
-
-                <!-- Phần đánh giá từ khách hàng -->
-                <div class="customer-reviews">
-                    <h2>Khách hàng nói gì về dịch vụ này?</h2>
-                    <div class="reviews-grid">
-                        <div class="review-card">
-                            <div class="reviewer-info">
-                                <img src="~/assets/images/customers/customer1.jpg" alt="Khách hàng" class="reviewer-avatar">
-                                <div class="reviewer-name">Nguyễn Văn A</div>
-                            </div>
-                            <div class="review-rating">
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                            </div>
-                            <div class="review-content">
-                                <p>"Tôi rất hài lòng với kết quả điều trị tại đây. Đội ngũ bác sĩ chuyên nghiệp và tận tâm."</p>
-                            </div>
-                        </div>
-                        <div class="review-card">
-                            <div class="reviewer-info">
-                                <img src="~/assets/images/customers/customer2.jpg" alt="Khách hàng" class="reviewer-avatar">
-                                <div class="reviewer-name">Trần Thị B</div>
-                            </div>
-                            <div class="review-rating">
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                            </div>
-                            <div class="review-content">
-                                <p>"Phòng khám sạch sẽ, trang thiết bị hiện đại. Chi phí hợp lý và kết quả rất tốt."</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Các dịch vụ liên quan -->
-                <div class="related-services">
-                    <h2>Dịch vụ liên quan</h2>
-                    <div class="services-cards">
-                        <div class="service-card">
-                            <img src="https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg" alt="Dịch vụ liên quan" class="card-image">
-                            <div class="card-body">
-                                <h4>Niềng răng thẩm mỹ</h4>
-                                <p>Giải pháp chỉnh nha hiện đại, nhanh chóng</p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <div class="service-card">
-                            <img src="https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg" alt="Dịch vụ liên quan" class="card-image">
-                            <div class="card-body">
-                                <h4>Implant răng</h4>
-                                <p>Phục hồi răng mất vĩnh viễn, bền đẹp</p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <div class="service-card">
-                            <img src="https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg" alt="Dịch vụ liên quan" class="card-image">
-                            <div class="card-body">
-                                <h4>Tẩy trắng răng</h4>
-                                <p>Làm trắng răng an toàn, hiệu quả</p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar - Khu vực quảng cáo -->
-            <div class="service-sidebar">
-                <!-- Form đặt lịch khám -->
-                <div class="sidebar-box appointment-form">
+        <div class="row">
+            <!-- Sidebar với form đặt lịch tư vấn ở bên trái -->
+            <div class="col-lg-4">
+                <!-- Form đặt lịch khám - Đã đẩy lên trên bên trái -->
+                <div class="dental-form-box">
                     <h3>ĐẶT LỊCH TƯ VẤN</h3>
                     <form asp-controller="Home" asp-action="BookAppointment" method="post">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <input type="text" name="FullName" class="form-control" placeholder="Họ và tên *" required>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <input type="tel" name="Phone" class="form-control" placeholder="Số điện thoại *" required>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <input type="email" name="Email" class="form-control" placeholder="Email">
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <select name="Service" class="form-control">
                                 <option value="">Chọn dịch vụ quan tâm</option>
                                 <option value="implant">Trồng răng Implant</option>
@@ -133,96 +31,125 @@
                                 <option value="rootcanal">Điều trị tủy</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <textarea name="Message" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">ĐẶT LỊCH NGAY</button>
+                        <button type="submit" class="btn btn-primary w-100">ĐẶT LỊCH NGAY</button>
                     </form>
                 </div>
 
                 <!-- Khuyến mãi -->
-                <div class="sidebar-box promotion-box">
-                    <div class="promo-header">KHUYẾN MÃI ĐẶC BIỆT</div>
-                    <div class="promo-content">
-                        <div class="promo-image">
-                            <img src="~/assets/images/promotions/promo.jpg" alt="Khuyến mãi" class="img-fluid">
+                <div class="dental-sidebar-box mb-4">
+                    <div class="bg-primary text-white p-2 rounded mb-3 text-center fw-bold">KHUYẾN MÃI ĐẶC BIỆT</div>
+                    <div>
+                        <div class="text-center mb-3">
+                            <img src="https://i.pinimg.com/736x/97/88/4b/97884b559420b66ce417d513352da188.jpg" alt="Khuyến mãi" class="img-fluid rounded">
                         </div>
-                        <div class="promo-title">Giảm 30% chi phí cho dịch vụ @Model.Service.ServiceName</div>
-                        <div class="promo-description">
-                            <p>Áp dụng cho 50 khách hàng đăng ký đầu tiên trong tháng 4/2025</p>
+                        <h4 class="text-center fw-bold mb-2">Giảm 30% chi phí cho dịch vụ @Model.Service.ServiceName</h4>
+                        <p class="text-center mb-2">Áp dụng cho 50 khách hàng đăng ký đầu tiên trong tháng 4/2025</p>
+                        <div class="dental-countdown mb-3">
+                            <div class="small text-muted">Chỉ còn:</div>
+                            <div class="fw-bold">15 ngày : 07 giờ : 23 phút</div>
                         </div>
-                        <div class="promo-countdown">
-                            <div class="countdown-label">Chỉ còn:</div>
-                            <div class="countdown-timer">15 ngày : 07 giờ : 23 phút</div>
-                        </div>
-                        <a href="@Url.Action("Promotion", "Home")" class="btn btn-danger btn-block">NHẬN ƯU ĐÃI NGAY</a>
+                        <a href="@Url.Action("Promotion", "Home")" class="btn btn-danger w-100">NHẬN ƯU ĐÃI NGAY</a>
                     </div>
                 </div>
 
-                <!-- Bài viết được quan tâm -->
-                <div class="sidebar-box popular-posts">
-                    <h3>BÀI VIẾT ĐƯỢC QUAN TÂM</h3>
-                    <ul class="popular-posts-list">
-                        @foreach (var post in Model.BlogPosts)
-                        {
-                            <li>
-                                <div class="icon-square">🦷</div>
-                                <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@post.Id">
-                                    @post.Title
-                                </a>
-                            </li>
-                        }
-                    </ul>
+                <!-- Banner quảng cáo -->
+                <div class="dental-sidebar-box mb-4">
+                    <a href="#">
+                        <img src="https://i.pinimg.com/736x/57/46/ff/5746ff79d88f45a5a825fdab5ecc9195.jpg" alt="Quảng cáo" class="img-fluid rounded">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cột nội dung chính - Bên phải -->
+            <div class="col-lg-8">
+                <!-- Hình ảnh dịch vụ -->
+                <div class="dental-img-container">
+                    <img src="@Model.Service.Image" alt="@Model.Service.ServiceName" class="img-fluid">
                 </div>
 
-                <!-- Danh sách dịch vụ -->
-                <div class="sidebar-box service-menu">
-                    <h3>DỊCH VỤ NỔI BẬT</h3>
-                    <ul class="service-menu-list">
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Trồng răng Implant</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Niềng răng thẩm mỹ</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Bọc răng sứ</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Tẩy trắng răng</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Chữa tủy răng</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Cạo vôi răng</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Nhổ răng khôn</a>
-                        </li>
-                        <li class="service-menu-item">
-                            <span class="service-icon">✓</span>
-                            <a href="#">Trám răng thẩm mỹ</a>
-                        </li>
-                    </ul>
+                <!-- Nội dung chi tiết dịch vụ -->
+                <div class="dental-service-content-main">
+                    <h3 class="mb-4">Giới thiệu về: @Model.Service.ServiceName</h3>
+                    <div class="dental-service-description">
+                        @Html.Raw(Model.Service.Description)
+                    </div>
                 </div>
-                <!-- Banner quảng cáo -->
-                <div class="sidebar-box banner-box">
-                    <a href="#">
-                        <img src="https://i.pinimg.com/736x/57/46/ff/5746ff79d88f45a5a825fdab5ecc9195.jpg" alt="Quảng cáo" class="img-fluid">
-                    </a>
+
+            </div>
+            <!-- Các dịch vụ liên quan -->
+            <div class="dental-related-services mb-4">
+                <h3 class="mb-3 text-center fw-bold">DỊCH VỤ LIÊN QUAN</h3>
+                <div class="row">
+                    @foreach (var feature in Model.ServiceFeatures)
+                    {
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="dental-service-card h-100 border rounded shadow-sm p-3 bg-white position-relative">
+
+                                <!-- Icon từ database -->
+                                <div class="text-center mb-3">
+                                    <span class="d-inline-block bg-primary text-white rounded-circle p-3">
+                                        <i class="@feature.Icon fa-2x"></i>
+                                    </span>
+                                </div>
+
+                                <!-- Tiêu đề -->
+                                <h5 class="text-primary fw-bold text-center mb-2">@feature.Title</h5>
+
+                                <!-- Mô tả ngắn -->
+                                <p class="text-muted small mb-4 text-center">
+                                    @(string.IsNullOrEmpty(feature.Description)
+                                                                    ? "Chưa có mô tả"
+                                                                    : (feature.Description.Length > 80
+                                                                    ? feature.Description.Substring(0, 80) + "..."
+                                                                    : feature.Description))
+                            </p>
+
+                                <!-- Nút xem chi tiết -->
+                                <div class="text-center position-absolute bottom-0 start-0 end-0 mb-3">
+                                    <a asp-controller="Services"
+                                       asp-action="Detail"
+                                       asp-route-id="@feature.Id"
+                                       class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                                        }
+                </div>
+
+            </div>
+            <!-- Bài viết liên quan - Giữ nguyên kiểu như cũ -->
+            <div class="dental-related-articles mb-4">
+                <h3>BÀI VIẾT LIÊN QUAN</h3>
+                <div class="row">
+                    @foreach (var post in Model.BlogPosts.Take(12))
+                    {
+                        <div class="col-md-2 col-sm-4 mb-3">
+                            <div class="dental-article-item">
+                                <!-- Phần hình ảnh - Sẽ hiển thị nếu có dữ liệu hình -->
+                                @if (!string.IsNullOrEmpty(post.FeaturedImage))
+                                {
+                                    <div class="dental-article-img">
+                                        <img src="@post.FeaturedImage" alt="@post.Title" onerror="this.src='https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg';">
+                                    </div>
+                                }
+                                <div class="dental-article-content">
+                                    <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@post.Id" class="text-decoration-none">
+                                        <div class="d-flex align-items-start">
+                                            <div class="dental-article-icon">🦷</div>
+                                            <h6 class="dental-article-title">@post.Title</h6>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
-
-
-
 </div>

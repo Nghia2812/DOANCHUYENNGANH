@@ -1,0 +1,274 @@
+﻿
+/* Custom classes để tránh ghi đè */
+.dental-service-detail-wrapper {
+    padding: 40px 0;
+}
+
+.dental-img-container {
+    max-width: 100%;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .dental-img-container img {
+        width: 100%;
+        height: auto;
+        max-height: 350px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+.dental-service-card {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    background: #fff;
+}
+
+    .dental-service-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .dental-service-card img {
+        height: 150px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 6px;
+    }
+
+.dental-sidebar-box {
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    padding: 20px;
+    margin-bottom: 25px;
+    background: #fff;
+}
+
+.dental-promo-banner {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.dental-review-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.dental-countdown {
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.dental-related-services {
+    margin-top: 30px;
+}
+
+.dental-service-content-main {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.dental-form-box {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid #e9ecef;
+}
+
+    .dental-form-box h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #3498db;
+    }
+
+    .dental-form-box .form-control {
+        margin-bottom: 15px;
+    }
+
+    .dental-form-box .btn-primary {
+        background-color: #3498db;
+        font-weight: bold;
+        border: none;
+    }
+
+.dental-related-articles {
+    margin-top: 30px;
+}
+/* CSS cải thiện cho phần Bài viết liên quan */
+.dental-related-articles {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 20px;
+}
+
+    .dental-related-articles h3 {
+        position: relative;
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+        .dental-related-articles h3:after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+.dental-article-item {
+    height: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+}
+
+    .dental-article-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+.dental-article-img {
+    height: 100px;
+    overflow: hidden;
+}
+
+    .dental-article-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.dental-article-content {
+    padding: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dental-article-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.dental-article-icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+/* Responsive styling */
+@media (max-width: 767px) {
+    .dental-related-articles .col-md-2 {
+        width: 50%;
+    }
+}
+
+/* CSS cho phần dịch vụ liên quan */
+.dental-related-services {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 25px;
+}
+
+    .dental-related-services h3 {
+        position: relative;
+        color: #3498db;
+        padding-bottom: 12px;
+    }
+
+        .dental-related-services h3:after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+.dental-service-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    min-height: 230px;
+}
+
+    .dental-service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+    }
+
+    .dental-service-card .btn-outline-primary {
+        border-color: #3498db;
+        color: #3498db;
+    }
+
+        .dental-service-card .btn-outline-primary:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+    .dental-service-card .rounded-circle {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .dental-service-card {
+        min-height: 200px;
+    }
+
+        .dental-service-card h5 {
+            font-size: 0.9rem;
+        }
+
+        .dental-service-card p {
+            font-size: 0.75rem;
+        }
+}
