@@ -1,0 +1,213 @@
+﻿/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Footer Styling */
+.dental-footer {
+    background-color: #0d6efd3d;
+    font-family: Arial, sans-serif;
+    color: #333;
+    border-top: 1px solid #e0e0e0;
+}
+
+.dental-footer-top {
+    padding: 30px 0;
+}
+
+.dental-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.dental-footer-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.dental-footer-col {
+    flex: 1;
+    padding: 0 15px;
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.dental-footer-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.dental-footer-info p {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.dental-footer-info i {
+    width: 20px;
+    color: #666;
+    margin-right: 5px;
+}
+
+.dental-footer-info a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+    .dental-footer-info a:hover {
+        text-decoration: underline;
+    }
+
+.dental-footer-social {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.dental-social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 4px;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+    .dental-social-btn:hover {
+        background-color: #e0e0e0;
+    }
+
+.dental-footer-links {
+    list-style: none;
+}
+
+    .dental-footer-links li {
+        margin-bottom: 8px;
+    }
+
+        .dental-footer-links li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+        }
+
+            .dental-footer-links li a:hover {
+                color: #0066cc;
+            }
+
+            .dental-footer-links li a i {
+                color: #ff9900;
+                margin-right: 5px;
+            }
+
+.dental-app-download {
+    margin-bottom: 20px;
+}
+
+    .dental-app-download p {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+.dental-qr-app {
+    display: flex;
+    align-items: center;
+}
+
+    .dental-qr-app img {
+        width: 80px;
+        height: 80px;
+        margin-right: 10px;
+    }
+
+.dental-app-links {
+    display: flex;
+    flex-direction: column;
+}
+
+    .dental-app-links a {
+        margin-bottom: 5px;
+    }
+
+    .dental-app-links img {
+        height: 35px;
+        width: auto;
+    }
+
+.dental-payment, .dental-shipping {
+    margin-top: 20px;
+}
+
+.dental-payment-methods, .dental-shipping-methods {
+    display: flex;
+    flex-direction: column;
+}
+
+.dental-payment-row, .dental-shipping-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+    .dental-payment-row img, .dental-shipping-row img {
+        height: 48px;
+        width: auto;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 3px;
+    }
+
+.dental-map {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+    .dental-map iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+.dental-copyright {
+    background-color: #f0f0f0;
+    padding: 15px 0;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+}
+
+    .dental-copyright p {
+        font-size: 14px;
+        color: #666;
+    }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .dental-footer-col {
+        flex: 0 0 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .dental-footer-col {
+        flex: 0 0 100%;
+    }
+
+    .dental-footer-main {
+        flex-direction: column;
+    }
+}

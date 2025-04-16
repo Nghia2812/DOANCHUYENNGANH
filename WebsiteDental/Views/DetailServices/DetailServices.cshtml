@@ -1,112 +1,228 @@
 ﻿@section Styles {
-    <link href="~/assets/css/DetailServices.css" rel="stylesheet">
+    <link href="~/assets/css/DetailService.css" rel="stylesheet">
 }
 @model WebsiteDental.Models.DetailServicesModelView
-<div class="container">
-    <div class="main-content">
-        <div class="doctor-info">
-            <img src="https://i.pinimg.com/736x/00/50/e0/0050e0655c21d5346b6b3ba058f7d59e.jpg" alt="Bác sĩ Nguyễn Quang Tiến">
-            <div class="doctor-details">
-                <h3>Bác sĩ Nguyễn Quang Tiến</h3>
-                <p>
-                    • Cố vấn và đào tạo chuyên môn<br>
-                    • Thạc sĩ nội khoa Đại Y quốc tế,Minster, CHLB Đức<br>
-                    • Chuyên khoa Răng Hàm Mặt - Nha khoa Đăng Lưu<br>
-                    • Hơn 25 năm kinh nghiệm nha khoa
-                </p>
-                <div class="action-buttons">
-                    <button class="btn btn-call">Đặt lịch</button>
-                    <button class="btn btn-profile">Xem hồ sơ</button>
+
+<div class="service-detail-wrapper">
+
+    <div class="container">
+        <div class="service-detail-container">
+            <!-- Cột nội dung chính -->
+            <div class="service-main-content">
+                <!-- Hình ảnh dịch vụ -->
+                <div class="service-feature-image">
+                    <img src="@Model.Service.Image" alt="@Model.Service.ServiceName" class="img-fluid rounded">
+                </div>
+
+                <!-- Nội dung chi tiết dịch vụ -->
+                <div class="service-content-box">
+                    <div class="service-intro">
+                        <h2>Giới thiệu về: @Model.Service.ServiceName</h2>
+                        <div class="service-description">
+                            @Html.Raw(Model.Service.Description)
+                        </div>
+                    </div>
+
+                    <!-- Ưu điểm dịch vụ -->
+                 
+
+                    <!-- Quy trình thực hiện -->
+               
+
+                    <!-- Bảng giá dịch vụ -->
+                  
+
+                    <!-- Câu hỏi thường gặp -->
+                   
+                </div>
+
+                <!-- Phần đánh giá từ khách hàng -->
+                <div class="customer-reviews">
+                    <h2>Khách hàng nói gì về dịch vụ này?</h2>
+                    <div class="reviews-grid">
+                        <div class="review-card">
+                            <div class="reviewer-info">
+                                <img src="~/assets/images/customers/customer1.jpg" alt="Khách hàng" class="reviewer-avatar">
+                                <div class="reviewer-name">Nguyễn Văn A</div>
+                            </div>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="review-content">
+                                <p>"Tôi rất hài lòng với kết quả điều trị tại đây. Đội ngũ bác sĩ chuyên nghiệp và tận tâm."</p>
+                            </div>
+                        </div>
+                        <div class="review-card">
+                            <div class="reviewer-info">
+                                <img src="~/assets/images/customers/customer2.jpg" alt="Khách hàng" class="reviewer-avatar">
+                                <div class="reviewer-name">Trần Thị B</div>
+                            </div>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="review-content">
+                                <p>"Phòng khám sạch sẽ, trang thiết bị hiện đại. Chi phí hợp lý và kết quả rất tốt."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Các dịch vụ liên quan -->
+                <div class="related-services">
+                    <h2>Dịch vụ liên quan</h2>
+                    <div class="services-cards">
+                        <div class="service-card">
+                            <img src="https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg" alt="Dịch vụ liên quan" class="card-image">
+                            <div class="card-body">
+                                <h4>Niềng răng thẩm mỹ</h4>
+                                <p>Giải pháp chỉnh nha hiện đại, nhanh chóng</p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <img src="https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg" alt="Dịch vụ liên quan" class="card-image">
+                            <div class="card-body">
+                                <h4>Implant răng</h4>
+                                <p>Phục hồi răng mất vĩnh viễn, bền đẹp</p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                        <div class="service-card">
+                            <img src="https://i.pinimg.com/736x/46/d4/14/46d4145edd67fc9dc1cc28c969bc5e97.jpg" alt="Dịch vụ liên quan" class="card-image">
+                            <div class="card-body">
+                                <h4>Tẩy trắng răng</h4>
+                                <p>Làm trắng răng an toàn, hiệu quả</p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="content-header">
-            <h2>Răng Khôn Là Gì?</h2>
-            <div class="audio-player">
-                Google New ▶ 0:00 / 0:00
+            <!-- Sidebar - Khu vực quảng cáo -->
+            <div class="service-sidebar">
+                <!-- Form đặt lịch khám -->
+                <div class="sidebar-box appointment-form">
+                    <h3>ĐẶT LỊCH TƯ VẤN</h3>
+                    <form asp-controller="Home" asp-action="BookAppointment" method="post">
+                        <div class="form-group">
+                            <input type="text" name="FullName" class="form-control" placeholder="Họ và tên *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="Phone" class="form-control" placeholder="Số điện thoại *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="Email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <select name="Service" class="form-control">
+                                <option value="">Chọn dịch vụ quan tâm</option>
+                                <option value="implant">Trồng răng Implant</option>
+                                <option value="orthodontics">Niềng răng</option>
+                                <option value="veneer">Bọc răng sứ</option>
+                                <option value="whitening">Tẩy trắng răng</option>
+                                <option value="rootcanal">Điều trị tủy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="Message" class="form-control" rows="3" placeholder="Ghi chú"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">ĐẶT LỊCH NGAY</button>
+                    </form>
+                </div>
+
+                <!-- Khuyến mãi -->
+                <div class="sidebar-box promotion-box">
+                    <div class="promo-header">KHUYẾN MÃI ĐẶC BIỆT</div>
+                    <div class="promo-content">
+                        <div class="promo-image">
+                            <img src="~/assets/images/promotions/promo.jpg" alt="Khuyến mãi" class="img-fluid">
+                        </div>
+                        <div class="promo-title">Giảm 30% chi phí cho dịch vụ @Model.Service.ServiceName</div>
+                        <div class="promo-description">
+                            <p>Áp dụng cho 50 khách hàng đăng ký đầu tiên trong tháng 4/2025</p>
+                        </div>
+                        <div class="promo-countdown">
+                            <div class="countdown-label">Chỉ còn:</div>
+                            <div class="countdown-timer">15 ngày : 07 giờ : 23 phút</div>
+                        </div>
+                        <a href="@Url.Action("Promotion", "Home")" class="btn btn-danger btn-block">NHẬN ƯU ĐÃI NGAY</a>
+                    </div>
+                </div>
+
+                <!-- Bài viết được quan tâm -->
+                <div class="sidebar-box popular-posts">
+                    <h3>BÀI VIẾT ĐƯỢC QUAN TÂM</h3>
+                    <ul class="popular-posts-list">
+                        @foreach (var post in Model.BlogPosts)
+                        {
+                            <li>
+                                <div class="icon-square">🦷</div>
+                                <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@post.Id">
+                                    @post.Title
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <!-- Danh sách dịch vụ -->
+                <div class="sidebar-box service-menu">
+                    <h3>DỊCH VỤ NỔI BẬT</h3>
+                    <ul class="service-menu-list">
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Trồng răng Implant</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Niềng răng thẩm mỹ</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Bọc răng sứ</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Tẩy trắng răng</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Chữa tủy răng</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Cạo vôi răng</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Nhổ răng khôn</a>
+                        </li>
+                        <li class="service-menu-item">
+                            <span class="service-icon">✓</span>
+                            <a href="#">Trám răng thẩm mỹ</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Banner quảng cáo -->
+                <div class="sidebar-box banner-box">
+                    <a href="#">
+                        <img src="https://i.pinimg.com/736x/57/46/ff/5746ff79d88f45a5a825fdab5ecc9195.jpg" alt="Quảng cáo" class="img-fluid">
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <p>Răng khôn là gì? Đây là chiếc răng thứ 3 hay còn gọi là răng số 8 (răng cấm), thường mọc ở tuổi 18-24. Răng khôn là răng cuối cùng mọc trong khoang miệng...</p>
-
-        <img src="@Model.Service.Image" alt="Răng Khôn Minh Họa" class="content-image">
-
-        <div class="content-navigation">
-            <h4>Nội Dung Bài Viết</h4>
-            <ol>
-                <li>Răng khôn là gì?</li>
-                <li>Biến chứng của răng khôn</li>
-                <li>Quy trình nhổ răng khôn</li>
-            </ol>
         </div>
     </div>
 
-    <div class="sidebar">
-        <div class="registration-form">
-            <h3>ĐĂNG KÝ TƯ VẤN MIỄN PHÍ</h3>
-            <form>
-                <input type="text" placeholder="Họ và tên">
-                <input type="tel" placeholder="Số điện thoại">
-                <input type="email" placeholder="Email (không bắt buộc)">
-                <textarea placeholder="Dịch vụ quan tâm"></textarea>
-                <button type="submit" class="submit-btn">ĐĂNG KÝ NGAY</button>
-            </form>
-        </div>
-
-        <div class="popular-posts">
-            <h3>BÀI VIẾT ĐƯỢC QUAN TÂM</h3>
-            <ul class="popular-posts-list">
-                @foreach (var post in Model.BlogPosts)
-                {
-                    <li>
-                        <div class="icon-square">🦷</div>
-                        <a asp-controller="DetailBlogPosts" asp-action="DetailBlog" asp-route-id="@post.Id">
-                            @post.Title
-                        </a>
-                    </li>
-                }
 
 
-            </ul>
-        </div>
-
-        <div class="services-section">
-            <h3>DỊCH VỤ NỔI BẬT</h3>
-            <div class="services-list-image">
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Trồng răng Implant
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Niềng răng
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Bọc răng sứ
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Tẩy trắng răng
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Chữa tủy răng
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Cạo vôi răng
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Nhổ răng khôn
-                </div>
-                <div class="service-item-image">
-                    <span class="checkmark">✓</span>
-                    Trám răng
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
