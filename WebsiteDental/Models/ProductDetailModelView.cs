@@ -8,7 +8,7 @@ namespace WebsiteDental.Models
     {
         // Thuộc tính chứa thông tin về sản phẩm
         public Product Product { get; set; }
-
+        public List<ProductComment> Comments { get; set; } // bình luận bài viết
         // Thuộc tính chứa danh sách các danh mục (ProductCategory)
         public List<ProductCategory> CategoryList { get; set; }
 

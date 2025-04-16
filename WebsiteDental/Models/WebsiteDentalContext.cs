@@ -61,6 +61,8 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
+    public virtual DbSet<ProductComment> ProductComments { get; set; }
+
     public virtual DbSet<ProductDetail> ProductDetails { get; set; }
 
     public virtual DbSet<Revenue> Revenues { get; set; }
@@ -83,9 +85,6 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-8C82E3H\\LETRONGNGHIA;Database=WebsiteDental;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -760,6 +759,26 @@ public partial class WebsiteDentalContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<ProductComment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3214EC07877A2806");
+
+            entity.ToTable("ProductComment");
+
+            entity.Property(e => e.CommentText).HasMaxLength(1000);
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.CreatedBy).HasMaxLength(255);
+            entity.Property(e => e.Gmail).HasMaxLength(255);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductComments)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ProductCo__Produ__14E61A24");
         });
 
         modelBuilder.Entity<ProductDetail>(entity =>
