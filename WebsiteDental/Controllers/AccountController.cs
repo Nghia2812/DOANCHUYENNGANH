@@ -9,14 +9,18 @@ namespace WebsiteDental.Controllers
     {
         private readonly string _connectionString;
         private readonly IHttpContextAccessor _httpContextAccessor; // Khai báo biến
+   
+
+       
 
         // Constructor để lấy chuỗi kết nối từ appsettings.json và khởi tạo IHttpContextAccessor
         public AccountController(IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            _httpContextAccessor = httpContextAccessor;
         }
-
+       
         public IActionResult TestConnection()
         {
             return Content($"Chuỗi kết nối: {_connectionString}");
@@ -80,12 +84,12 @@ namespace WebsiteDental.Controllers
             return View();
         }
 
-        // Hiển thị trang Đăng Nhập
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        //// Hiển thị trang Đăng Nhập
+        //[HttpGet]
+        //public IActionResult RegisterAccount()
+        //{
+        //    return View("Register");
+        //}
 
         // Xử lý Đăng Nhập
         [HttpPost]
@@ -94,7 +98,7 @@ namespace WebsiteDental.Controllers
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT username, password FROM Users WHERE email = @Email";
+                string query = "SELECT id, username, password FROM Users WHERE email = @Email";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
@@ -104,18 +108,13 @@ namespace WebsiteDental.Controllers
                         {
                             string storedUsername = reader["username"].ToString();
                             string storedHashedPassword = reader["password"].ToString();
+                            int userId = Convert.ToInt32(reader["id"]); // Lấy thêm ID người dùng
 
                             if (BCrypt.Net.BCrypt.Verify(password, storedHashedPassword))
                             {
-                                // Kiểm tra HttpContext trước khi sử dụng
-                                if (_httpContextAccessor.HttpContext != null)
-                                {
-                                    _httpContextAccessor.HttpContext.Session.SetString("Username", storedUsername);
-                                }
-                                else
-                                {
-                                    return BadRequest("HttpContext is null.");
-                                }
+                                // Thiết lập session với Username và UserId
+                                _httpContextAccessor.HttpContext.Session.SetString("Username", storedUsername);
+                                _httpContextAccessor.HttpContext.Session.SetInt32("UserId", userId); // ✅ Lưu UserId vào session
 
                                 // Chuyển hướng về trang Home
                                 return RedirectToAction("Index", "Home");
@@ -124,9 +123,12 @@ namespace WebsiteDental.Controllers
                     }
                 }
             }
+
             ViewData["Error"] = "Email hoặc mật khẩu không đúng!";
             return View();
         }
+
+
 
         // Xử lý Đăng Xuất
         public IActionResult Logout()

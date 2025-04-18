@@ -222,6 +222,22 @@
                         <div class="prod-discount-tag">-15%</div>
                         <img src="@Model.Product.Image" alt="Ejaculoid">
                     </div>
+                    <div class="prod-quantity">
+                        <div id="decrease-btn" class="prod-quantity-btn">-</div>
+                        <input type="number" id="prod-quantity-input" class="prod-quantity-input" name="quantity" value="3" min="1" />
+                        <div id="increase-btn" class="prod-quantity-btn">+</div>
+                    </div>
+
+                    <form id="add-to-cart-form" method="post" asp-action="AddToCart" asp-controller="ShoppingCart">
+                        <input type="hidden" name="productId" value="@Model.Product.Id" />
+                        <!-- Thêm input ẩn để truyền số lượng -->
+                        <input type="hidden" id="quantity-input" name="quantity" value="3" />
+                        <button type="submit" class="prod-add-cart">Thêm vào giỏ</button>
+                    </form>
+
+                    <!-- Nút quay lại trang trước đó -->
+                    <button class="btn btn-outline-info" onclick="window.history.back();">Quay lại</button>
+
                 </div>
 
                 <!-- Product Info Column -->
@@ -283,14 +299,22 @@
                             </div>
                         </div>
 
-                        <div class="prod-quantity">
-                            <div class="prod-quantity-btn">-</div>
-                            <input type="text" class="prod-quantity-input" value="3">
-                            <div class="prod-quantity-btn">+</div>
+                      @*   <div class="prod-quantity">
+                            <div id="decrease-btn" class="prod-quantity-btn">-</div>
+                            <input type="number" id="prod-quantity-input" class="prod-quantity-input" name="quantity" value="3" min="1" />
+                            <div id="increase-btn" class="prod-quantity-btn">+</div>
                         </div>
 
-                        <button class="prod-add-cart">THÊM VÀO GIỎ HÀNG</button>
+                        <form id="add-to-cart-form" method="post" asp-action="AddToCart" asp-controller="ShoppingCart">
+                            <input type="hidden" name="productId" value="@Model.Product.Id" />
+                            <!-- Thêm input ẩn để truyền số lượng -->
+                            <input type="hidden" id="quantity-input" name="quantity" value="3" />
+                            <button type="submit" class="prod-add-cart">Thêm vào giỏ</button>
+                        </form>
 
+                        <!-- Nút quay lại trang trước đó -->
+                        <button class="btn btn-outline-info" onclick="window.history.back();">Quay lại</button>
+ *@
                         <div class="prod-category">
                             Danh mục: <a href="#">Nam Giới</a>, <a href="#">Tăng kích thước cậu nhỏ</a>
                         </div>
@@ -308,7 +332,7 @@
                         <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">Chi tiết</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Đánh giá (12)</button>
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Đánh giá</button>
                     </li>
                 </ul>
                 <div class="tab-content p-3" id="productTabsContent">
@@ -386,7 +410,7 @@
                                 {
                                     <div class="mb-4">
                                         <div class="d-flex align-items-center mb-2">
-                                            <img src="/api/placeholder/40/40" class="rounded-circle me-2" alt="User">
+                                            <img src="/assets/img/logo.jpg" class="rounded-circle me-2" alt="User" style="width: 40px; height: 40px;">
                                             <div>
                                                 <h6 class="mb-0">@comment.CreatedBy</h6>
                                                 <small class="text-muted">@comment.CreatedAt?.ToString("dd/MM/yyyy HH:mm:ss")</small>
@@ -697,3 +721,25 @@
         </div>
     </div>
 </div>
+<!-- Xử lý số lượng trong đơn hàng -->
+<script>
+    document.getElementById('increase-btn').addEventListener('click', function () {
+        var quantityInput = document.getElementById('prod-quantity-input');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1; // Tăng số lượng
+    });
+
+    document.getElementById('decrease-btn').addEventListener('click', function () {
+        var quantityInput = document.getElementById('prod-quantity-input');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1; // Giảm số lượng nếu lớn hơn 1
+        }
+    });
+
+    document.getElementById('add-to-cart-form').addEventListener('submit', function (event) {
+        // Cập nhật giá trị cho input ẩn khi submit form
+        var quantity = document.getElementById('prod-quantity-input').value;
+        document.getElementById('quantity-input').value = quantity;
+    });
+</script>

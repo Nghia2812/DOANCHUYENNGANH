@@ -47,8 +47,8 @@
         {
             <div class="shop-item">
                 <div class="shop-item-tags">
-                    <span class="shop-discount-label">2%</span>
-                    <span class="shop-item-category">Lon</span>
+                    <span class="shop-discount-label">@item.Rating</span>
+                    <span class="shop-item-category">@item.Type</span>
                 </div>
                 <div class="shop-item-image">
                     <img src="@item.Image" alt="@item.ProductName">
@@ -59,12 +59,15 @@
                     </a>
 
                     <div class="shop-price-area">
-                        <span class="shop-current-price">279.000đ</span>
-                        <span class="shop-price-saving">Giảm 5k</span>
+                        <span class="shop-current-price">@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</span>
+
+                        <span class="shop-price-saving">Giảm: @item.PriceDiscount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</span>
+
                     </div>
                     <span class="shop-item-origin">Xuất xứ: Việt Nam</span>
                     <span class="shop-item-sales">Đã bán: 3</span>
-                    <button class="shop-add-cart-btn">Thêm vào giỏ</button>
+                    <button onclick="window.location.href='@Url.Action("Index", "DetailProducts", new { id = item.Id })'" class="shop-add-cart-btn">Xem chi tiết</button>
+
                 </div>
             </div>
         }
