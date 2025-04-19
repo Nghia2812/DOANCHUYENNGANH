@@ -125,7 +125,7 @@ namespace WebsiteDental.Controllers
             }
 
             ViewData["Error"] = "Email hoặc mật khẩu không đúng!";
-            return View();
+            return View("Register"); // ❗Sửa dòng này
         }
 
 

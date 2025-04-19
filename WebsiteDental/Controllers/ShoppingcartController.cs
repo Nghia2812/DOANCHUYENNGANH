@@ -4,6 +4,8 @@ using WebsiteDental.Models;
 using WebsiteDental.ViewModels;
 using Microsoft.AspNetCore.Http; // Cần thêm namespace này
 
+
+
 public class ShoppingcartController : Controller
 {
     private readonly WebsiteDentalContext _context;
@@ -54,7 +56,7 @@ public class ShoppingcartController : Controller
         ViewData["TotalAmount"] = totalAmount;  // Gửi tổng tiền hàng
         ViewData["ShippingFee"] = shippingFee;  // Gửi phí vận chuyển
         ViewData["TotalWithShipping"] = totalWithShipping;  // Gửi tổng thanh toán
-
+        
         return View(cartItems);
     }
     [HttpPost]
@@ -191,6 +193,8 @@ public class ShoppingcartController : Controller
         // Quay lại trang giỏ hàng sau khi cập nhật
         return RedirectToAction("Index", "Shoppingcart");
     }
+   
+   
 
 
 }
