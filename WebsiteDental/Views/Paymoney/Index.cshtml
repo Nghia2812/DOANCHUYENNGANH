@@ -1,0 +1,275 @@
+﻿@section Styles {
+    <link href="~/assets/css/style/stylePatmoney.css" rel="stylesheet">
+}
+@model WebsiteDental.Models.PaymoneyModelView
+
+<!-- Phần địa chỉ đã được sửa lại để không cần dùng JavaScript -->
+<div class="checkout-container">
+    <div class="container">
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Delivery Info -->
+                <div class="checkout-card">
+                    <h3 class="checkout-title">Thông tin giao hàng</h3>
+                    <form class="checkout-form">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="fullName" name="FullName" value="@ViewBag.FullName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="phone" name="Phone" value="@ViewBag.Phone" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="Email" value="@ViewBag.Email">
+                        </div>
+                        <!-- Phần địa chỉ đã được sửa lại - không cần JavaScript -->
+
+                        <div class="row">
+                            <!-- Tỉnh/Thành phố -->
+                            <div class="col-md-4 mb-3">
+                                <label for="province" class="form-label">Tỉnh/Thành phố <span class="text-danger">*</span></label>
+                                <select class="form-select" id="province" name="province" required>
+                                    <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                                    <option value="Hà Nội">Hà Nội</option>
+                                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                    <option value="Đà Nẵng">Đà Nẵng</option>
+                                    <option value="Hải Phòng">Hải Phòng</option>
+                                    <option value="Cần Thơ">Cần Thơ</option>
+                                    <option value="An Giang">An Giang</option>
+                                    <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
+                                    <option value="Bắc Giang">Bắc Giang</option>
+                                    <option value="Bắc Kạn">Bắc Kạn</option>
+                                    <option value="Bạc Liêu">Bạc Liêu</option>
+                                </select>
+                            </div>
+
+                            <!-- Quận/Huyện -->
+                            <div class="col-md-4 mb-3">
+                                <label for="district" class="form-label">Quận/Huyện <span class="text-danger">*</span></label>
+                                <select class="form-select" id="district" name="district" required>
+                                    <option value="">-- Chọn Quận/Huyện --</option>
+                                    <option value="Ba Đình">Ba Đình</option>
+                                    <option value="Hoàn Kiếm">Hoàn Kiếm</option>
+                                    <option value="Đống Đa">Đống Đa</option>
+                                    <option value="Hai Bà Trưng">Hai Bà Trưng</option>
+                                    <option value="Cầu Giấy">Cầu Giấy</option>
+                                    <option value="Bình Thạnh">Bình Thạnh</option>
+                                    <option value="Tân Bình">Tân Bình</option>
+                                    <!-- Có thể thêm các huyện/quận khác -->
+                                </select>
+                            </div>
+
+                            <!-- Phường/Xã -->
+                            <div class="col-md-4 mb-3">
+                                <label for="ward" class="form-label">Phường/Xã <span class="text-danger">*</span></label>
+                                <select class="form-select" id="ward" name="ward" required>
+                                    <option value="">-- Chọn Phường/Xã --</option>
+                                    <option value="Phúc Xá">Phúc Xá</option>
+                                    <option value="Trúc Bạch">Trúc Bạch</option>
+                                    <option value="Quán Thánh">Quán Thánh</option>
+                                    <option value="Ngọc Hà">Ngọc Hà</option>
+                                    <option value="Điện Biên">Điện Biên</option>
+                                    <option value="11">Phường 11</option>
+                                    <option value="12">Phường 12</option>
+                                    <!-- Có thể thêm các phường/xã khác -->
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Địa chỉ cụ thể <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="address" placeholder="Số nhà, tên đường..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Ghi chú</label>
+                            <textarea class="form-control" id="note" rows="3" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Shipping Method -->
+                <div class="checkout-card">
+                    <h3 class="checkout-title">Phương thức vận chuyển</h3>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="shippingMethod" id="standardShipping" checked>
+                        <label class="form-check-label d-flex justify-content-between w-100" for="standardShipping">
+                            <span>Giao hàng tiêu chuẩn (2-3 ngày)</span>
+                            <span>Miễn phí</span>
+                        </label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" name="shippingMethod" id="fastShipping">
+                        <label class="form-check-label d-flex justify-content-between w-100" for="fastShipping">
+                            <span>Giao hàng nhanh (1-2 ngày)</span>
+                            <span>30.000 đ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="checkout-card">
+                    <h3 class="checkout-title">Phương thức thanh toán</h3>
+                    <div class="checkout-payment-option active">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="cod" checked>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT02n0ly7vGc-WAHq2SohiShmVybVzcya6ZQg&s" alt="COD">
+                        <div>
+                            <div class="fw-bold">Thanh toán khi nhận hàng (COD)</div>
+                            <div class="small text-muted">Bạn chỉ phải thanh toán khi nhận được hàng</div>
+                        </div>
+                    </div>
+                    <div class="checkout-payment-option">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+                        <img src="https://data.unicloud.com.vn/wp-content/uploads/2022/09/digital-banking-platform-making-1.png" alt="Bank Transfer">
+                        <div>
+                            <div class="fw-bold">Chuyển khoản ngân hàng</div>
+                            <div class="small text-muted">Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi.</div>
+                        </div>
+                    </div>
+                    <div class="checkout-payment-option">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="momo">
+                        <img src="https://nobi.pro/wp-content/uploads/2024/05/momo-2_11zon.webp" alt="Momo">
+                        <div>
+                            <div class="fw-bold">Thanh toán qua Ví MoMo</div>
+                            <div class="small text-muted">Quét mã QR để thanh toán</div>
+                        </div>
+                    </div>
+                    <div class="checkout-payment-option">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="zalopay">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9bbH091DkyUOKcAI3mEb4kvKvVwEtTEhyvw&s" alt="ZaloPay">
+                        <div>
+                            <div class="fw-bold">Thanh toán qua ZaloPay</div>
+                            <div class="small text-muted">Quét mã QR để thanh toán</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Order Summary -->
+                <div class="checkout-card">
+                    <h3 class="checkout-title">Đơn hàng của bạn</h3>
+
+                    <div class="checkout-products mb-4">
+
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <div class="checkout-product">
+                                <!-- Hiển thị hình ảnh sản phẩm -->
+                                <img src="@item.Image" alt="@item.ProductName" class="checkout-product-img" />
+                                <div class="checkout-product-details">
+                                    <div class="checkout-product-title">@item.ProductName</div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted">Số lượng: @item.Quantity</span>
+                                        <span class="checkout-product-price">
+                                            @item.TotalPrice.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
+                    <div class="checkout-summary">
+                        <div class="checkout-summary-item">
+                            <span>Tạm tính:</span>
+                            <span>
+                                @Model.TotalAmount.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            </span>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Phí vận chuyển:</span>
+                            <span>@Model.ShippingFee.ToString("N0") đ</span>
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span>Giảm giá:</span>
+                            <span>@(0.ToString("N0")) đ</span> 
+                        </div>
+                        <div class="checkout-summary-item">
+                            <span class="checkout-total">Tổng thanh toán:</span>
+                            <span class="checkout-total">
+                                @Model.TotalWithShipping.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            Tôi đã đọc và đồng ý với <a href="#" class="text-decoration-none">điều khoản và điều kiện</a> của cửa hàng.
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary w-100 checkout-btn">Đặt hàng</button>
+
+                    <div class="checkout-instructions">
+                        <p class="mb-2"><i class="fas fa-shield-alt me-2"></i> Thông tin của bạn được bảo mật và mã hóa an toàn.</p>
+                        <p class="mb-0"><i class="fas fa-undo-alt me-2"></i> Chính sách hoàn trả trong vòng 30 ngày nếu không hài lòng.</p>
+                    </div>
+                </div>
+
+                <!-- Customer Support -->
+                <div class="checkout-card">
+                    <h3 class="checkout-subtitle">Cần hỗ trợ?</h3>
+                    <p class="mb-2"><i class="fas fa-phone-alt me-2 text-primary"></i> Gọi: <a href="tel:1900123456" class="text-decoration-none">1900 123 456</a></p>
+                    <p class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i> Email: <a href="mailto:support@ltn-dental.vn" class="text-decoration-none">support@ltn-dental.vn</a></p>
+                    <p class="mb-0"><i class="fas fa-clock me-2 text-primary"></i> Giờ làm việc: 8:00 - 22:00, Thứ Hai - Chủ Nhật</p>
+                </div>
+                <div class="checkout-card">
+                    <img src="https://i.pinimg.com/736x/4f/c5/53/4fc5531745881dbd5e0f3277ac855a75.jpg"
+                         alt="Ảnh"
+                         style="display: block;
+                           margin: 0 auto;
+                           max-width: 100%;
+                           height: auto;
+                           border-radius: 16px;
+                           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script chỉ để xử lý việc chọn phương thức thanh toán và cập nhật chi phí vận chuyển -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Payment method selection
+    document.querySelectorAll('.checkout-payment-option').forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove active class from all options
+            document.querySelectorAll('.checkout-payment-option').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Add active class to clicked option
+            this.classList.add('active');
+
+            // Check the radio button
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+        });
+    });
+
+    // Update shipping cost when shipping method changes
+    document.querySelectorAll('input[name="shippingMethod"]').forEach(method => {
+        method.addEventListener('change', function() {
+            const shippingCost = this.id === 'fastShipping' ? '30.000 đ' : '0 đ';
+            const totalCost = this.id === 'fastShipping' ? '7.630.000 đ' : '7.600.000 đ';
+
+            document.querySelector('.checkout-summary-item:nth-child(2) span:last-child').textContent = shippingCost;
+            document.querySelector('.checkout-summary-item:last-child span:last-child').textContent = totalCost;
+        });
+    });
+</script>

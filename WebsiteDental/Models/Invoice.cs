@@ -17,9 +17,13 @@ public partial class Invoice
 
     public bool? IsActive { get; set; }
 
+    public int? UserId { get; set; }
+
     public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
 
     public virtual Patient? Patient { get; set; }
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+
+    public virtual User? User { get; set; }
 }

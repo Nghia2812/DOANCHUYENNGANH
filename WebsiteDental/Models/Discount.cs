@@ -25,5 +25,11 @@ public partial class Discount
 
     public int? CategoryId { get; set; }
 
+    public string? ProductCode { get; set; }
+
+    public string? ServiceCode { get; set; }
+
+    public string? ShippingCode { get; set; }
+
     public virtual DiscountCategory? Category { get; set; }
 }

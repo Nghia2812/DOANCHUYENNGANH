@@ -2,6 +2,17 @@
 <link href="~/assets/css/style/styleshoppingcart.css" rel="stylesheet">
 }
  @model List<WebsiteDental.ViewModels.CartItemModelView> 
+
+@{
+    ViewData["Title"] = "Giỏ hàng của bạn";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 <!-- Main Content -->
 <main class="container py-5">
     <!-- Promotional Banner -->
@@ -69,17 +80,9 @@
 
                             </div>
                             <div class="col-md-2 col-4 text-md-center">
-                                <div class="d-flex align-items-center justify-content-md-center">
-
-                                   @*  <form asp-action="UpdateQuantity" asp-controller="Shoppingcart" method="post" class="d-flex">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button type="submit" name="action" value="decrease" class="shoplt-quantity-btn">-</button>
-                                        <input type="text" name="quantity" class="shoplt-quantity-input mx-2" value="@item.Quantity" readonly>
-                                        <button type="submit" name="action" value="increase" class="shoplt-quantity-btn">+</button>
-                                    </form> *@
+                                <div class="d-flex align-items-center justify-content-md-center">                              
                                     <form asp-action="UpdateQuantity" asp-controller="Shoppingcart" method="post" class="d-flex">
                                         <input type="hidden" name="productId" value="@item.ProductId" />
-
                                         <!-- Nút giảm số lượng -->
                                         <button type="submit" name="action" value="decrease" class="shoplt-quantity-btn">-</button>
 
@@ -101,28 +104,45 @@
                             </div>
                         </div>
                     </div>          
-                    
+
                 }
-               </div>
+            </div>
             <!-- Cart Actions -->
             <div class="row mt-4">
+                <!-- Mã giảm giá column -->
                 <div class="col-md-6 mb-3 mb-md-0">
                     <div class="input-group">
                         <input type="text" class="form-control shoplt-promo-input" placeholder="Mã giảm giá">
                         <button class="btn btn-primary shoplt-promo-btn" type="button">Áp dụng</button>
                     </div>
+                    <!-- Policy text moved here, directly under the input group -->
+                    <div class="cart-policy small text-muted mt-2">
+                        <p><strong>Chính sách giỏ hàng:</strong></p>
+                        <ul style="padding-left: 15px; margin-bottom: 10px;">
+                            <li>Giỏ hàng sẽ được lưu trong 30 ngày kể từ lần truy cập cuối.</li>
+                            <li>Sản phẩm và giá có thể thay đổi theo thời gian. Vui lòng kiểm tra lại trước khi thanh toán.</li>
+                            <li>Số lượng sản phẩm có hạn và không được đảm bảo cho đến khi hoàn tất đơn hàng.</li>
+                        </ul>
+                        <p><strong>Về mã giảm giá:</strong></p>
+                        <ul style="padding-left: 15px; margin-bottom: 10px;">
+                            <li>Mã giảm giá chỉ áp dụng một lần và có thể có điều kiện đi kèm.</li>
+                            <li>Không áp dụng đồng thời nhiều mã giảm giá cho một đơn hàng.</li>
+                        </ul>
+                        <p><strong>Giao hàng:</strong> Thời gian giao hàng có thể thay đổi tùy khu vực và điều kiện vận chuyển.</p>
+                    </div>
                 </div>
+
+                <!-- Buttons column -->
                 <div class="col-md-6 text-md-end">
                     <form asp-action="ClearCart" asp-controller="Shoppingcart" method="post">
-                        <button type="submit" class="btn btn-outline-secondary mb-3 ">Xóa tất cả</button>
+                        <button type="submit" class="btn btn-outline-secondary mb-2 ">Xóa tất cả</button>
                     </form>
-
-                    <button class="btn btn-outline-primary">Cập nhật giỏ hàng</button>
-
+                    <form asp-action="RemoveCart" asp-controller="Shoppingcart" method="post">
+                        <button style="margin-bottom: 10px;" type="submit" class="btn btn-outline-primary">Cập nhật giỏ hàng</button>
+                    </form>
                     <!-- Nút quay lại trang -->
                     <button class="btn btn-outline-info" onclick="window.history.back();">Quay lại trang</button>
                 </div>
-
             </div>
         </div>
 
@@ -133,23 +153,15 @@
 
                 <div class="shoplt-summary-row">
                     <span>Tạm tính:</span>
-
                     <span>@(Convert.ToDecimal(ViewData["TotalAmount"]).ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
-
-
                 </div>
-
                 <div class="shoplt-summary-row">
                     <span>Giảm giá</span>
                     <span>-0 đ</span>
                 </div>
-
                 <div class="shoplt-summary-row">
                     <span>Phí vận chuyển</span>
                     <span> @(((decimal)ViewData["ShippingFee"]).ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
-
-          
-
                 </div>
 
                 <hr>
@@ -162,13 +174,11 @@
 
                 </div>
 
-                <button class="btn btn-primary shoplt-checkout-btn w-100 mt-3 py-2">Tiến hành thanh toán</button>
-                <a href="#" class="btn shoplt-continue-btn w-100 mt-2 py-2">Tiếp tục mua sắm</a>
+                <a href="@Url.Action("Index", "Paymoney")" class="btn btn-primary shoplt-checkout-btn w-100 mt-3 py-2">
+                    Tiến hành thanh toán
+                </a>
+                <a href="/Products" class="btn shoplt-continue-btn w-100 mt-2 py-2">Tiếp tục mua sắm</a>
             </div>
-
-
-
-
             <!-- Payment Methods -->
             <div class="mt-4 p-3 border rounded">
                 <h5 class="mb-3">Phương thức thanh toán</h5>
@@ -189,58 +199,66 @@
     <div class="mt-5">
         <h3 class="mb-4">Có thể bạn cũng thích</h3>
         <div class="row">
-            <!-- Product 1 -->
-            <div class="col-md-3 col-6 mb-4">
-                <div class="shoplt-recommended-product position-relative">
-                    <span class="shoplt-promo-badge">-10%</span>
-                    <img src="/api/placeholder/200/200" alt="Chỉ nha khoa" class="img-fluid mb-3">
-                    <h5>Chỉ nha khoa Oral-B</h5>
-                    <div class="mb-2">
-                        <span class="shoplt-product-price">50.000 đ</span>
-                        <span class="shoplt-discount-price ms-2">55.000 đ</span>
-                    </div>
-                    <button class="btn btn-primary btn-sm w-100">Thêm vào giỏ</button>
-                </div>
-            </div>
 
-            <!-- Product 2 -->
-            <div class="col-md-3 col-6 mb-4">
-                <div class="shoplt-recommended-product position-relative">
-                    <span class="shoplt-promo-badge">-15%</span>
-                    <img src="/api/placeholder/200/200" alt="Bộ chăm sóc răng" class="img-fluid mb-3">
-                    <h5>Bộ chăm sóc răng miệng</h5>
-                    <div class="mb-2">
-                        <span class="shoplt-product-price">285.000 đ</span>
-                        <span class="shoplt-discount-price ms-2">335.000 đ</span>
+            @foreach (var item in ViewBag.RecommendedProducts)
+            {
+                <div class="col-md-3 col-6 mb-4">
+                    <div class="shoplt-recommended-product position-relative">
+                        <span class="shoplt-promo-badge">-10%</span>
+                        <div class="product-img-container mb-3">
+                            <img src="@item.Image" alt="@item.ProductName" class="product-img">
+                        </div>
+                        <h5>@item.ProductName</h5>
+                        <div class="mb-2">
+                            <span class="shoplt-product-price">
+                                @item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            </span>
+                            <span class=" ms-2">Đánh giá: @item.Rating</span>
+                        </div>
+                        <a href="@Url.Action("Index", "DetailProducts", new { id = item.Id })" class="btn btn-primary btn-sm w-100">Xem chi tiết</a>
                     </div>
-                    <button class="btn btn-primary btn-sm w-100">Thêm vào giỏ</button>
                 </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="col-md-3 col-6 mb-4">
-                <div class="shoplt-recommended-product position-relative">
-                    <img src="/api/placeholder/200/200" alt="Kem tẩy trắng răng" class="img-fluid mb-3">
-                    <h5>Kem tẩy trắng răng 3D</h5>
-                    <div class="mb-2">
-                        <span class="shoplt-product-price">160.000 đ</span>
-                    </div>
-                    <button class="btn btn-primary btn-sm w-100">Thêm vào giỏ</button>
-                </div>
-            </div>
-
-            <!-- Product 4 -->
-            <div class="col-md-3 col-6 mb-4">
-                <div class="shoplt-recommended-product position-relative">
-                    <span class="shoplt-promo-badge">Mới</span>
-                    <img src="/api/placeholder/200/200" alt="Bàn chải tre" class="img-fluid mb-3">
-                    <h5>Bàn chải tre sinh học</h5>
-                    <div class="mb-2">
-                        <span class="shoplt-product-price">75.000 đ</span>
-                    </div>
-                    <button class="btn btn-primary btn-sm w-100">Thêm vào giỏ</button>
-                </div>
-            </div>
+             }
         </div>
     </div>
 </main>
+<style>
+    .product-img-container {
+        position: relative;
+        width: 100%;
+        height: 200px; /* Fixed height */
+        overflow: hidden;
+    }
+
+    .product-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Maintains aspect ratio while filling the container */
+    }
+
+    .shoplt-recommended-product {
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .shoplt-recommended-product:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+    .shoplt-promo-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff4a4a;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+</style>

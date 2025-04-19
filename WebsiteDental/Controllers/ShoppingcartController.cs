@@ -25,7 +25,7 @@ public class ShoppingcartController : Controller
         {
             return RedirectToAction("Register", "Account");
         }
-
+     
         var cartItems = _context.Carts
             .Where(c => c.UserId == userId)
             .Include(c => c.Product)
@@ -37,26 +37,29 @@ public class ShoppingcartController : Controller
                 Rating = c.Product.Rating,
                 Price = c.Product.Price,
                 Quantity = c.Quantity ?? 0
+                
             })
             .ToList();
+
         // Tính tổng giá trị giỏ hàng
         decimal totalAmount = cartItems.Sum(item => item.TotalPrice);  // Sử dụng TotalPrice trong CartItemModelView
 
         // Tính phí vận chuyển
         decimal shippingFee = totalAmount < 500000 ? 40000 : 0;
 
-
-
-
         // Tính tổng thanh toán (giỏ hàng + phí vận chuyển)
         decimal totalWithShipping = totalAmount + shippingFee;
-        
 
+        // Lấy 8 sản phẩm gợi ý
+        var recommendedProducts = _context.Products
+            .OrderByDescending(p => p.Id)
+            .Take(8)
+            .ToList();
         // Gửi dữ liệu ra View
-        ViewData["TotalAmount"] = totalAmount;  // Gửi tổng tiền hàng
-        ViewData["ShippingFee"] = shippingFee;  // Gửi phí vận chuyển
-        ViewData["TotalWithShipping"] = totalWithShipping;  // Gửi tổng thanh toán
-        
+        ViewData["TotalAmount"] = totalAmount;  
+        ViewData["ShippingFee"] = shippingFee; 
+        ViewData["TotalWithShipping"] = totalWithShipping;  
+        ViewBag.RecommendedProducts = recommendedProducts; // Truyền sang View
         return View(cartItems);
     }
     [HttpPost]
@@ -193,8 +196,31 @@ public class ShoppingcartController : Controller
         // Quay lại trang giỏ hàng sau khi cập nhật
         return RedirectToAction("Index", "Shoppingcart");
     }
-   
-   
+
+    [HttpPost]
+    public IActionResult RemoveCart(int productId)
+    {
+        var userId = GetCurrentUserId();
+
+        if (userId == 0)
+        {
+            return RedirectToAction("Register", "Account");
+        }
+
+        var cartItem = _context.Carts.FirstOrDefault(c => c.ProductId == productId && c.UserId == userId);
+
+        if (cartItem != null)
+        {
+            _context.Carts.Remove(cartItem);  // Xóa sản phẩm khỏi giỏ
+            _context.SaveChanges();
+        }
+
+        // Gửi thông báo thành công qua TempData
+        TempData["SuccessMessage"] = "Giỏ hàng đã được cập nhật thành công!";
+
+        // Quay lại trang giỏ hàng
+        return RedirectToAction("Index", "Shoppingcart");
+    }
 
 
 }

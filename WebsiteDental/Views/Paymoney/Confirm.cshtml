@@ -1,0 +1,52 @@
+﻿@model WebsiteDental.Models.PaymoneyModelView
+
+<h3>Xác nhận đơn hàng</h3>
+<hr />
+
+<h4>Thông tin giao hàng:</h4>
+<p><strong>Họ và tên:</strong> @Model.username</p>
+<p><strong>Số điện thoại:</strong> @Model.Phone</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Địa chỉ:</strong> @Model.Address, @Model.Ward, @Model.District, @Model.Province</p>
+<p><strong>Ghi chú:</strong> @Model.Note</p>
+
+<h4>Chi tiết sản phẩm:</h4>
+@foreach (var item in Model.CartItems)
+{
+    <div>
+        <p>@item.ProductName - SL: @item.Quantity - Giá: @item.TotalPrice.ToString("N0") đ</p>
+    </div>
+}
+
+<h4>Tổng cộng:</h4>
+<p><strong>Tạm tính:</strong> @Model.TotalAmount.ToString("N0") đ</p>
+<p><strong>Phí vận chuyển:</strong> @Model.ShippingFee.ToString("N0") đ</p>
+<p><strong>Tổng thanh toán:</strong> @Model.TotalWithShipping.ToString("N0") đ</p>
+
+<!-- Form để gửi thông tin đơn hàng -->
+<form method="post" action="@Url.Action("PlaceOrder", "Paymoney")">
+    <!-- Dữ liệu sẽ được gửi từ model -->
+    <input type="hidden" name="FullName" value="@Model.username" />
+    <input type="hidden" name="Phone" value="@Model.Phone" />
+    <input type="hidden" name="Email" value="@Model.Email" />
+    <input type="hidden" name="Province" value="@Model.Province" />
+    <input type="hidden" name="District" value="@Model.District" />
+    <input type="hidden" name="Ward" value="@Model.Ward" />
+    <input type="hidden" name="Address" value="@Model.Address" />
+    <input type="hidden" name="Note" value="@Model.Note" />
+    <input type="hidden" name="TotalAmount" value="@Model.TotalAmount" />
+    <input type="hidden" name="ShippingFee" value="@Model.ShippingFee" />
+    <input type="hidden" name="TotalWithShipping" value="@Model.TotalWithShipping" />
+
+    <!-- Giỏ hàng -->
+    @foreach (var item in Model.CartItems)
+    {
+        <input type="hidden" name="CartItems[@item.ProductId].Quantity" value="@item.Quantity" />
+    }
+
+    <!-- Nút đặt hàng -->
+    <button type="submit" class="btn btn-primary w-100 checkout-btn">Đặt hàng</button>
+</form>
+
+<!-- Quay lại trang giỏ hàng -->
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

@@ -85,7 +85,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -354,6 +354,9 @@ public partial class WebsiteDentalContext : DbContext
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
             entity.Property(e => e.OriginalPrice).HasColumnName("original_price");
+            entity.Property(e => e.ProductCode).HasMaxLength(50);
+            entity.Property(e => e.ServiceCode).HasMaxLength(50);
+            entity.Property(e => e.ShippingCode).HasMaxLength(50);
             entity.Property(e => e.StartDate).HasColumnName("start_date");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Discounts)
@@ -541,6 +544,10 @@ public partial class WebsiteDentalContext : DbContext
                 .HasForeignKey(d => d.PatientId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Invoices__patien__00200768");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Invoices)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_Invoices_Users");
         });
 
         modelBuilder.Entity<InvoiceDetail>(entity =>
@@ -584,6 +591,10 @@ public partial class WebsiteDentalContext : DbContext
                 .HasForeignKey(d => d.InvoiceId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__InvoiceDe__invoi__06CD04F7");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.InvoiceDetails)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK_InvoiceDetails_Products");
 
             entity.HasOne(d => d.Service).WithMany(p => p.InvoiceDetails)
                 .HasForeignKey(d => d.ServiceId)
