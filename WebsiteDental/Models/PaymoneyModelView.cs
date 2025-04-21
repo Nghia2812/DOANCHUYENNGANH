@@ -6,6 +6,9 @@ namespace WebsiteDental.Models
     public class PaymoneyModelView
     {
         // Các thuộc tính mới thêm vào
+
+
+        public string UserId { get; set; } // Thêm UserId vào Model View
         public string username { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }

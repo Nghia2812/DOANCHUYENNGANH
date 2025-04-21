@@ -174,9 +174,12 @@
 
                 </div>
 
-                <a href="@Url.Action("Index", "Paymoney")" class="btn btn-primary shoplt-checkout-btn w-100 mt-3 py-2">
-                    Tiến hành thanh toán
-                </a>
+                <form asp-controller="Shoppingcart" asp-action="ProceedToCheckout" method="post">
+                    <button type="submit" class="btn btn-primary shoplt-checkout-btn w-100 mt-3 py-2">
+                        Tiến hành thanh toán
+                    </button>
+                </form>
+
                 <a href="/Products" class="btn shoplt-continue-btn w-100 mt-2 py-2">Tiếp tục mua sắm</a>
             </div>
             <!-- Payment Methods -->

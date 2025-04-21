@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Security.Claims;
 using WebsiteDental.Models;
 using WebsiteDental.ViewModels;
 
@@ -14,6 +16,7 @@ public class PaymoneyController : Controller
         _httpContextAccessor = httpContextAccessor;
     }
 
+    // GET: Trang thanh toán (index)
     public IActionResult Index()
     {
         var userId = GetCurrentUserId();
@@ -22,6 +25,7 @@ public class PaymoneyController : Controller
         {
             return RedirectToAction("Register", "Account");
         }
+
         // Lấy thông tin người dùng
         var user = _context.Users.FirstOrDefault(u => u.Id == userId);
         if (user != null)
@@ -30,6 +34,7 @@ public class PaymoneyController : Controller
             ViewBag.Email = user.Email;
             ViewBag.Phone = user.Phone;
         }
+
         // Lấy giỏ hàng của người dùng
         var cartItems = _context.Carts
             .Where(c => c.UserId == userId)
@@ -42,7 +47,7 @@ public class PaymoneyController : Controller
                 Rating = c.Product.Rating,
                 Price = c.Product.Price,
                 Quantity = c.Quantity ?? 0,
-               // TotalPrice = (c.Product.Price ?? 0) * (c.Quantity ?? 0)  // Tính tổng giá cho từng sản phẩm
+               // TotalPrice = (c.Product.Price ?? 0) * (c.Quantity ?? 0) // Tính tổng giá cho từng sản phẩm
             })
             .ToList();
 
@@ -70,69 +75,102 @@ public class PaymoneyController : Controller
         return View(paymentModelView);
     }
 
+    // Lấy ID người dùng hiện tại từ session
     private int GetCurrentUserId()
     {
         var userId = _httpContextAccessor.HttpContext?.Session.GetInt32("UserId");
         return userId ?? 0;
     }
+
+    // POST: Xác nhận đơn hàng
     [HttpPost]
     public IActionResult Confirm(PaymoneyModelView model)
     {
+        // Kiểm tra tính hợp lệ của model
         if (!ModelState.IsValid)
         {
-            return View("Index", model); // Trả về trang thanh toán nếu dữ liệu không hợp lệ
+            return View("Confirm", model); // Nếu không hợp lệ, quay lại trang xác nhận
         }
 
-        // Chuyển sang view xác nhận đơn hàng
-        return View("Confirm", model);
-    }
-    [HttpPost]
-    public IActionResult PlaceOrder(PaymoneyModelView model)
-    {
-        // Giả sử PatientId lấy từ thông tin người dùng đã đăng nhập hoặc thông qua Session
-        int? patientId = 123; // Lấy PatientId từ thông tin đăng nhập hoặc session, ví dụ.
+        // Lưu giỏ hàng vào Session
+        var cartJson = JsonConvert.SerializeObject(model.CartItems);
+        HttpContext.Session.SetString("CartItems", cartJson);
 
-        // Tạo hóa đơn mới
+        // Chuyển đến trang xác nhận sau khi lưu giỏ hàng
+        return View("Confirm", model); // Confirm.cshtml
+    }
+
+    // POST: Đặt hàng
+    [HttpPost]
+    public IActionResult PlaceOrder()
+    {
+        // Lấy giỏ hàng từ session
+        var cartJson = HttpContext.Session.GetString("CartItems");
+        var cartItems = string.IsNullOrEmpty(cartJson)
+            ? new List<CartItemModelView>()
+            : JsonConvert.DeserializeObject<List<CartItemModelView>>(cartJson);
+
+        // Kiểm tra giỏ hàng
+        if (cartItems == null || !cartItems.Any())
+        {
+            TempData["ErrorMessage"] = "Giỏ hàng của bạn trống!";
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+
+        // Lấy ID người dùng
+        var userId = GetCurrentUserId();
+        if (userId == 0)
+        {
+            TempData["ErrorMessage"] = "Bạn cần phải đăng nhập trước khi đặt hàng!";
+            return RedirectToAction("Login", "Account");
+        }
+
+        // Tính tổng tiền của đơn hàng
+        var totalAmount = cartItems.Sum(item => item.TotalPrice);
+
+        // Tạo hóa đơn
         var invoice = new Invoice
         {
-            PatientId = patientId,  // Liên kết với bệnh nhân (khách hàng)
-            TotalAmount = model.TotalAmount,
-            IssueDate = DateOnly.FromDateTime(DateTime.Now),  // Ngày xuất hóa đơn
-            IsPaid = false,  // Chưa thanh toán
-            IsActive = true,
-            UserId = 1,  // Liên kết với User đang đăng nhập (có thể lấy từ session hoặc hệ thống quản lý người dùng)
+            UserId = userId,
+            TotalAmount = totalAmount,
+            IssueDate = DateOnly.FromDateTime(DateTime.Now),
+            IsPaid = false,
+            IsActive = true
         };
 
-        // Lưu hóa đơn vào bảng Invoice
         _context.Invoices.Add(invoice);
-        _context.SaveChanges();  // Lưu vào database, lấy Id của hóa đơn vừa tạo
+        _context.SaveChanges();
 
-        // Lưu chi tiết đơn hàng vào bảng InvoiceDetail
-        foreach (var item in model.CartItems)
+        // Thêm chi tiết hóa đơn
+        foreach (var item in cartItems)
         {
             var invoiceDetail = new InvoiceDetail
             {
-                InvoiceId = invoice.Id,  // Liên kết chi tiết với hóa đơn vừa tạo
+                InvoiceId = invoice.Id,
                 ProductId = item.ProductId,
                 Quantity = item.Quantity,
-                Subtotal = item.Quantity * item.Price,  // Tính tổng tiền cho sản phẩm
-                DiscountAmount = 0,  // Nếu có giảm giá thì tính ở đây
-                FinalAmount = item.Quantity * item.Price,  // Tổng tiền sau khi áp dụng giảm giá (nếu có)
+                Subtotal = item.TotalPrice,
+                DiscountAmount = 0,
+                FinalAmount = item.TotalPrice,
                 CreatedAt = DateTime.Now,
                 IsActive = true
             };
 
             _context.InvoiceDetails.Add(invoiceDetail);
         }
-        _context.SaveChanges();  // Lưu chi tiết vào database
 
-        // Chuyển hướng đến trang thông báo đặt hàng thành công
-        return RedirectToAction("OrderSuccess");
+        _context.SaveChanges();
+
+        // Xóa giỏ hàng
+        HttpContext.Session.Remove("CartItems");
+
+        TempData["SuccessMessage"] = "Đặt hàng thành công!";
+        return RedirectToAction("OrderSuccess"); // Chuyển hướng đến trang OrderSuccess
     }
+
+    // Trang thành công khi đặt hàng
     public IActionResult OrderSuccess()
     {
-        return View();
+        return View("OrderSuccess"); // Trả về view OrderSuccess.cshtml
     }
-
-
 }

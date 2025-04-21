@@ -223,4 +223,39 @@ public class ShoppingcartController : Controller
     }
 
 
+
+    //lưu giỏ hàng vào session 
+    [HttpPost]
+    public IActionResult ProceedToCheckout()
+    {
+        var userId = GetCurrentUserId();
+
+        if (userId == 0)
+        {
+            return RedirectToAction("Register", "Account");
+        }
+
+        // Lấy giỏ hàng của người dùng từ database
+        var cartItems = _context.Carts
+            .Where(c => c.UserId == userId)
+            .Include(c => c.Product)
+            .Select(c => new CartItemModelView
+            {
+                ProductId = c.ProductId ?? 0,
+                ProductName = c.Product.ProductName,
+                Image = c.Product.Image,
+                Rating = c.Product.Rating,
+                Price = c.Product.Price,
+                Quantity = c.Quantity ?? 0
+            })
+            .ToList();
+
+        // Lưu giỏ hàng vào Session
+        HttpContext.Session.SetString("CartItems", System.Text.Json.JsonSerializer.Serialize(cartItems));
+
+        // Điều hướng sang trang thanh toán
+        return RedirectToAction("Index", "Paymoney");
+    }
+
+
 }

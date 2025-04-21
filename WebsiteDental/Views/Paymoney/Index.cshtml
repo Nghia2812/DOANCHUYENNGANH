@@ -6,14 +6,13 @@
 <!-- Phần địa chỉ đã được sửa lại để không cần dùng JavaScript -->
 <div class="checkout-container">
     <div class="container">
-
+        <form asp-action="PlaceOrder" asp-controller="Paymoney" method="post" class="checkout-form">
         <div class="row">
             <!-- Left Column -->
             <div class="col-lg-8">
                 <!-- Delivery Info -->
                 <div class="checkout-card">
-                    <h3 class="checkout-title">Thông tin giao hàng</h3>
-                    <form class="checkout-form">
+                    <h3 class="checkout-title">Thông tin giao hàng</h3>            
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="fullName" class="form-label">Họ và tên <span class="text-danger">*</span></label>
@@ -92,7 +91,7 @@
                             <label for="note" class="form-label">Ghi chú</label>
                             <textarea class="form-control" id="note" rows="3" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
                         </div>
-                    </form>
+                    
                 </div>
 
                 <!-- Shipping Method -->
@@ -176,10 +175,7 @@
                                 </div>
                             </div>
                         }
-
-
                     </div>
-
                     <div class="checkout-summary">
                         <div class="checkout-summary-item">
                             <span>Tạm tính:</span>
@@ -218,7 +214,7 @@
                         <p class="mb-0"><i class="fas fa-undo-alt me-2"></i> Chính sách hoàn trả trong vòng 30 ngày nếu không hài lòng.</p>
                     </div>
                 </div>
-
+         
                 <!-- Customer Support -->
                 <div class="checkout-card">
                     <h3 class="checkout-subtitle">Cần hỗ trợ?</h3>
@@ -239,6 +235,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </div>
 
