@@ -111,10 +111,33 @@
             <div class="row mt-4">
                 <!-- Mã giảm giá column -->
                 <div class="col-md-6 mb-3 mb-md-0">
-                    <div class="input-group">
-                        <input type="text" class="form-control shoplt-promo-input" placeholder="Mã giảm giá">
-                        <button class="btn btn-primary shoplt-promo-btn" type="button">Áp dụng</button>
+
+
+                    <form asp-action="ApplyDiscount" asp-controller="Shoppingcart" method="post">
+                        <div class="input-group">
+                            <input type="text" name="discountCode" class="form-control shoplt-promo-input" placeholder="Mã giảm giá" required>
+                            <button class="btn btn-primary shoplt-promo-btn" type="submit">Áp dụng</button>
+                        </div>
+                        <span class="text-danger">@TempData["DiscountError"]</span>
+                        <span class="text-success">@TempData["DiscountSuccess"]</span>
+                    </form>
+
+                    <!-- Hiển thị mã giảm giá khi người dùng đã nhập -->
+                    <div id="discount-display" style="margin-top: 10px;">
+                        @if (TempData["DiscountCode"] != null)
+                        {
+                            <strong>Mã giảm giá đã nhập: </strong>
+                            <span>@TempData["DiscountCode"]</span>
+                        }
                     </div>
+
+
+
+
+
+
+
+
                     <!-- Policy text moved here, directly under the input group -->
                     <div class="cart-policy small text-muted mt-2">
                         <p><strong>Chính sách giỏ hàng:</strong></p>

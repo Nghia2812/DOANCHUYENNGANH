@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http; // Cần thêm namespace này
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WebsiteDental.Models;
 using WebsiteDental.ViewModels;
-using Microsoft.AspNetCore.Http; // Cần thêm namespace này
+
 
 
 
@@ -119,6 +121,69 @@ public class ShoppingcartController : Controller
 
         return 0;
     }
+
+
+
+
+
+
+
+    [HttpPost]
+    public IActionResult ApplyDiscount(string discountCode)
+    {
+        // Kiểm tra mã giảm giá từ bảng Discounts
+        var discount = _context.Discounts
+            .FirstOrDefault(d => (d.ProductCode == discountCode || d.ServiceCode == discountCode || d.ShippingCode == discountCode)
+                                 && d.IsActive == true
+                                 && d.StartDate.HasValue
+                                 && d.StartDate.Value <= DateOnly.FromDateTime(DateTime.Now)
+                                 && d.EndDate.HasValue
+                                 && d.EndDate.Value >= DateOnly.FromDateTime(DateTime.Now));
+
+        // Nếu tìm thấy mã giảm giá hợp lệ
+        if (discount != null)
+        {
+            // Kiểm tra xem FinalPrice có phải là null và chuyển sang decimal
+            decimal finalPrice = 0;
+            if (decimal.TryParse(discount.FinalPrice, out var parsedPrice))
+            {
+                finalPrice = parsedPrice;
+            }
+
+            // Lưu mã giảm giá và giá trị finalPrice vào session
+            HttpContext.Session.SetString("DiscountCode", discountCode);
+            HttpContext.Session.SetString("FinalPrice", finalPrice.ToString());
+
+            // Cập nhật lại số lượng mã giảm giá trong cơ sở dữ liệu
+            if (discount.Quantity > 0)
+            {
+                discount.Quantity -= 1; // Giảm số lượng
+                _context.SaveChanges(); // Lưu thay đổi vào cơ sở dữ liệu
+
+                // Sử dụng TempData để truyền mã giảm giá và thông báo thành công
+                TempData["DiscountCode"] = discountCode;
+                TempData["DiscountSuccess"] = "Áp dụng mã giảm giá thành công!";
+            }
+            else
+            {
+                TempData["DiscountError"] = "Mã giảm giá đã hết!";
+                return RedirectToAction("Index", "Shoppingcart");
+            }
+        }
+        else
+        {
+            TempData["DiscountError"] = "Mã giảm giá không hợp lệ hoặc đã hết hạn.";
+        }
+
+        // Quay lại trang giỏ hàng
+        return RedirectToAction("Index", "Shoppingcart");
+    }
+
+
+
+
+
+
 
 
 
