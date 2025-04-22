@@ -50,7 +50,7 @@ namespace WebsiteDental.Controllers
 
         // Xử lý Đăng Ký
         [HttpPost]
-        public IActionResult Register(string username, string email, string phone, string password, string confirmPassword)
+        public IActionResult Register(string username, string email, string phone, string password, string confirmPassword, string address)
         {
             if (password != confirmPassword)
             {
@@ -69,13 +69,14 @@ namespace WebsiteDental.Controllers
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO Users (username, email, phone, password, created_at) VALUES (@Username, @Email, @Phone, @Password, GETDATE())";
+                string query = "INSERT INTO Users (username, email, phone, password, address, created_at) VALUES (@Username, @Email, @Phone, @Password, @Address, GETDATE())";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@Email", email);
                     cmd.Parameters.AddWithValue("@Phone", phone);
                     cmd.Parameters.AddWithValue("@Password", hashedPassword);
+                    cmd.Parameters.AddWithValue("@Address", address);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -84,12 +85,7 @@ namespace WebsiteDental.Controllers
             return View();
         }
 
-        //// Hiển thị trang Đăng Nhập
-        //[HttpGet]
-        //public IActionResult RegisterAccount()
-        //{
-        //    return View("Register");
-        //}
+
 
         // Xử lý Đăng Nhập
         [HttpPost]

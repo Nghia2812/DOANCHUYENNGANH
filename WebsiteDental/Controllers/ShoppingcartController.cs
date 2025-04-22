@@ -119,6 +119,9 @@ public class ShoppingcartController : Controller
 
         return 0;
     }
+
+
+
     //Xoá sản phẩm trong giỏ hàng ạ
     [HttpPost]
     public IActionResult RemoveFromCart(int productId)
@@ -143,6 +146,10 @@ public class ShoppingcartController : Controller
         // Quay lại giỏ hàng
         return RedirectToAction("Index", "ShoppingCart");
     }
+
+
+
+
     //xoá tất cả
     [HttpPost]
     public IActionResult ClearCart()
@@ -164,6 +171,11 @@ public class ShoppingcartController : Controller
         // Quay lại giỏ hàng
         return RedirectToAction("Index", "ShoppingCart");
     }
+
+
+
+
+
     //cập nhật số lượng thêm trong giỏ hàng
     [HttpPost]
     public IActionResult UpdateQuantity(int productId, int quantity, string action)

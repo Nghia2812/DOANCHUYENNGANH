@@ -85,7 +85,7 @@ public partial class WebsiteDentalContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-   
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AboutDental>(entity =>
@@ -355,6 +355,7 @@ public partial class WebsiteDentalContext : DbContext
                 .HasColumnName("is_active");
             entity.Property(e => e.OriginalPrice).HasColumnName("original_price");
             entity.Property(e => e.ProductCode).HasMaxLength(50);
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.ServiceCode).HasMaxLength(50);
             entity.Property(e => e.ShippingCode).HasMaxLength(50);
             entity.Property(e => e.StartDate).HasColumnName("start_date");
@@ -1096,6 +1097,7 @@ public partial class WebsiteDentalContext : DbContext
             entity.HasIndex(e => e.Username, "UQ__Users__F3DBC5728CED1AA1").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.Avatar)
                 .HasMaxLength(255)
                 .HasColumnName("avatar");

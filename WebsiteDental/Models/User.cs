@@ -25,6 +25,8 @@ public partial class User
 
     public bool? IsActive { get; set; }
 
+    public string? Address { get; set; }
+
     public virtual ICollection<BlogComment> BlogComments { get; set; } = new List<BlogComment>();
 
     public virtual ICollection<BlogPost> BlogPosts { get; set; } = new List<BlogPost>();

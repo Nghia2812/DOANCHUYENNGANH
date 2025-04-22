@@ -31,5 +31,7 @@ public partial class Discount
 
     public string? ShippingCode { get; set; }
 
+    public int? Quantity { get; set; }
+
     public virtual DiscountCategory? Category { get; set; }
 }

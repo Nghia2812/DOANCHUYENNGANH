@@ -27,71 +27,16 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="Email" value="@ViewBag.Email">
-                        </div>
-                        <!-- Phần địa chỉ đã được sửa lại - không cần JavaScript -->
-
-                        <div class="row">
-                            <!-- Tỉnh/Thành phố -->
-                            <div class="col-md-4 mb-3">
-                                <label for="province" class="form-label">Tỉnh/Thành phố <span class="text-danger">*</span></label>
-                                <select class="form-select" id="province" name="province" required>
-                                    <option value="">-- Chọn Tỉnh/Thành phố --</option>
-                                    <option value="Hà Nội">Hà Nội</option>
-                                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                                    <option value="Đà Nẵng">Đà Nẵng</option>
-                                    <option value="Hải Phòng">Hải Phòng</option>
-                                    <option value="Cần Thơ">Cần Thơ</option>
-                                    <option value="An Giang">An Giang</option>
-                                    <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
-                                    <option value="Bắc Giang">Bắc Giang</option>
-                                    <option value="Bắc Kạn">Bắc Kạn</option>
-                                    <option value="Bạc Liêu">Bạc Liêu</option>
-                                </select>
-                            </div>
-
-                            <!-- Quận/Huyện -->
-                            <div class="col-md-4 mb-3">
-                                <label for="district" class="form-label">Quận/Huyện <span class="text-danger">*</span></label>
-                                <select class="form-select" id="district" name="district" required>
-                                    <option value="">-- Chọn Quận/Huyện --</option>
-                                    <option value="Ba Đình">Ba Đình</option>
-                                    <option value="Hoàn Kiếm">Hoàn Kiếm</option>
-                                    <option value="Đống Đa">Đống Đa</option>
-                                    <option value="Hai Bà Trưng">Hai Bà Trưng</option>
-                                    <option value="Cầu Giấy">Cầu Giấy</option>
-                                    <option value="Bình Thạnh">Bình Thạnh</option>
-                                    <option value="Tân Bình">Tân Bình</option>
-                                    <!-- Có thể thêm các huyện/quận khác -->
-                                </select>
-                            </div>
-
-                            <!-- Phường/Xã -->
-                            <div class="col-md-4 mb-3">
-                                <label for="ward" class="form-label">Phường/Xã <span class="text-danger">*</span></label>
-                                <select class="form-select" id="ward" name="ward" required>
-                                    <option value="">-- Chọn Phường/Xã --</option>
-                                    <option value="Phúc Xá">Phúc Xá</option>
-                                    <option value="Trúc Bạch">Trúc Bạch</option>
-                                    <option value="Quán Thánh">Quán Thánh</option>
-                                    <option value="Ngọc Hà">Ngọc Hà</option>
-                                    <option value="Điện Biên">Điện Biên</option>
-                                    <option value="11">Phường 11</option>
-                                    <option value="12">Phường 12</option>
-                                    <!-- Có thể thêm các phường/xã khác -->
-                                </select>
-                            </div>
-                        </div>
-
-
+                        </div>                    
                         <div class="mb-3">
                             <label for="address" class="form-label">Địa chỉ cụ thể <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="address" placeholder="Số nhà, tên đường..." required>
+                            <input type="text" class="form-control" id="address" name="address" value="@ViewBag.Address" required>
+
                         </div>
                         <div class="mb-3">
                             <label for="note" class="form-label">Ghi chú</label>
                             <textarea class="form-control" id="note" rows="3" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
-                        </div>
-                    
+                        </div>                  
                 </div>
 
                 <!-- Shipping Method -->

@@ -33,6 +33,7 @@ public class PaymoneyController : Controller
             ViewBag.FullName = user.Username;
             ViewBag.Email = user.Email;
             ViewBag.Phone = user.Phone;
+            ViewBag.Address = user.Address;
         }
 
         // Lấy giỏ hàng của người dùng
@@ -82,6 +83,91 @@ public class PaymoneyController : Controller
         return userId ?? 0;
     }
 
+    [HttpPost]
+    public IActionResult PlaceOrder()
+    {
+        // Lấy giỏ hàng từ session
+        var cartJson = HttpContext.Session.GetString("CartItems");
+        var cartItems = string.IsNullOrEmpty(cartJson)
+            ? new List<CartItemModelView>()
+            : JsonConvert.DeserializeObject<List<CartItemModelView>>(cartJson);
+
+        if (cartItems == null || !cartItems.Any())
+        {
+            TempData["ErrorMessage"] = "Giỏ hàng của bạn trống!";
+            return RedirectToAction("Index", "ShoppingCart");
+        }
+
+        // Lấy ID người dùng
+        var userId = GetCurrentUserId();
+        if (userId == null)
+        {
+            TempData["ErrorMessage"] = "Bạn cần phải đăng nhập trước khi đặt hàng!";
+            return RedirectToAction("Login", "Account");
+        }
+
+        // Tính tổng tiền
+        var totalAmount = cartItems.Sum(item => item.TotalPrice);
+
+        // Tạo hóa đơn
+        var invoice = new Invoice
+        {
+            UserId = userId,
+            TotalAmount = totalAmount,
+            IssueDate = DateOnly.FromDateTime(DateTime.Now),
+            IsPaid = false,
+            IsActive = true
+        };
+
+        _context.Invoices.Add(invoice);
+        _context.SaveChanges(); // Lưu để lấy Invoice.Id
+
+        // Danh sách chi tiết hóa đơn
+        List<InvoiceDetail> invoiceDetails = new List<InvoiceDetail>();
+
+        foreach (var item in cartItems)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == item.ProductId);
+            if (product == null || product.Quantity < item.Quantity)
+            {
+                TempData["ErrorMessage"] = $"Sản phẩm '{item.ProductName}' không đủ số lượng trong kho.";
+                return RedirectToAction("Index", "ShoppingCart");
+            }
+
+            // Trừ số lượng trong kho
+            product.Quantity -= item.Quantity;
+            _context.Products.Update(product);
+
+            // Thêm chi tiết hóa đơn
+            invoiceDetails.Add(new InvoiceDetail
+            {
+                InvoiceId = invoice.Id,
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                Subtotal = item.TotalPrice,
+                DiscountAmount = 0,
+                FinalAmount = item.TotalPrice,
+                CreatedAt = DateTime.Now,
+                IsActive = true
+            });
+        }
+
+        // Lưu chi tiết hóa đơn
+        _context.InvoiceDetails.AddRange(invoiceDetails);
+        _context.SaveChanges();
+
+        // Xoá giỏ hàng sau khi đặt
+        HttpContext.Session.Remove("CartItems");
+
+        // Truyền dữ liệu sang trang xác nhận
+        ViewBag.Invoice = invoice;
+        ViewBag.InvoiceDetails = invoiceDetails;
+        ViewBag.CartItems = cartItems;
+
+        return View("~/Views/Paymoney/Confirm.cshtml");
+    }
+
+
     // POST: Xác nhận đơn hàng
     [HttpPost]
     public IActionResult Confirm(PaymoneyModelView model)
@@ -97,76 +183,10 @@ public class PaymoneyController : Controller
         HttpContext.Session.SetString("CartItems", cartJson);
 
         // Chuyển đến trang xác nhận sau khi lưu giỏ hàng
-        return View("Confirm", model); // Confirm.cshtml
+        return View("OrderSuccess", model); // Confirm.cshtml
     }
 
-    // POST: Đặt hàng
-    [HttpPost]
-    public IActionResult PlaceOrder()
-    {
-        // Lấy giỏ hàng từ session
-        var cartJson = HttpContext.Session.GetString("CartItems");
-        var cartItems = string.IsNullOrEmpty(cartJson)
-            ? new List<CartItemModelView>()
-            : JsonConvert.DeserializeObject<List<CartItemModelView>>(cartJson);
 
-        // Kiểm tra giỏ hàng
-        if (cartItems == null || !cartItems.Any())
-        {
-            TempData["ErrorMessage"] = "Giỏ hàng của bạn trống!";
-            return RedirectToAction("Index", "ShoppingCart");
-        }
-
-        // Lấy ID người dùng
-        var userId = GetCurrentUserId();
-        if (userId == 0)
-        {
-            TempData["ErrorMessage"] = "Bạn cần phải đăng nhập trước khi đặt hàng!";
-            return RedirectToAction("Login", "Account");
-        }
-
-        // Tính tổng tiền của đơn hàng
-        var totalAmount = cartItems.Sum(item => item.TotalPrice);
-
-        // Tạo hóa đơn
-        var invoice = new Invoice
-        {
-            UserId = userId,
-            TotalAmount = totalAmount,
-            IssueDate = DateOnly.FromDateTime(DateTime.Now),
-            IsPaid = false,
-            IsActive = true
-        };
-
-        _context.Invoices.Add(invoice);
-        _context.SaveChanges();
-
-        // Thêm chi tiết hóa đơn
-        foreach (var item in cartItems)
-        {
-            var invoiceDetail = new InvoiceDetail
-            {
-                InvoiceId = invoice.Id,
-                ProductId = item.ProductId,
-                Quantity = item.Quantity,
-                Subtotal = item.TotalPrice,
-                DiscountAmount = 0,
-                FinalAmount = item.TotalPrice,
-                CreatedAt = DateTime.Now,
-                IsActive = true
-            };
-
-            _context.InvoiceDetails.Add(invoiceDetail);
-        }
-
-        _context.SaveChanges();
-
-        // Xóa giỏ hàng
-        HttpContext.Session.Remove("CartItems");
-
-        TempData["SuccessMessage"] = "Đặt hàng thành công!";
-        return RedirectToAction("OrderSuccess"); // Chuyển hướng đến trang OrderSuccess
-    }
 
     // Trang thành công khi đặt hàng
     public IActionResult OrderSuccess()
