@@ -18,7 +18,8 @@ else
     <h2>Xác nhận đơn hàng</h2>
     <p><strong>Mã đơn hàng:</strong> @invoice.Id</p>
     <p><strong>Ngày đặt:</strong> @invoice.IssueDate?.ToString("dd/MM/yyyy")</p>
-    <p><strong>Tổng tiền:</strong> @invoice.TotalAmount?.ToString("N0") VND</p>
+    <p><strong>Tổng tiền:</strong> @invoice.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
+
 
     <table class="table">
         <thead>
@@ -35,8 +36,9 @@ else
                 <tr>
                     <td>@item.ProductName</td>
                     <td>@item.Quantity</td>
-                    <td>@item.Price?.ToString("N0") VND</td>
-                    <td>@item.TotalPrice.ToString("N0") VND</td>
+                    <td>@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+                    <td>@item.TotalPrice.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+
                 </tr>
             }
         </tbody>

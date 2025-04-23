@@ -178,13 +178,25 @@
                     <span>Tạm tính:</span>
                     <span>@(Convert.ToDecimal(ViewData["TotalAmount"]).ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
                 </div>
-                <div class="shoplt-summary-row">
-                    <span>Giảm giá</span>
-                    <span>-0 đ</span>
-                </div>
+
+                @if (ViewData["DiscountAmount"] != null && (decimal)ViewData["DiscountAmount"] > 0)
+                {
+                    <div class="shoplt-summary-row text-success">
+                        <span>Giảm giá (@ViewData["DiscountPercentage"]%)</span>
+                        <span>-@(((decimal)ViewData["DiscountAmount"]).ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="shoplt-summary-row">
+                        <span>Giảm giá</span>
+                        <span>-0 đ</span>
+                    </div>
+                }
+
                 <div class="shoplt-summary-row">
                     <span>Phí vận chuyển</span>
-                    <span> @(((decimal)ViewData["ShippingFee"]).ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
+                    <span>@(((decimal)ViewData["ShippingFee"]).ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
                 </div>
 
                 <hr>
@@ -194,7 +206,6 @@
                     <span class="fs-5 shoplt-product-price">
                         @(((decimal)ViewData["TotalWithShipping"]).ToString("N0", new System.Globalization.CultureInfo("vi-VN")) + " ₫")
                     </span>
-
                 </div>
 
                 <form asp-controller="Shoppingcart" asp-action="ProceedToCheckout" method="post">
@@ -205,6 +216,7 @@
 
                 <a href="/Products" class="btn shoplt-continue-btn w-100 mt-2 py-2">Tiếp tục mua sắm</a>
             </div>
+
             <!-- Payment Methods -->
             <div class="mt-4 p-3 border rounded">
                 <h5 class="mb-3">Phương thức thanh toán</h5>

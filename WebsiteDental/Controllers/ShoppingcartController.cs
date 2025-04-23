@@ -27,7 +27,7 @@ public class ShoppingcartController : Controller
         {
             return RedirectToAction("Register", "Account");
         }
-     
+
         var cartItems = _context.Carts
             .Where(c => c.UserId == userId)
             .Include(c => c.Product)
@@ -39,31 +39,57 @@ public class ShoppingcartController : Controller
                 Rating = c.Product.Rating,
                 Price = c.Product.Price,
                 Quantity = c.Quantity ?? 0
-                
             })
             .ToList();
 
         // Tính tổng giá trị giỏ hàng
-        decimal totalAmount = cartItems.Sum(item => item.TotalPrice);  // Sử dụng TotalPrice trong CartItemModelView
+        decimal totalAmount = cartItems.Sum(item => item.TotalPrice);
 
         // Tính phí vận chuyển
         decimal shippingFee = totalAmount < 500000 ? 40000 : 0;
 
-        // Tính tổng thanh toán (giỏ hàng + phí vận chuyển)
+        // Tổng tạm tính trước khi giảm
         decimal totalWithShipping = totalAmount + shippingFee;
 
-        // Lấy 8 sản phẩm gợi ý
-        var recommendedProducts = _context.Products
+        // ==== MÃ GIẢM GIÁ ====
+        string discountCode = HttpContext.Session.GetString("DiscountCode");
+        decimal discountPercentage = 0;
+        decimal discountAmount = 0;
+
+        if (!string.IsNullOrEmpty(discountCode))
+        {
+            var discount = _context.Discounts
+                .FirstOrDefault(d =>
+                    (d.ProductCode == discountCode || d.ServiceCode == discountCode || d.ShippingCode == discountCode)
+                    && d.IsActive == true
+                    && d.StartDate <= DateOnly.FromDateTime(DateTime.Now)
+                    && d.EndDate >= DateOnly.FromDateTime(DateTime.Now));
+
+            if (discount != null)
+            {
+                discountPercentage = discount.DiscountPercentage ?? 0;
+                discountAmount = totalAmount * (discountPercentage / 100);
+            }
+        }
+
+        // Tổng thanh toán cuối cùng sau khi giảm giá
+        decimal finalTotal = totalWithShipping - discountAmount;
+
+        // ==== Truyền dữ liệu ra View ====
+        ViewData["TotalAmount"] = totalAmount;
+        ViewData["ShippingFee"] = shippingFee;
+        ViewData["DiscountPercentage"] = discountPercentage;
+        ViewData["DiscountAmount"] = discountAmount;
+        ViewData["TotalWithShipping"] = finalTotal;
+
+        ViewBag.RecommendedProducts = _context.Products
             .OrderByDescending(p => p.Id)
             .Take(8)
             .ToList();
-        // Gửi dữ liệu ra View
-        ViewData["TotalAmount"] = totalAmount;  
-        ViewData["ShippingFee"] = shippingFee; 
-        ViewData["TotalWithShipping"] = totalWithShipping;  
-        ViewBag.RecommendedProducts = recommendedProducts; // Truyền sang View
+
         return View(cartItems);
     }
+
     [HttpPost]
     public IActionResult AddToCart(int productId, int quantity)
     {

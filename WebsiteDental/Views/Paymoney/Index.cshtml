@@ -121,28 +121,39 @@
                             </div>
                         }
                     </div>
-                    <div class="checkout-summary">
-                        <div class="checkout-summary-item">
-                            <span>Tạm tính:</span>
-                            <span>
-                                @Model.TotalAmount.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
-                            </span>
+
+
+
+                        <div class="checkout-summary">
+                            <div class="checkout-summary-item">
+                                <span>Tạm tính:</span>
+                                <span>
+                                    @Model.TotalAmount.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                                </span>
+                            </div>
+                            <div class="checkout-summary-item">
+                                <span>Phí vận chuyển:</span>
+                                <span>@Model.ShippingFee.ToString("N0") đ</span>
+                            </div>
+                            <div class="checkout-summary-item">
+                                <span>Giảm giá:</span>
+                                <!-- Hiển thị giá trị giảm giá thực tế -->
+                                <span>@Model.DiscountAmount.ToString("N0") đ</span>
+                            </div>
+                            <div class="checkout-summary-item">
+                                <span>Mã giảm giá:</span>
+                                <!-- Hiển thị mã giảm giá người dùng đã nhập -->
+                                <span>@Model.DiscountCode</span>
+                            </div>
+                            <div class="checkout-summary-item">
+                                <span class="checkout-total">Tổng thanh toán:</span>
+                                <span class="checkout-total">
+                                    @Model.TotalWithShipping.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                                </span>
+                            </div>
                         </div>
-                        <div class="checkout-summary-item">
-                            <span>Phí vận chuyển:</span>
-                            <span>@Model.ShippingFee.ToString("N0") đ</span>
-                        </div>
-                        <div class="checkout-summary-item">
-                            <span>Giảm giá:</span>
-                            <span>@(0.ToString("N0")) đ</span> 
-                        </div>
-                        <div class="checkout-summary-item">
-                            <span class="checkout-total">Tổng thanh toán:</span>
-                            <span class="checkout-total">
-                                @Model.TotalWithShipping.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
-                            </span>
-                        </div>
-                    </div>
+
+
 
 
                     <div class="form-check mb-4">

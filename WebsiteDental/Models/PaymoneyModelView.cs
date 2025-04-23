@@ -20,6 +20,9 @@ namespace WebsiteDental.Models
 
         // Các thuộc tính cũ
         public List<CartItemModelView> CartItems { get; set; }
+        public decimal DiscountAmount { get; set; }        
+        public int DiscountPercentage { get; set; }          
+        public string DiscountCode { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal ShippingFee { get; set; }
         public decimal TotalWithShipping { get; set; }

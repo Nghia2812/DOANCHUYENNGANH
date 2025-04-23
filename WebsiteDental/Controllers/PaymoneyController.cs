@@ -16,11 +16,12 @@ public class PaymoneyController : Controller
         _httpContextAccessor = httpContextAccessor;
     }
 
-    // GET: Trang thanh toán (index)
+
     public IActionResult Index()
     {
         var userId = GetCurrentUserId();
 
+        // Kiểm tra nếu người dùng chưa đăng nhập
         if (userId == 0)
         {
             return RedirectToAction("Register", "Account");
@@ -48,7 +49,6 @@ public class PaymoneyController : Controller
                 Rating = c.Product.Rating,
                 Price = c.Product.Price,
                 Quantity = c.Quantity ?? 0,
-               // TotalPrice = (c.Product.Price ?? 0) * (c.Quantity ?? 0) // Tính tổng giá cho từng sản phẩm
             })
             .ToList();
 
@@ -58,23 +58,55 @@ public class PaymoneyController : Controller
             return RedirectToAction("Index", "ShoppingCart"); // Nếu không có sản phẩm trong giỏ hàng
         }
 
-        // Tính tổng tiền và phí vận chuyển
+        // Tính tổng tiền giỏ hàng
         decimal totalAmount = cartItems.Sum(item => item.TotalPrice);
-        decimal shippingFee = totalAmount < 500000 ? 40000 : 0; // Tính phí vận chuyển
+
+        // Tính phí vận chuyển
+        decimal shippingFee = totalAmount < 500000 ? 40000 : 0; // Nếu tổng dưới 500,000 VND thì tính phí vận chuyển
+
+        // Tính tổng thanh toán với phí vận chuyển
         decimal totalWithShipping = totalAmount + shippingFee;
 
-        // Truyền thông tin giỏ hàng và thanh toán sang ViewModel
+        // ==== MÃ GIẢM GIÁ ====
+        string discountCode = HttpContext.Session.GetString("DiscountCode");
+        decimal discountPercentage = 0;
+        decimal discountAmount = 0;
+
+        if (!string.IsNullOrEmpty(discountCode))
+        {
+            var discount = _context.Discounts
+                .FirstOrDefault(d =>
+                    (d.ProductCode == discountCode || d.ServiceCode == discountCode || d.ShippingCode == discountCode)
+                    && d.IsActive == true
+                    && d.StartDate <= DateOnly.FromDateTime(DateTime.Now)
+                    && d.EndDate >= DateOnly.FromDateTime(DateTime.Now));
+
+            if (discount != null)
+            {
+                discountPercentage = discount.DiscountPercentage ?? 0;
+                discountAmount = totalAmount * (discountPercentage / 100);
+            }
+        }
+
+        // Tổng thanh toán cuối cùng sau khi giảm giá
+        decimal finalTotal = totalWithShipping - discountAmount;
+
+        // ==== Truyền dữ liệu ra ViewModel ====
         var paymentModelView = new PaymoneyModelView
         {
             CartItems = cartItems,
             TotalAmount = totalAmount,
-            ShippingFee = shippingFee,
-            TotalWithShipping = totalWithShipping
+            DiscountAmount = discountAmount, // Số tiền giảm
+            DiscountCode = discountCode, // Mã giảm giá
+            ShippingFee = shippingFee, // Phí vận chuyển
+            TotalWithShipping = finalTotal // Tổng thanh toán sau khi tính phí vận chuyển và giảm giá
         };
 
-        // Trả về view với model
+        // Trả về view với dữ liệu của model
         return View(paymentModelView);
     }
+
+
 
     // Lấy ID người dùng hiện tại từ session
     private int GetCurrentUserId()
@@ -168,6 +200,11 @@ public class PaymoneyController : Controller
     }
 
 
+
+
+
+
+
     // POST: Xác nhận đơn hàng
     [HttpPost]
     public IActionResult Confirm(PaymoneyModelView model)
@@ -185,6 +222,8 @@ public class PaymoneyController : Controller
         // Chuyển đến trang xác nhận sau khi lưu giỏ hàng
         return View("OrderSuccess", model); // Confirm.cshtml
     }
+
+
 
 
 
