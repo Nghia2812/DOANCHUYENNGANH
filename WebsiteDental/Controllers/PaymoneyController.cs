@@ -271,33 +271,118 @@ public class PaymoneyController : Controller
             ViewBag.UserEmail = user.Email;
         }
 
-        // (Nếu có lấy thêm giỏ hàng từ Session)
+        // Lấy giỏ hàng từ session
         var cartJson = HttpContext.Session.GetString("CartItems");
-        if (!string.IsNullOrEmpty(cartJson))
+        var cartItems = string.IsNullOrEmpty(cartJson)
+            ? new List<CartItemModelView>()
+            : JsonConvert.DeserializeObject<List<CartItemModelView>>(cartJson);
+
+        if (cartItems == null || !cartItems.Any())
         {
-            var cartItems = JsonConvert.DeserializeObject<List<CartItemModelView>>(cartJson);
-            ViewBag.CartItems = cartItems;
+            TempData["ErrorMessage"] = "Giỏ hàng của bạn trống!";
+            return RedirectToAction("Index", "ShoppingCart");
         }
 
-        // (Nếu cần lấy thêm hóa đơn mới nhất)
-        var invoice = _context.Invoices
-            .Where(i => i.UserId == userId)
-            .OrderByDescending(i => i.IssueDate)
-            .FirstOrDefault();
+        // Tính tổng tiền giỏ hàng
+        decimal totalAmount = cartItems.Sum(item => item.TotalPrice);
 
-        var invoiceDetails = new List<InvoiceDetail>();
+        // Tính phí vận chuyển
+        decimal shippingFee = totalAmount < 500000 ? 40000 : 0;
 
-        if (invoice != null)
+        // Tính tổng tiền với phí vận chuyển
+        decimal totalWithShipping = totalAmount + shippingFee;
+
+        // ==== Xử lý mã giảm giá ====
+        string discountCode = HttpContext.Session.GetString("DiscountCode");
+        decimal discountPercentage = 0;
+        decimal discountAmount = 0;
+
+        if (!string.IsNullOrEmpty(discountCode))
         {
-            invoiceDetails = _context.InvoiceDetails
-                .Where(d => d.InvoiceId == invoice.Id)
-                .ToList();
+            var discount = _context.Discounts.FirstOrDefault(d =>
+                (d.ProductCode == discountCode || d.ServiceCode == discountCode || d.ShippingCode == discountCode)
+                && d.IsActive == true
+                && d.StartDate <= DateOnly.FromDateTime(DateTime.Now)
+                && d.EndDate >= DateOnly.FromDateTime(DateTime.Now));
+
+            if (discount != null)
+            {
+                discountPercentage = discount.DiscountPercentage ?? 0;
+                discountAmount = totalAmount * (discountPercentage / 100);
+            }
         }
 
+        // Tổng thanh toán cuối cùng
+        decimal finalTotal = totalWithShipping - discountAmount;
+
+        // Tạo hóa đơn
+        var invoice = new Invoice
+        {
+            UserId = userId.Value,
+            TotalAmount = finalTotal,
+            IssueDate = DateOnly.FromDateTime(DateTime.Now),
+            IsPaid = false,
+            IsActive = true
+        };
+
+        _context.Invoices.Add(invoice);
+        await _context.SaveChangesAsync(); // Lưu để lấy Invoice.Id
+
+        // Danh sách chi tiết hóa đơn
+        List<InvoiceDetail> invoiceDetails = new List<InvoiceDetail>();
+
+        foreach (var item in cartItems)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == item.ProductId);
+            if (product == null || product.Quantity < item.Quantity)
+            {
+                TempData["ErrorMessage"] = $"Sản phẩm '{item.ProductName}' không đủ số lượng trong kho.";
+                return RedirectToAction("Index", "ShoppingCart");
+            }
+
+            // Trừ số lượng trong kho
+            product.Quantity -= item.Quantity;
+            _context.Products.Update(product);
+
+            // ==== Tính lại giá chi tiết ====
+            decimal itemSubtotal = item.TotalPrice;
+
+            // Phí ship phân bổ cho sản phẩm này
+            decimal itemShippingFee = (totalAmount > 0) ? (itemSubtotal / totalAmount) * shippingFee : 0;
+
+            // Giảm giá phân bổ cho sản phẩm này
+            decimal itemDiscountAmount = (totalAmount > 0) ? (itemSubtotal / totalAmount) * discountAmount : 0;
+
+            // Final = Subtotal + phí ship phân bổ - giảm giá phân bổ
+            decimal itemFinalAmount = itemSubtotal + itemShippingFee - itemDiscountAmount;
+
+            // Thêm chi tiết hóa đơn
+            invoiceDetails.Add(new InvoiceDetail
+            {
+                InvoiceId = invoice.Id,
+                ProductId = item.ProductId,
+                Quantity = item.Quantity,
+                Subtotal = itemSubtotal,
+                DiscountAmount = itemDiscountAmount,
+                FinalAmount = itemFinalAmount,
+                CreatedAt = DateTime.Now,
+                IsActive = true
+            });
+        }
+
+        // Lưu chi tiết hóa đơn
+        await _context.InvoiceDetails.AddRangeAsync(invoiceDetails);
+        await _context.SaveChangesAsync();
+
+        // Xoá giỏ hàng sau khi đặt
+        HttpContext.Session.Remove("CartItems");
+
+        // Truyền dữ liệu sang trang xác nhận
         ViewBag.Invoice = invoice;
         ViewBag.InvoiceDetails = invoiceDetails;
+        ViewBag.CartItems = cartItems;
 
-        return View("Confirm"); // Trả về view
+        return View("Confirm"); // Trả về view xác nhận
     }
 
 

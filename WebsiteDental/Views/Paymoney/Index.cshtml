@@ -6,10 +6,13 @@
 <!-- Phần địa chỉ đã được sửa lại để không cần dùng JavaScript -->
 <div class="checkout-container">
     <div class="container">
-        <form asp-action="PlaceOrder" asp-controller="Paymoney" method="post" class="checkout-form">
+       
         <div class="row">
             <!-- Left Column -->
             <div class="col-lg-8">
+
+                 <form asp-action="PlaceOrder" asp-controller="Paymoney" method="post" class="checkout-form">
+
                 <!-- Delivery Info -->
                 <div class="checkout-card">
                     <h3 class="checkout-title">Thông tin giao hàng</h3>            
@@ -39,6 +42,8 @@
                         </div>
 
                  </div>
+
+                </form>
 
                 <!-- Shipping Method -->
                 <div class="checkout-card">
@@ -102,7 +107,7 @@
                 <!-- Order Summary -->
                 <div class="checkout-card">
                     <h3 class="checkout-title">Đơn hàng của bạn</h3>
-
+                     <form asp-action="PlaceOrder" asp-controller="Paymoney" method="post" class="checkout-form">
                     <div class="checkout-products mb-4">
 
                         @foreach (var item in Model.CartItems)
@@ -122,9 +127,9 @@
                             </div>
                         }
                     </div>
+                    </form>
 
-
-
+                    <form asp-action="PlaceOrder" asp-controller="Paymoney" method="post" class="checkout-form">
                         <div class="checkout-summary">
                             <div class="checkout-summary-item">
                                 <span>Tạm tính:</span>
@@ -153,7 +158,7 @@
                                 </span>
                             </div>
                         </div>
-
+                    </form>
                    
 
 
@@ -199,7 +204,7 @@
                 </div>
             </div>
         </div>
-       </form>
+     
     </div>
 </div>
 
