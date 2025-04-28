@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using WebsiteDental.Models;
 using WebsiteDental.ViewModels;
 
@@ -249,60 +250,57 @@ public class PaymoneyController : Controller
 
 
 
-
-
-
     [HttpPost]
-    public IActionResult Confirm(PaymoneyModelView model)
+    public async Task<IActionResult> Confirm()
     {
-        // Kiểm tra tính hợp lệ của model
-        if (!ModelState.IsValid)
-        {
-            return View("Confirm", model); // Nếu không hợp lệ, quay lại trang xác nhận
-        }
+        var userId = _httpContextAccessor.HttpContext?.Session.GetInt32("UserId");
 
-        // Lưu giỏ hàng vào Session
-        var cartJson = JsonConvert.SerializeObject(model.CartItems);
-        HttpContext.Session.SetString("CartItems", cartJson);
-
-        // Lấy thông tin người dùng từ model hoặc session
-        var userName = model.username; // Hoặc lấy từ session nếu đã lưu trước đó
-        var userPhone = model.Phone;
-        var userEmail = model.Email;
-        var userAddress = model.Address;
-
-        // Truyền dữ liệu vào ViewBag
-        ViewBag.UserName = userName;
-        ViewBag.UserPhone = userPhone;
-        ViewBag.UserEmail = userEmail;
-        ViewBag.UserAddress = userAddress;
-        // Lấy UserId từ Session
-        var userId = HttpContext.Session.GetInt32("UserId");
-
-        // Kiểm tra nếu UserId không có trong session (chưa đăng nhập)
+        // Kiểm tra nếu chưa đăng nhập
         if (userId == null)
         {
             TempData["Error"] = "Bạn cần đăng nhập để tiếp tục.";
-            return RedirectToAction("Login", "Account"); // Chuyển hướng đến trang đăng nhập
+            return RedirectToAction("Login", "Account");
         }
 
-        // Lấy thông tin hóa đơn và chi tiết hóa đơn (giả sử bạn đã có dữ liệu này trong context)
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        if (user != null)
+        {
+            ViewBag.UserAddress = user.Address;
+            ViewBag.UserPhone = user.Phone;
+            ViewBag.UserName = user.Username;
+            ViewBag.UserEmail = user.Email;
+        }
+
+        // (Nếu có lấy thêm giỏ hàng từ Session)
+        var cartJson = HttpContext.Session.GetString("CartItems");
+        if (!string.IsNullOrEmpty(cartJson))
+        {
+            var cartItems = JsonConvert.DeserializeObject<List<CartItemModelView>>(cartJson);
+            ViewBag.CartItems = cartItems;
+        }
+
+        // (Nếu cần lấy thêm hóa đơn mới nhất)
         var invoice = _context.Invoices
-                           .Where(i => i.UserId == userId)
-                           .OrderByDescending(i => i.IssueDate)
-                           .FirstOrDefault();
+            .Where(i => i.UserId == userId)
+            .OrderByDescending(i => i.IssueDate)
+            .FirstOrDefault();
 
-        var invoiceDetails = _context.InvoiceDetails
-                                     .Where(d => d.InvoiceId == invoice.Id)
-                                     .ToList();
+        var invoiceDetails = new List<InvoiceDetail>();
 
-        // Truyền dữ liệu hóa đơn và chi tiết hóa đơn vào ViewBag
+        if (invoice != null)
+        {
+            invoiceDetails = _context.InvoiceDetails
+                .Where(d => d.InvoiceId == invoice.Id)
+                .ToList();
+        }
+
         ViewBag.Invoice = invoice;
         ViewBag.InvoiceDetails = invoiceDetails;
 
-        // Chuyển đến trang xác nhận đơn hàng
-        return View("OrderSuccess", model); // Confirm.cshtml
+        return View("Confirm"); // Trả về view
     }
+
+
 
 
 

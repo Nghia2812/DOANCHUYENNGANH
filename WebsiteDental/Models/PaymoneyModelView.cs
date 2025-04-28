@@ -8,7 +8,7 @@ namespace WebsiteDental.Models
         // Các thuộc tính mới thêm vào
 
 
-        public string UserId { get; set; } // Thêm UserId vào Model View
+        public int? UserId { get; set; } // Thêm UserId vào Model View
         public string username { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
@@ -26,7 +26,10 @@ namespace WebsiteDental.Models
         public decimal TotalAmount { get; set; }
         public decimal ShippingFee { get; set; }
         public decimal TotalWithShipping { get; set; }
-
         public decimal TotalPrice { get; set; }
+
+        // Thêm các thuộc tính sau để lưu trữ thông tin hóa đơn
+        public WebsiteDental.Models.Invoice Invoice { get; set; }
+        public List<WebsiteDental.Models.InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

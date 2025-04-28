@@ -154,22 +154,29 @@
                             </div>
                         </div>
 
+                   
 
 
+        <form asp-action="Confirm" asp-controller="Paymoney" method="post" class="checkout-form">
+            <!-- Điều khoản -->
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" id="terms" required>
+                <label class="form-check-label" for="terms">
+                    Tôi đã đọc và đồng ý với <a href="#" class="text-decoration-none">điều khoản và điều kiện</a> của cửa hàng.
+                </label>
+            </div>
 
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="terms" required>
-                        <label class="form-check-label" for="terms">
-                            Tôi đã đọc và đồng ý với <a href="#" class="text-decoration-none">điều khoản và điều kiện</a> của cửa hàng.
-                        </label>
-                    </div>
+            <!-- Nút Đặt hàng -->
+            <button type="submit" class="btn btn-primary w-100 checkout-btn">Đặt hàng</button>
 
-                    <button class="btn btn-primary w-100 checkout-btn">Đặt hàng</button>
+            <!-- Hướng dẫn -->
+            <div class="checkout-instructions">
+                <p class="mb-2"><i class="fas fa-shield-alt me-2"></i> Thông tin của bạn được bảo mật và mã hóa an toàn.</p>
+                <p class="mb-0"><i class="fas fa-undo-alt me-2"></i> Chính sách hoàn trả trong vòng 30 ngày nếu không hài lòng.</p>
+            </div>
+        </form>
 
-                    <div class="checkout-instructions">
-                        <p class="mb-2"><i class="fas fa-shield-alt me-2"></i> Thông tin của bạn được bảo mật và mã hóa an toàn.</p>
-                        <p class="mb-0"><i class="fas fa-undo-alt me-2"></i> Chính sách hoàn trả trong vòng 30 ngày nếu không hài lòng.</p>
-                    </div>
+
                 </div>
          
                 <!-- Customer Support -->
@@ -192,7 +199,7 @@
                 </div>
             </div>
         </div>
-        </form>
+       </form>
     </div>
 </div>
 

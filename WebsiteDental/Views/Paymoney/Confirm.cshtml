@@ -1,62 +1,64 @@
-﻿@model WebsiteDental.Models.PaymoneyModelView
-
-@{
-    ViewBag.Title = "Xác nhận đơn hàng";
-
-    var invoice = ViewBag.Invoice as WebsiteDental.Models.Invoice;
-    var details = ViewBag.InvoiceDetails as List<WebsiteDental.Models.InvoiceDetail>;
+﻿@{
+    ViewData["Title"] = "Xác nhận đơn hàng";
     var cartItems = ViewBag.CartItems as List<WebsiteDental.ViewModels.CartItemModelView>;
-
-    // Lấy thông tin người dùng từ ViewBag
-    var userName = ViewBag.UserName as string;
-    var userPhone = ViewBag.UserPhone as string;
-    var userEmail = ViewBag.UserEmail as string;
-    var userAddress = ViewBag.UserAddress as string;
 }
 
-@if (invoice == null || cartItems == null)
-{
-    <div class="alert alert-danger">Không tìm thấy thông tin đơn hàng để xác nhận.</div>
-}
-else
-{
-    <h2>Xác nhận đơn hàng</h2>
 
-    <!-- Thông tin người dùng -->
-    <h3>Thông tin người dùng</h3>
-    <p><strong>Họ và tên:</strong> @userName</p>
-    <p><strong>Số điện thoại:</strong> @userPhone</p>
-    <p><strong>Email:</strong> @userEmail</p>
-    <p><strong>Địa chỉ giao hàng:</strong> @userAddress</p>
+<!-- Thông tin người mua -->
+<div>
+    <h3>Thông tin người mua</h3>
+    <p><strong>Tên:</strong> @ViewBag.UserName</p>
+    <p><strong>Điện thoại:</strong> @ViewBag.UserPhone</p>
+    <p><strong>Email:</strong> @ViewBag.UserEmail</p>
+    <p><strong>Địa chỉ:</strong> @ViewBag.UserAddress</p>
+</div>
 
-    <!-- Thông tin hóa đơn -->
-    <p><strong>Mã đơn hàng:</strong> @invoice.Id</p>
-    <p><strong>Ngày đặt:</strong> @invoice.IssueDate?.ToString("dd/MM/yyyy")</p>
-    <p><strong>Tổng tiền:</strong> @invoice.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
+<hr />
 
-    <!-- Danh sách sản phẩm trong giỏ hàng -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th>Thành tiền</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in cartItems)
-            {
+<!-- Giỏ hàng --> 
+<div>
+    <h3>Giỏ hàng của bạn</h3>
+    @if (cartItems != null && cartItems.Count > 0)
+    {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@item.ProductName</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
-                    <td>@item.TotalPrice.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Thành tiền</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in cartItems)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+                        <td>@((item.Quantity * item.Price)?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</td>
 
-    <!-- Nút quay lại trang chủ -->
-    <a href="@Url.Action("Index", "Home")" class="btn btn-success">Quay về trang chủ</a>
-}
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Tổng tiền -->
+        <div class="text-end">
+            <h4>
+                Tổng cộng: @((cartItems.Sum(x => x.Quantity * x.Price))?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))
+            </h4>
+        </div>
+    }
+    else
+    {
+        <p>Giỏ hàng của bạn đang trống.</p>
+    }
+</div>
+
+<hr />
+
+<!-- Nút xác nhận -->
+<form asp-action="OrderSuccess" method="post">
+    <button type="submit" class="btn btn-primary">Xác nhận đặt hàng</button>
+</form>

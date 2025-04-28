@@ -94,7 +94,7 @@ namespace WebsiteDental.Controllers
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, username, password, phone, address FROM Users WHERE email = @Email";
+                string query = "SELECT id, username, password, phone, address, email FROM Users WHERE email = @Email";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -109,6 +109,7 @@ namespace WebsiteDental.Controllers
                             int userId = Convert.ToInt32(reader["id"]);
                             string storedPhone = reader["phone"].ToString();
                             string storedAddress = reader["address"].ToString();
+                            string storedEmail = reader["email"].ToString();
 
                             // Kiểm tra mật khẩu
                             if (BCrypt.Net.BCrypt.Verify(password, storedHashedPassword))
@@ -118,6 +119,8 @@ namespace WebsiteDental.Controllers
                                 _httpContextAccessor.HttpContext.Session.SetInt32("UserId", userId);
                                 _httpContextAccessor.HttpContext.Session.SetString("UserPhone", storedPhone);
                                 _httpContextAccessor.HttpContext.Session.SetString("UserAddress", storedAddress);
+                                _httpContextAccessor.HttpContext.Session.SetString("UserEmail", storedEmail);
+
 
                                 // Kiểm tra session đã lưu đúng thông tin
                                 Console.WriteLine("Session Username: " + _httpContextAccessor.HttpContext.Session.GetString("Username"));
