@@ -94,25 +94,36 @@ namespace WebsiteDental.Controllers
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, username, password FROM Users WHERE email = @Email";
+                string query = "SELECT id, username, password, phone, address FROM Users WHERE email = @Email";
+
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
+
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             string storedUsername = reader["username"].ToString();
                             string storedHashedPassword = reader["password"].ToString();
-                            int userId = Convert.ToInt32(reader["id"]); // Lấy thêm ID người dùng
+                            int userId = Convert.ToInt32(reader["id"]);
+                            string storedPhone = reader["phone"].ToString();
+                            string storedAddress = reader["address"].ToString();
 
+                            // Kiểm tra mật khẩu
                             if (BCrypt.Net.BCrypt.Verify(password, storedHashedPassword))
                             {
-                                // Thiết lập session với Username và UserId
+                                // Lưu thông tin vào session
                                 _httpContextAccessor.HttpContext.Session.SetString("Username", storedUsername);
-                                _httpContextAccessor.HttpContext.Session.SetInt32("UserId", userId); // ✅ Lưu UserId vào session
+                                _httpContextAccessor.HttpContext.Session.SetInt32("UserId", userId);
+                                _httpContextAccessor.HttpContext.Session.SetString("UserPhone", storedPhone);
+                                _httpContextAccessor.HttpContext.Session.SetString("UserAddress", storedAddress);
 
-                                // Chuyển hướng về trang Home
+                                // Kiểm tra session đã lưu đúng thông tin
+                                Console.WriteLine("Session Username: " + _httpContextAccessor.HttpContext.Session.GetString("Username"));
+                                Console.WriteLine("Session UserId: " + _httpContextAccessor.HttpContext.Session.GetInt32("UserId"));
+
+                                // Chuyển hướng về trang chủ
                                 return RedirectToAction("Index", "Home");
                             }
                         }
@@ -121,7 +132,7 @@ namespace WebsiteDental.Controllers
             }
 
             ViewData["Error"] = "Email hoặc mật khẩu không đúng!";
-            return View("Register"); // ❗Sửa dòng này
+            return View("Login"); // Chuyển về trang đăng nhập nếu không đúng
         }
 
 

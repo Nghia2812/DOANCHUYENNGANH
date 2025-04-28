@@ -16,4 +16,6 @@ public partial class Cart
     public virtual Product? Product { get; set; }
 
     public virtual User? User { get; set; }
+    // Lấy giá từ đối tượng Product và tính tổng giá trị
+    public decimal TotalPrice => (Product?.Price ?? 0) * (Quantity ?? 0);
 }

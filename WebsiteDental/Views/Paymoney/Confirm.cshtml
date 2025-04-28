@@ -7,6 +7,11 @@
     var details = ViewBag.InvoiceDetails as List<WebsiteDental.Models.InvoiceDetail>;
     var cartItems = ViewBag.CartItems as List<WebsiteDental.ViewModels.CartItemModelView>;
 
+    // Lấy thông tin người dùng từ ViewBag
+    var userName = ViewBag.UserName as string;
+    var userPhone = ViewBag.UserPhone as string;
+    var userEmail = ViewBag.UserEmail as string;
+    var userAddress = ViewBag.UserAddress as string;
 }
 
 @if (invoice == null || cartItems == null)
@@ -16,11 +21,20 @@
 else
 {
     <h2>Xác nhận đơn hàng</h2>
+
+    <!-- Thông tin người dùng -->
+    <h3>Thông tin người dùng</h3>
+    <p><strong>Họ và tên:</strong> @userName</p>
+    <p><strong>Số điện thoại:</strong> @userPhone</p>
+    <p><strong>Email:</strong> @userEmail</p>
+    <p><strong>Địa chỉ giao hàng:</strong> @userAddress</p>
+
+    <!-- Thông tin hóa đơn -->
     <p><strong>Mã đơn hàng:</strong> @invoice.Id</p>
     <p><strong>Ngày đặt:</strong> @invoice.IssueDate?.ToString("dd/MM/yyyy")</p>
     <p><strong>Tổng tiền:</strong> @invoice.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
 
-
+    <!-- Danh sách sản phẩm trong giỏ hàng -->
     <table class="table">
         <thead>
             <tr>
@@ -38,11 +52,11 @@ else
                     <td>@item.Quantity</td>
                     <td>@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
                     <td>@item.TotalPrice.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
-
                 </tr>
             }
         </tbody>
     </table>
 
+    <!-- Nút quay lại trang chủ -->
     <a href="@Url.Action("Index", "Home")" class="btn btn-success">Quay về trang chủ</a>
 }

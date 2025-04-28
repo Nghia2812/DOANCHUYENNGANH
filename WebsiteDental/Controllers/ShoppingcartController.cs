@@ -148,12 +148,6 @@ public class ShoppingcartController : Controller
         return 0;
     }
 
-
-
-
-
-
-
     [HttpPost]
     public IActionResult ApplyDiscount(string discountCode)
     {
