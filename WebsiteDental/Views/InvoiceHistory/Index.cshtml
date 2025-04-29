@@ -1,0 +1,160 @@
+﻿@model List<WebsiteDental.Models.InvoiceViewModel>
+<style>
+    .inv-history-container {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .inv-history-title {
+        color: #2c3e50;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+
+    .inv-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .inv-card {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inv-card-header {
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .inv-id {
+        color: #3498db;
+        font-size: 18px;
+        margin: 0 0 10px 0;
+    }
+
+    .inv-date, .inv-total {
+        color: #555;
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .inv-total {
+        font-weight: bold;
+    }
+
+    .inv-details-title {
+        color: #2c3e50;
+        font-size: 16px;
+        margin: 15px 0 10px 0;
+    }
+
+    .inv-details-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .inv-details-item {
+        border-left: 3px solid #3498db;
+        padding: 8px 15px;
+        margin-bottom: 8px;
+        background-color: #fff;
+        font-size: 14px;
+    }
+
+    .inv-highlight {
+        color: #3498db;
+    }
+
+    .inv-empty {
+        text-align: center;
+        padding: 50px 0;
+        color: #777;
+        grid-column: span 2;
+    }
+
+    .inv-view-details {
+        display: inline-block;
+        margin-top: 15px;
+        background-color: #3498db;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        align-self: flex-start;
+        margin-top: auto;
+    }
+
+        .inv-view-details:hover {
+            background-color: #2980b9;
+        }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .inv-grid
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .inv-empty {
+        grid-column: span 1;
+    }
+
+    }
+</style>
+<div class="inv-history-container">
+    <h2 class="inv-history-title">Danh sách hóa đơn của bạn</h2>
+    @if (Model != null && Model.Any())
+    {
+        <div class="inv-grid">
+            @foreach (var invoice in Model)
+            {
+                <div class="inv-card">
+                    <div class="inv-card-header">
+                        <h3 class="inv-id">Mã hóa đơn: <span class="inv-highlight">@invoice.InvoiceId</span></h3>
+                        <p class="inv-date">Ngày lập hóa đơn: @(invoice.OrderDate?.ToString("dd/MM/yyyy") ?? "")</p>
+                        <p class="inv-total">Tổng tiền: @invoice.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
+                    </div>
+                    <h4 class="inv-details-title">Chi tiết:</h4>
+                    <ul class="inv-details-list">
+                        @foreach (var detail in invoice.Details)
+                        {
+                            <li class="inv-details-item">
+                                <strong>@detail.ProductName</strong> -
+                                SL: @detail.Quantity -
+                                Đơn giá: @detail.FinalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            </li>
+                        }
+                    </ul>
+                        <a href="@Url.Action("Detail", "InvoiceHistory", new { id = invoice.InvoiceId })" class="inv-view-details">Xem chi tiết</a>
+
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="inv-empty">
+            <p>Bạn chưa có hóa đơn nào</p>
+        </div>
+    }
+</div>

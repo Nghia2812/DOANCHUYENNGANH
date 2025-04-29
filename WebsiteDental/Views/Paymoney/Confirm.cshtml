@@ -3,62 +3,432 @@
     var cartItems = ViewBag.CartItems as List<WebsiteDental.ViewModels.CartItemModelView>;
 }
 
-
-<!-- Thông tin người mua -->
-<div>
-    <h3>Thông tin người mua</h3>
-    <p><strong>Tên:</strong> @ViewBag.UserName</p>
-    <p><strong>Điện thoại:</strong> @ViewBag.UserPhone</p>
-    <p><strong>Email:</strong> @ViewBag.UserEmail</p>
-    <p><strong>Địa chỉ:</strong> @ViewBag.UserAddress</p>
-</div>
-
-<hr />
-
-<!-- Giỏ hàng --> 
-<div>
-    <h3>Giỏ hàng của bạn</h3>
-    @if (cartItems != null && cartItems.Count > 0)
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Giá</th>
-                    <th>Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in cartItems)
-                {
-                    <tr>
-                        <td>@item.ProductName</td>
-                        <td>@item.Quantity</td>
-                        <td>@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
-                        <td>@((item.Quantity * item.Price)?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</td>
-
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <!-- Tổng tiền -->
-        <div class="text-end">
-            <h4>
-                Tổng cộng: @((cartItems.Sum(x => x.Quantity * x.Price))?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))
-            </h4>
+<div class="invoice-container">
+    <!-- Header với logo -->
+    <div class="invoice-header">
+        <div class="logo">
+            <img src="/assets/img/logo.jpg" alt="Dental Care Logo" />
+            <p>Chăm sóc nụ cười của bạn</p>
         </div>
-    }
-    else
-    {
-        <p>Giỏ hàng của bạn đang trống.</p>
-    }
+        <div class="company-info">
+            <h1>LTN-Dental</h1>        
+            <p>123 Nguyễn Huệ, Quận 1, TP.HCM</p>
+            <p>Hotline: 1900-1234</p>
+        </div>
+    </div>
+
+    <div class="invoice-title">
+        <h2>PHIẾU XÁC NHẬN ĐƠN HÀNG</h2>
+        <p>Mã đơn hàng: DH-@DateTime.Now.ToString("yyyyMMdd")-@(new Random().Next(1000, 9999))</p>
+        <p>Ngày đặt: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</p>
+    </div>
+
+    <div class="invoice-divider"></div>
+
+    <!-- Thông tin khách hàng và giao hàng song song -->
+    <div class="info-container">
+        <div class="customer-info">
+            <h3>Thông tin người mua</h3>
+            <p><strong>Tên:</strong> @ViewBag.UserName</p>
+            <p><strong>Điện thoại:</strong> @ViewBag.UserPhone</p>
+            <p><strong>Email:</strong> @ViewBag.UserEmail</p>
+            <p><strong>Địa chỉ:</strong> @ViewBag.UserAddress</p>
+        </div>
+
+        <div class="delivery-info">
+            <h3>Thông tin giao hàng</h3>
+            <p><strong>Hình thức giao hàng:</strong> Giao hàng tiêu chuẩn</p>
+            <p><strong>Địa chỉ giao hàng:</strong> @ViewBag.UserAddress</p>
+            <p><strong>Thời gian dự kiến:</strong> 3-5 ngày làm việc</p>
+            <p><strong>Ghi chú:</strong> Gọi trước khi giao 30 phút</p>
+        </div>
+    </div>
+
+    <div class="invoice-divider"></div>
+
+    <!-- Giỏ hàng -->
+    <div class="cart-info">
+        <h3>Giỏ hàng của bạn</h3>
+        @if (cartItems != null && cartItems.Count > 0)
+        {
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in cartItems)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</td>
+                            <td>@((item.Quantity * item.Price)?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- Chi tiết thanh toán -->
+            <div class="payment-details">
+                <div class="payment-row">
+                    <span>Tạm tính:</span>
+                    <span>@(ViewBag.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
+                </div>
+                <div class="payment-row">
+                    <span>Phí vận chuyển:</span>
+                    <span>@(ViewBag.ShippingFee?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
+                </div>
+                <div class="payment-row">
+                    <span>Giảm giá:</span>
+                    <span>@(ViewBag.DiscountAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
+                </div>
+                <div class="payment-row total">
+                    <span>Tổng cộng:</span>
+                    <span>@(ViewBag.FinalTotal?.ToString("C0", new System.Globalization.CultureInfo("vi-VN")))</span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Giỏ hàng của bạn đang trống.</p>
+        }
+    </div>
+
+    <!-- Hình thức thanh toán -->
+    <div class="payment-info">
+        <h3>Hình thức thanh toán</h3>
+        <p><strong>Phương thức:</strong> Thanh toán khi nhận hàng (COD)</p>
+        <p><strong>Tình trạng:</strong> Chưa thanh toán</p>
+        <p><strong>Mã giảm giá áp dụng:</strong> @(string.IsNullOrEmpty(ViewBag.PromoCode) ? "Không có" : ViewBag.PromoCode)</p>
+        <p><strong>Mã vận đơn:</strong> Chưa phát hành</p>
+    </div>
+
+    <div class="invoice-divider"></div>
+
+    <!-- Điều khoản và chính sách -->
+    <div class="terms">
+        <h3>Điều khoản & Chính sách</h3>
+        <p>- Sản phẩm được đổi trả trong vòng 7 ngày nếu có lỗi từ nhà sản xuất</p>
+        <p>- Vui lòng kiểm tra sản phẩm trước khi nhận hàng</p>
+        <p>- Quý khách vui lòng giữ hóa đơn để đối chiếu khi cần thiết</p>
+        <p>- Mọi thắc mắc vui lòng liên hệ hotline: 1900-1234</p>
+    </div>
+
+    <!-- Chữ ký -->
+    <div class="signature-area">
+        <div class="signature-box">
+            <p>Người lập phiếu</p>
+            <div class="sign-line"></div>
+            <p>Ngày: @DateTime.Now.ToString("dd/MM/yyyy")</p>
+        </div>
+        <div class="signature-box">
+            <p>Khách hàng</p>
+            <div class="sign-line"></div>
+            <p>Ngày: ___/___/______</p>
+        </div>
+    </div>
+
+    <div class="invoice-footer">
+        <p>Cảm ơn quý khách đã mua sắm tại Dental Care!</p>
+        <p>Chúc quý khách có trải nghiệm tuyệt vời với sản phẩm của chúng tôi.</p>
+    </div>
+
+    <!-- Nút xác nhận -->
+    <div class="confirm-order">
+        <form asp-action="OrderSuccess" method="post">
+            <button type="submit" class="btn-confirm">Xác nhận đặt hàng</button>
+        </form>
+    </div>
 </div>
 
-<hr />
+<style>
+    /* Thiết lập tổng thể */
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f5f5f5;
+        color: #000;
+        padding: 20px;
+        font-size: 14px;
+    }
 
-<!-- Nút xác nhận -->
-<form asp-action="OrderSuccess" method="post">
-    <button type="submit" class="btn btn-primary">Xác nhận đặt hàng</button>
-</form>
+    .invoice-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        position: relative;
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='30' y='50' font-family='Arial' font-size='12' fill='rgba(0,0,0,0.03)' transform='rotate(-45 50,50)'%3EDental Care%3C/text%3E%3C/svg%3E");
+    }
+
+    /* Header với logo */
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        display: flex;
+        flex-direction: column; /* Sắp xếp theo chiều dọc */
+        justify-content: center; /* Căn giữa dọc nếu logo có chiều cao */
+        align-items: center; /* Căn giữa ngang */
+        height: auto; /* Chiều cao tự động */
+        text-align: center; /* Căn giữa văn bản */
+        padding: 10px;
+    }
+
+        .logo img {
+            max-height: 80px;
+            object-fit: contain;
+            margin-bottom: 8px; /* Khoảng cách dưới logo */
+        }
+
+
+
+    .company-info {
+        text-align: right;
+    }
+
+        .company-info h1 {
+            margin: 0;
+            color: #000;
+            font-size: 24px;
+        }
+
+        .company-info p {
+            margin: 5px 0;
+            color: #000;
+            font-size: 13px;
+        }
+
+    /* Tiêu đề hóa đơn */
+    .invoice-title {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .invoice-title h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .invoice-title p {
+            margin: 5px 0;
+            color: #000;
+            font-size: 13px;
+        }
+
+    /* Đường phân cách */
+    .invoice-divider {
+        height: 1px;
+        background-color: #000;
+        margin: 20px 0;
+        position: relative;
+    }
+
+        .invoice-divider::before {
+            content: '✂';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            color: #000;
+            font-size: 14px;
+        }
+
+    /* Thông tin container song song */
+    .info-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .customer-info, .delivery-info {
+        flex: 1;
+    }
+
+    /* Thông tin khách hàng và giao hàng */
+    .customer-info, .delivery-info, .payment-info, .cart-info, .terms {
+        margin-bottom: 20px;
+    }
+
+        .customer-info h3, .delivery-info h3, .payment-info h3, .cart-info h3, .terms h3 {
+            font-size: 16px;
+            color: #000;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #000;
+            padding-bottom: 5px;
+        }
+
+        .customer-info p, .delivery-info p, .payment-info p {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+    /* Bảng sản phẩm */
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+    }
+
+        .invoice-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+            padding: 8px;
+            border-bottom: 2px solid #000;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .invoice-table td {
+            padding: 8px;
+            border-bottom: 1px solid #000;
+            font-size: 13px;
+        }
+
+        .invoice-table tr:last-child td {
+            border-bottom: 2px solid #000;
+        }
+
+    /* Chi tiết thanh toán */
+    .payment-details {
+        margin-top: 20px;
+        width: 300px;
+        margin-left: auto;
+    }
+
+    .payment-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        font-size: 13px;
+    }
+
+        .payment-row.total {
+            font-weight: 700;
+            font-size: 16px;
+            padding-top: 10px;
+            border-top: 2px solid #000;
+            margin-top: 10px;
+            color: #000;
+        }
+
+    /* Chữ ký */
+    .signature-area {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    .signature-box {
+        text-align: center;
+        width: 45%;
+    }
+
+        .signature-box p {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+    .sign-line {
+        border-bottom: 1px solid #000;
+        margin: 40px 0 5px;
+    }
+
+    /* Footer */
+    .invoice-footer {
+        margin-top: 30px;
+        text-align: center;
+        color: #000;
+        font-style: italic;
+        font-size: 13px;
+    }
+
+    /* Nút xác nhận */
+    .confirm-order {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .btn-confirm {
+        background-color: #000;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-confirm:hover {
+            background-color: #333;
+        }
+
+    /* Hiệu ứng giấy */
+    .invoice-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-width: 0 30px 30px 0;
+        border-style: solid;
+        border-color: #f5f5f5 #f5f5f5;
+        box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hiệu ứng tem */
+    .invoice-container::after {
+        content: 'XÁC NHẬN';
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        font-size: 60px;
+        color: rgba(0, 0, 0, 0.07);
+        font-weight: bold;
+        transform: rotate(-30deg);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .invoice-header
+
+    {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .company-info {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .payment-details {
+        width: 100%;
+    }
+
+    .signature-area {
+        flex-direction: column;
+    }
+
+    .signature-box {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    }
+</style>

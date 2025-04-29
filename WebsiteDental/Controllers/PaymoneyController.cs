@@ -378,6 +378,11 @@ public class PaymoneyController : Controller
         HttpContext.Session.Remove("CartItems");
 
         // Truyền dữ liệu sang trang xác nhận
+        ViewBag.TotalAmount = totalAmount;
+        ViewBag.ShippingFee = shippingFee;
+        ViewBag.DiscountAmount = discountAmount;
+        ViewBag.FinalTotal = finalTotal;
+
         ViewBag.Invoice = invoice;
         ViewBag.InvoiceDetails = invoiceDetails;
         ViewBag.CartItems = cartItems;

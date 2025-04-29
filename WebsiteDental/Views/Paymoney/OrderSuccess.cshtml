@@ -1,3 +1,187 @@
-﻿<h3>🎉 Đặt hàng thành công!</h3>
-<p>Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ với bạn để xác nhận đơn hàng và thông tin vận chuyển.</p>
-<a href="/Home" class="btn btn-primary">Về trang chủ</a>
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt hàng thành công</title>
+    <style>
+        .order-success-message {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .order-confirmation-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: orderPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            z-index: 10;
+        }
+
+        @@keyframes orderPopIn {
+            0%
+
+        {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        }
+
+        .order-success-icon {
+            background-color: #4CAF50;
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+
+        .order-success-message h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .order-success-message p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .order-home-btn {
+            display: inline-block;
+            background-color: #2196f3;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+            .order-home-btn:hover {
+                background-color: #0d8aee;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+            }
+
+        /* Confetti styles */
+        .order-confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: #f2d74e;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        @@keyframes orderConfettiFall {
+            0%
+
+        {
+            opacity: 1;
+            top: -10%;
+            transform: translateX(0) rotateZ(0deg);
+        }
+
+        100% {
+            opacity: 0;
+            top: 100%;
+            transform: translateX(100px) rotateZ(360deg);
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="order-success-message">
+        <div class="order-confirmation-container">
+            <div class="order-success-icon">✓</div>
+            <h3>🎉 Đặt hàng thành công!</h3>
+            <p>Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ liên hệ với bạn để xác nhận đơn hàng và thông tin vận chuyển.</p>
+            <a href="/Home" class="order-home-btn">Về trang chủ</a>
+        </div>
+    </div>
+
+    <script>
+        // Tạo hiệu ứng confetti
+        function createOrderConfetti() {
+            const colors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#e91e63', '#00bcd4', '#f44336', '#ffeb3b'];
+            const confettiCount = 150;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('order-confetti');
+
+                // Random vị trí
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -Math.random() * 20 + '%';
+
+                // Random màu sắc
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                // Random kích thước
+                const size = Math.random() * 10 + 6;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+
+                // Random hình dạng
+                const shapes = ['square', 'circle', 'triangle'];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                if (shape === 'circle') {
+                    confetti.style.borderRadius = '50%';
+                } else if (shape === 'triangle') {
+                    confetti.style.width = '0';
+                    confetti.style.height = '0';
+                    confetti.style.borderLeft = size/2 + 'px solid transparent';
+                    confetti.style.borderRight = size/2 + 'px solid transparent';
+                    confetti.style.borderBottom = size + 'px solid ' + colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.backgroundColor = 'transparent';
+                }
+
+                // Animation
+                confetti.style.animationName = 'orderConfettiFall';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationTimingFunction = 'ease-out';
+                confetti.style.animationFillMode = 'forwards';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+
+                // Thêm vào body
+                document.body.appendChild(confetti);
+
+                // Xóa sau khi animation hoàn thành
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Chạy ngay khi script được tải
+        document.addEventListener('DOMContentLoaded', function() {
+            createOrderConfetti();
+        });
+    </script>
+</body>
+</html>
