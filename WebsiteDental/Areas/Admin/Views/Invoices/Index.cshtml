@@ -1,0 +1,295 @@
+﻿@model IEnumerable<WebsiteDental.Models.Invoice>
+@{
+    ViewData["Title"] = "Danh sách hoá đơn";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin */
+    }
+
+        .table-header h5 {
+            margin: 0; /* Loại bỏ margin mặc định */
+        }
+
+    .table-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px; /* Giảm padding */
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+        .compact-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table th {
+            padding: 8px; /* Giảm padding */
+            color: #495057;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            padding: 6px 8px; /* Giảm padding */
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: rgba(0,123,255,0.04);
+        }
+
+    .create-btn {
+        display: inline-block;
+        background-color: #1a3b5d;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+        .create-btn:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .action-links {
+        white-space: nowrap;
+    }
+
+        .action-links a {
+            display: inline-block;
+            margin: 0 3px;
+            padding: 4px 6px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #1a3b5d;
+        }
+
+            .action-links a:hover {
+                background-color: #f0f0f0;
+            }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-paid {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .status-unpaid {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý thông tin hoá đơn một cách dễ dàng và hiệu quả</h4>
+        <p>Theo dõi hoá đơn, trạng thái thanh toán và thông tin bệnh nhân nhanh chóng.</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h5>Danh sách hoá đơn</h5>
+            <a asp-action="Create" class="create-btn">
+                <i class="fa fa-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm..." onkeyup="filterTable()" style="width: 100%; padding: 6px; border: 1px solid #ced4da; border-radius: 4px;">
+        </div>
+        <table class="compact-table">
+            <thead>
+                <tr>
+                        <th>
+                            Người đặt
+                        </th>
+
+                        <th>
+                            Tổng tiền
+                        </th>
+                        <th>
+                            Ngày phát hành
+                        </th>
+                        <th>
+                            Đã thanh toán
+                        </th>
+                        <th>
+                            Sản phẩm
+                        </th>
+                       
+
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.Username)
+                            </td>
+                            
+                        <td>
+                                @item.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IssueDate)
+                        </td>
+                        <td>
+                            @if (item.IsPaid == true)
+                            {
+                                <span class="status-paid">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="status-unpaid">Chưa thanh toán</span>
+                            }
+                        </td>
+                            <td>
+                                @if (item.InvoiceDetails != null && item.InvoiceDetails.Any())
+                                {
+                                    <ul>
+                                        @foreach (var detail in item.InvoiceDetails)
+                                        {
+                                            <li>@detail.Product?.ProductName</li>
+                                        }
+                                    </ul>
+                                }
+                            </td>
+                       
+                        
+                        <td class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.Id" title="Chỉnh sửa">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" title="Chi tiết">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="Xóa">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".compact-table");
+        tr = table.getElementsByTagName("tr");
+
+        // Bắt đầu từ i = 1 để bỏ qua hàng tiêu đề
+        for (i = 1; i < tr.length; i++) {
+            var found = false;
+            // Tìm kiếm trong tất cả các cột (trừ cột thao tác cuối cùng)
+            for (var j = 0; j < tr[i].getElementsByTagName("td").length - 1; j++) {
+                td = tr[i].getElementsByTagName("td")[j];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (found) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+</script>

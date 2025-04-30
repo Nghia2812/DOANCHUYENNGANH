@@ -87,14 +87,13 @@ namespace WebsiteDental.Controllers
 
 
 
-        // Xử lý Đăng Nhập
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, username, password, phone, address, email FROM Users WHERE email = @Email";
+                string query = "SELECT id, username, password, phone, address, email, role_id FROM Users WHERE email = @Email";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -107,27 +106,34 @@ namespace WebsiteDental.Controllers
                             string storedUsername = reader["username"].ToString();
                             string storedHashedPassword = reader["password"].ToString();
                             int userId = Convert.ToInt32(reader["id"]);
+                            int roleId = Convert.ToInt32(reader["role_id"]); // ✅ Lấy role_id
                             string storedPhone = reader["phone"].ToString();
                             string storedAddress = reader["address"].ToString();
                             string storedEmail = reader["email"].ToString();
 
-                            // Kiểm tra mật khẩu
                             if (BCrypt.Net.BCrypt.Verify(password, storedHashedPassword))
                             {
-                                // Lưu thông tin vào session
                                 _httpContextAccessor.HttpContext.Session.SetString("Username", storedUsername);
                                 _httpContextAccessor.HttpContext.Session.SetInt32("UserId", userId);
                                 _httpContextAccessor.HttpContext.Session.SetString("UserPhone", storedPhone);
                                 _httpContextAccessor.HttpContext.Session.SetString("UserAddress", storedAddress);
                                 _httpContextAccessor.HttpContext.Session.SetString("UserEmail", storedEmail);
+                                _httpContextAccessor.HttpContext.Session.SetInt32("RoleId", roleId); // ✅ Lưu role_id
 
+                                // ✅ Điều hướng theo vai trò
+                                if (roleId == 1) // Admin
+                                {
+                                    return RedirectToAction("Index", "Home", new { area = "Admin" });
 
-                                // Kiểm tra session đã lưu đúng thông tin
-                                Console.WriteLine("Session Username: " + _httpContextAccessor.HttpContext.Session.GetString("Username"));
-                                Console.WriteLine("Session UserId: " + _httpContextAccessor.HttpContext.Session.GetInt32("UserId"));
-
-                                // Chuyển hướng về trang chủ
-                                return RedirectToAction("Index", "Home");
+                                }
+                                else if (roleId == 2) // User
+                                {
+                                    return RedirectToAction("Index", "Home");
+                                }
+                                else
+                                {
+                                    return RedirectToAction("Index", "Home");
+                                }
                             }
                         }
                     }
@@ -135,8 +141,9 @@ namespace WebsiteDental.Controllers
             }
 
             ViewData["Error"] = "Email hoặc mật khẩu không đúng!";
-            return View("Login"); // Chuyển về trang đăng nhập nếu không đúng
+            return View("Login");
         }
+
 
 
 

@@ -1,273 +1,509 @@
 ﻿@model WebsiteDental.Models.InvoiceViewModel
 <style>
-    .invoice-container {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 30px;
-        border: 1px solid #ddd;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        background-color: white;
+    /* Reset và thiết lập cơ bản */
+    .dental-invoice * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    .invoice-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #3498db;
-    }
-
-    .invoice-logo {
-        max-width: 200px;
-        height: auto;
-    }
-
-    .invoice-title {
-        color: #2c3e50;
-        font-size: 24px;
-        text-align: right;
-    }
-
-    .invoice-id {
-        font-size: 18px;
-        color: #3498db;
-        margin-top: 5px;
-    }
-
-    .invoice-section {
-        margin-bottom: 25px;
-    }
-
-        .invoice-section h3 {
-            color: #2c3e50;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 15px;
-        }
-
-    .invoice-info p {
-        margin: 5px 0;
+    .dental-invoice-body {
+        background-color: #f5f7fa;
         color: #333;
+        font-family: 'Roboto', Arial, sans-serif;
+        font-size: 13px;
         line-height: 1.5;
     }
 
-    .invoice-info strong {
-        color: #2c3e50;
-        width: 120px;
-        display: inline-block;
+    /* Container chính */
+    .dental-invoice-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 25px 30px;
+        border: 1px solid #e0e6ed;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        background-color: white;
     }
 
-    .invoice-table {
-        width: 100%;
-        border-collapse: collapse;
+    /* Header hóa đơn */
+    .dental-invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #0078d7;
+        position: relative;
+    }
+
+    .dental-invoice-logo {
+        max-width: 120px;
+        height: auto;
+    }
+
+    .dental-invoice-logo-text {
+        font-size: 12px;
+        color: #555;
+        margin-top: 5px;
+        font-style: italic;
+    }
+
+    .dental-invoice-title-section {
+        text-align: right;
+    }
+
+    .dental-invoice-title {
+        color: #0078d7;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+        position: relative;
+    }
+
+        .dental-invoice-title:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            right: 0;
+            width: 80px;
+            height: 2px;
+            background-color: #0078d7;
+        }
+
+    .dental-invoice-id {
+        font-size: 14px;
+        color: #555;
+        margin-top: 8px;
+    }
+
+    .dental-invoice-date-stamp {
+        position: absolute;
+        top: 5px;
+        right: 0;
+        font-size: 11px;
+        color: #888;
+        font-style: italic;
+    }
+
+    /* Các phần trong hóa đơn */
+    .dental-invoice-section {
         margin-bottom: 20px;
     }
 
-        .invoice-table th {
-            background-color: #f8f9fa;
-            color: #2c3e50;
-            font-weight: bold;
-            padding: 12px;
+        .dental-invoice-section h3 {
+            color: #0078d7;
+            font-size: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e6ed;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+
+
+
+    /* Thông tin khách hàng và hóa đơn */
+    .dental-invoice-info p {
+        margin: 4px 0;
+        color: #333;
+        line-height: 1.4;
+        display: flex; /* Thêm display flex để dàn hàng ngang */
+        flex-wrap: wrap; /* Cho phép xuống dòng khi cần */
+    }
+
+    .dental-invoice-info strong {
+        color: #444;
+        width: 110px;
+        display: inline-block;
+        font-weight: 600;
+        flex-shrink: 0; /* Ngăn không cho phần này co lại */
+    }
+
+    /* Thêm style cho phần nội dung của thông tin */
+    .dental-invoice-info span.info-content {
+        flex: 1;
+        word-break: break-word; /* Cho phép từ được ngắt xuống dòng */
+    }
+
+    /* Đảm bảo các khối địa chỉ dài được hiển thị đúng */
+    .dental-invoice-info p.address-line {
+        align-items: flex-start; /* Căn đầu dòng khi có nhiều dòng */
+    }
+
+    /* Bảng chi tiết dịch vụ */
+    .dental-invoice-table-container {
+        overflow-x: auto;
+        margin-bottom: 15px;
+    }
+
+    .dental-invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+        .dental-invoice-table th {
+            background-color: #f0f5fa;
+            color: #444;
+            font-weight: 600;
+            padding: 10px 12px;
             text-align: left;
-            border-bottom: 2px solid #3498db;
+            border-top: 1px solid #d1dce8;
+            border-bottom: 1px solid #d1dce8;
+            font-size: 13px;
         }
 
-        .invoice-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
+        .dental-invoice-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e6ed;
+            color: #333;
+            vertical-align: middle;
         }
 
-    .invoice-total {
+        .dental-invoice-table tr:nth-child(even) {
+            background-color: #f9fbfd;
+        }
+
+        .dental-invoice-table tr:hover {
+            background-color: #f0f5fa;
+        }
+
+        /* Định dạng cột trong bảng */
+        .dental-invoice-table th:nth-child(1),
+        .dental-invoice-table td:nth-child(1) {
+            width: 40%;
+        }
+
+        .dental-invoice-table th:nth-child(2),
+        .dental-invoice-table td:nth-child(2) {
+            width: 15%;
+            text-align: center;
+        }
+
+        .dental-invoice-table th:nth-child(3),
+        .dental-invoice-table td:nth-child(3) {
+            width: 20%;
+            text-align: right;
+        }
+
+        .dental-invoice-table th:nth-child(4),
+        .dental-invoice-table td:nth-child(4) {
+            width: 25%;
+            text-align: right;
+        }
+
+    /* Tổng cộng */
+    .dental-invoice-total {
         text-align: right;
-        font-size: 18px;
-        font-weight: bold;
-        color: #2c3e50;
-        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #0078d7;
+        padding: 10px 0;
+        border-top: 2px solid #e0e6ed;
+        margin-top: 5px;
     }
 
-    .invoice-actions {
+    /* Khu vực các nút - BÊN PHẢI MÀN HÌNH */
+    .dental-invoice-actions {
+        position: fixed;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
         display: flex;
+        flex-direction: column;
         gap: 10px;
-        justify-content: flex-end;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 5px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        z-index: 100;
     }
 
-    .invoice-btn {
+    .dental-invoice-btn {
         display: inline-flex;
         align-items: center;
-        padding: 8px 16px;
-        background-color: #3498db;
+        justify-content: center;
+        width: 140px;
+        padding: 8px 15px;
         color: white;
         border: none;
-        border-radius: 4px;
+        border-radius: 3px;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 13px;
         text-decoration: none;
-        transition: background-color 0.3s;
+        transition: all 0.2s ease;
     }
 
-        .invoice-btn:hover {
-            background-color: #2980b9;
-        }
-
-        .invoice-btn i {
-            margin-right: 5px;
-        }
-
-    .back-btn {
-        background-color: #95a5a6;
+    .dental-back-btn {
+        background-color: #6c757d;
     }
 
-        .back-btn:hover {
-            background-color: #7f8c8d;
+        .dental-back-btn:hover {
+            background-color: #5a6268;
         }
 
-    .print-btn {
-        background-color: #2ecc71;
+    .dental-print-btn {
+        background-color: #17a2b8;
     }
 
-        .print-btn:hover {
-            background-color: #27ae60;
+        .dental-print-btn:hover {
+            background-color: #138496;
         }
 
-    .pdf-btn {
-        background-color: #e74c3c;
+    .dental-pdf-btn {
+        background-color: #dc3545;
     }
 
-        .pdf-btn:hover {
-            background-color: #c0392b;
+        .dental-pdf-btn:hover {
+            background-color: #c82333;
         }
 
-    .excel-btn {
-        background-color: #27ae60;
+    .dental-excel-btn {
+        background-color: #28a745;
     }
 
-        .excel-btn:hover {
-            background-color: #219653;
+        .dental-excel-btn:hover {
+            background-color: #218838;
         }
 
-    /* Icon styles */
-    .fa {
+    /* Hiệu ứng nút */
+    .dental-invoice-btn:active {
+        transform: translateY(1px);
+    }
+
+    .dental-invoice-btn i {
+        margin-right: 8px;
+    }
+
+    /* Biểu tượng */
+    .dental-fa {
         margin-right: 5px;
     }
 
-    @@media print {
-        .invoice-actions
-
-    {
-        display: none;
+    /* Chi tiết khách hàng và hóa đơn */
+    .dental-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
     }
 
-    .invoice-container {
+    /* Chi tiết bổ sung */
+    .dental-invoice-notes {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f9fbfd;
+        border-left: 3px solid #0078d7;
+        font-style: italic;
+        color: #666;
+    }
+
+    .dental-signature-area {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px dashed #e0e6ed;
+    }
+
+    .dental-signature-box {
+        text-align: center;
+        width: 200px;
+    }
+
+    .dental-signature-title {
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    .dental-signature-name {
+        border-top: 1px solid #999;
+        padding-top: 5px;
+        font-weight: 600;
+    }
+
+    /* Footer hóa đơn */
+    .dental-invoice-footer {
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #e0e6ed;
+        text-align: center;
+        color: #666;
+        font-size: 12px;
+    }
+
+    .dental-clinic-info {
+        margin-top: 5px;
+    }
+
+    /* Responsive */
+    @@media screen and (max-width: 768px) {
+        .dental-detail-grid
+
+    {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .dental-invoice-container {
+        padding: 15px;
+    }
+
+    }
+
+    /* In ấn */
+    @@media print {
+        .dental-invoice-body
+
+    {
+        background-color: white;
+    }
+
+    .dental-invoice-container {
         box-shadow: none;
         border: none;
         padding: 0;
+        max-width: 100%;
+    }
+
+    .dental-invoice-actions {
+        display: none;
     }
 
     }
 </style>
 
-<div class="invoice-container">
-    <div class="invoice-header">
-        <div>
-            <img src="/assets/img/logo.jpg" alt="Dental Care Logo" class="invoice-logo" />
-        </div>
-        <div>
-            <h1 class="invoice-title">HÓA ĐƠN DỊCH VỤ</h1>
-            <div class="invoice-id">Mã hóa đơn: @Model.InvoiceId</div>
-        </div>
-    </div>
+<!-- Khu vực các nút - Đặt bên ngoài và bên phải -->
+<div class="dental-invoice-actions">
+    <a href="/InvoiceHistory" class="dental-invoice-btn dental-back-btn">
+        <i class="fa fa-arrow-left dental-fa"></i> Quay lại
+    </a>
+    <button onclick="window.print()" class="dental-invoice-btn dental-print-btn">
+        <i class="fa fa-print dental-fa"></i> In hóa đơn
+    </button>
+    <button onclick="exportToPDF()" class="dental-invoice-btn dental-pdf-btn">
+        <i class="fa fa-file-pdf-o dental-fa"></i> Xuất PDF
+    </button>
+    <button onclick="exportToExcel()" class="dental-invoice-btn dental-excel-btn">
+        <i class="fa fa-file-excel-o dental-fa"></i> Xuất Excel
+    </button>
+</div>
 
-    @if (Model != null)
-    {
-        <div class="invoice-section">
-            <h3>THÔNG TIN KHÁCH HÀNG</h3>
-            <div class="invoice-info">
-                <p><strong>Khách hàng:</strong> @Model.User.Username</p>
-                <p><strong>Email:</strong> @Model.User.Email</p>
-                <p><strong>Điện thoại:</strong> @Model.User.Phone</p>
-                <p><strong>Địa chỉ:</strong> @Model.User.Address</p>
+<div class="dental-invoice">
+    <div class="dental-invoice-container">
+        <div class="dental-invoice-header">
+            <div>
+                <img src="/assets/img/logo.jpg" alt="LTN Dental Logo" class="dental-invoice-logo" />
+                <div class="dental-invoice-logo-text">Nha khoa uy tín hàng đầu</div>
+            </div>
+            <div class="dental-invoice-title-section">
+                <div class="dental-invoice-date-stamp">Ngày in: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                <h1 class="dental-invoice-title">HÓA ĐƠN DỊCH VỤ</h1>
+                <div class="dental-invoice-id">Mã hóa đơn: @Model.InvoiceId</div>
             </div>
         </div>
 
-        <div class="invoice-section">
-            <h3>THÔNG TIN HÓA ĐƠN</h3>
-            <div class="invoice-info">
-                <p><strong>Ngày lập:</strong> @Model.OrderDate?.ToString("dd/MM/yyyy")</p>
-            </div>
-        </div>
+        @if (Model != null)
+        {
 
-        <div class="invoice-section">
-            <h3>CHI TIẾT DỊCH VỤ</h3>
-            @if (Model.Details != null && Model.Details.Any())
-            {
-                <table class="invoice-table">
-                    <thead>
-                        <tr>
-                            <th>Dịch vụ</th>
-                            <th>Số lượng</th>
-                            <th>Đơn giá</th>
-                            <th>Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var detail in Model.Details)
-                        {
-                            <tr>
-                                <td>@detail.ProductName</td>
-                                <td>@detail.Quantity</td>
-                                <td>@detail.FinalAmount?.ToString("N0") VNĐ</td>
-                                <td>@((detail.Quantity * detail.FinalAmount)?.ToString("N0")) VNĐ</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div class="invoice-total">
-                    Tổng cộng: @Model.TotalAmount?.ToString("N0") VNĐ
+
+            <div class="dental-detail-grid">
+            <!-- Phần thông tin khách hàng cập nhật -->
+            <div class="dental-invoice-section">
+                <h3>THÔNG TIN KHÁCH HÀNG</h3>
+                <div class="dental-invoice-info">
+                    <p><strong>Khách hàng:</strong> <span class="info-content">@Model.User.Username</span></p>
+                    <p><strong>Email:</strong> <span class="info-content">@Model.User.Email</span></p>
+                    <p><strong>Điện thoại:</strong> <span class="info-content">@Model.User.Phone</span></p>
+                    <p class="address-line"><strong>Địa chỉ:</strong> <span class="info-content">@Model.User.Address</span></p>
                 </div>
-            }
-            else
-            {
-                <p>Không có dịch vụ nào.</p>
-            }
-        </div>
+            </div>
 
-        <div class="invoice-actions">
-            <a href="/Invoice" class="invoice-btn back-btn">
-                <i class="fa fa-arrow-left"></i> Quay lại
-            </a>
-            <button onclick="window.print()" class="invoice-btn print-btn">
-                <i class="fa fa-print"></i> In hóa đơn
-            </button>
-            <button onclick="exportToPDF()" class="invoice-btn pdf-btn">
-                <i class="fa fa-file-pdf-o"></i> Xuất PDF
-            </button>
-            <button onclick="exportToExcel()" class="invoice-btn excel-btn">
-                <i class="fa fa-file-excel-o"></i> Xuất Excel
-            </button>
-        </div>
-    }
-    else
-    {
-        <p>Không tìm thấy hóa đơn.</p>
-    }
+            <!-- Phần thông tin hóa đơn cập nhật -->
+            <div class="dental-invoice-section">
+                <h3>THÔNG TIN HÓA ĐƠN</h3>
+                <div class="dental-invoice-info">
+                    <p><strong>Ngày lập:</strong> <span class="info-content">@(Model.OrderDate.HasValue? Model.OrderDate.Value.ToString("dd/MM/yyyy") : "")</span></p>
+                    <p><strong>Mã số thuế:</strong> <span class="info-content">0315886310</span></p>
+                    <p><strong>Nhân viên:</strong> <span class="info-content">BS. Lê Thị Ngọc</span></p>
+                    <p><strong>Chi nhánh:</strong> <span class="info-content">LTN Dental - Quận 7</span></p>
+                    <p><strong>Phương thức:</strong> <span class="info-content">Thanh toán tiền mặt</span></p>
+                    <p><strong>Trạng thái:</strong> <span class="info-content" style="color: #28a745; font-weight: 600;">Đã thanh toán</span></p>
+                    <p><strong>Số phiếu:</strong> <span class="info-content">PK-@DateTime.Now.ToString("yyMMdd")-@Model.InvoiceId</span></p>
+                </div>
+            </div>
+            </div>
+
+            <div class="dental-invoice-section">
+                <h3>CHI TIẾT DỊCH VỤ</h3>
+                @if (Model.Details != null && Model.Details.Any())
+                {
+                    <div class="dental-invoice-table-container">
+                        <table class="dental-invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>Dịch vụ</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.Details)
+                                {
+                                    <tr>
+                                        <td>@detail.ProductName</td>
+                                        <td>@detail.Quantity</td>
+                                        <td>@detail.FinalAmount?.ToString("N0") VNĐ</td>
+                                        <td>@((detail.Quantity * detail.FinalAmount)?.ToString("N0")) VNĐ</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dental-invoice-total">
+                        Tổng cộng: @Model.TotalAmount?.ToString("N0") VNĐ
+                    </div>
+                }
+                else
+                {
+                    <p>Không có dịch vụ nào.</p>
+                }
+            </div>
+
+            <div class="dental-invoice-notes">
+                <p><strong>Ghi chú:</strong> Khách hàng vui lòng giữ hóa đơn cho lần khám tiếp theo. Bảo hành dịch vụ 12 tháng kể từ ngày điều trị. Hóa đơn điện tử sẽ được gửi qua email trong vòng 24 giờ.</p>
+                <p><strong>Chính sách bảo hành:</strong> Các dịch vụ thẩm mỹ được bảo hành trong vòng 12 tháng. Để được hỗ trợ bảo hành, quý khách vui lòng mang theo hóa đơn này khi đến phòng khám.</p>
+                <p><strong>Lịch tái khám:</strong> @(Model.OrderDate?.AddMonths(3).ToString("dd/MM/yyyy")) (3 tháng sau lần khám này)</p>
+            </div>
+
+            <div class="dental-signature-area">
+                <div class="dental-signature-box">
+                    <div class="dental-signature-title">Người lập hóa đơn</div>
+                    <div class="dental-signature-name">Bác sĩ Nguyễn Văn A</div>
+                </div>
+                <div class="dental-signature-box">
+                    <div class="dental-signature-title">Khách hàng</div>
+                    <div class="dental-signature-name">@Model.User.Username</div>
+                </div>
+            </div>
+
+            <div class="dental-invoice-footer">
+                <p><strong>LTN DENTAL - NHA KHOA CHUYÊN NGHIỆP</strong></p>
+                <div class="dental-clinic-info">
+                    <p>Địa chỉ: 123 Nguyễn Văn Linh, Phường Tân Thuận Đông, Quận 7, TP.HCM</p>
+                    <p>Hotline: 0912 345 678 | Email: contact@ltndental.com | Website: www.ltndental.com</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Không tìm thấy hóa đơn.</p>
+        }
+    </div>
 </div>
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<script>
-    function exportToPDF() {
-        // Đoạn mã JavaScript để xuất PDF - Thực tế sẽ cần tích hợp với thư viện
-        alert('Chức năng xuất PDF đang được phát triển');
-    }
-
-    function exportToExcel() {
-        // Đoạn mã JavaScript để xuất Excel - Thực tế sẽ cần tích hợp với thư viện
-        alert('Chức năng xuất Excel đang được phát triển');
-    }
-</script>
