@@ -1,60 +1,294 @@
 ﻿@model WebsiteDental.Models.Invoice
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa hoá đơn";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<style>
+    body {
+        background-color: white;
+    }
 
-<h4>Invoice</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label"></label>
-                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
-                <span asp-validation-for="PatientId" class="text-danger"></span>
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .form-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+        .form-header h5 {
+            margin: 0;
+            color: #1a3b5d;
+            font-weight: 600;
+        }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+    select.form-control {
+        height: 38px;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #f8f9fa;
+        color: #212529;
+        border: 1px solid #dee2e6;
+    }
+
+        .btn-secondary:hover {
+            background-color: #e2e6ea;
+        }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .status-option {
+        padding: 5px;
+    }
+
+    .status-paid {
+        color: #2e7d32;
+    }
+
+    .status-unpaid {
+        color: #c62828;
+    }
+
+    .switch-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+        margin-right: 10px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+    input:checked + .slider {
+        background-color: #2e7d32;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2e7d32;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    .status-label {
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media(max - width: 992px) {
+            .content-wrapper {
+                margin-left: 0;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <div class="content-wrapper">
+        <div class="page-intro">
+            <h4>Chỉnh sửa thông tin hoá đơn</h4>
+            <p>Cập nhật thông tin chi tiết và trạng thái của hoá đơn.</p>
+        </div>
+
+        <div class="form-container">
+            <div class="form-header">
+                <h5>Thông tin hoá đơn #@Model.Id</h5>
             </div>
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
-                <span asp-validation-for="TotalAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IssueDate" class="control-label"></label>
-                <input asp-for="IssueDate" class="form-control" />
-                <span asp-validation-for="IssueDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsPaid" class="control-label"></label>
-                <input asp-for="IsPaid" class="form-control" />
-                <span asp-validation-for="IsPaid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" class="form-control" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="PatientId" class="control-label">Bệnh nhân</label>
+                    <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                    <span asp-validation-for="PatientId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="TotalAmount" class="control-label">Tổng tiền</label>
+                    <input asp-for="TotalAmount" class="form-control" />
+                    <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="IsPaid" class="control-label">Trạng thái thanh toán</label>
+                    <select asp-for="IsPaid" class="form-control">
+                        <option value="false" class="status-option status-unpaid">Chưa thanh toán</option>
+                        <option value="true" class="status-option status-paid">Đã thanh toán</option>
+                    </select>
+                    <span asp-validation-for="IsPaid" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Trạng thái hoạt động</label>
+                    <div class="switch-container">
+                        <label class="switch">
+                            <!-- Hidden input để gửi false nếu checkbox không được check -->
+                            <input type="hidden" name="IsActive" value="false" />
+
+                            <!-- Checkbox thực tế -->
+                            <input type="checkbox" name="IsActive" value="true" @(Model.IsActive == true ? "checked" : "") />
+                            <span class="slider"></span>
+                        </label>
+
+                        <!-- Label hiển thị trạng thái -->
+                        <span class="status-label" id="isActiveLabel">
+                            @(Model.IsActive == true ? "Đang hoạt động" : "Không hoạt động")
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label">Người quản lý</label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i> Lưu thay đổi
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+     
+    }

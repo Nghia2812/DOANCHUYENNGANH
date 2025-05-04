@@ -1,60 +1,341 @@
-﻿@model WebsiteDental.Models.Invoice
+﻿@using System.Globalization
 
+@model WebsiteDental.Models.Invoice
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết hóa đơn";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 <style>
-    .body{
+    body {
         background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+            color: #1a3b5d;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 15px;
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+        .section-header h5 {
+            color: #1a3b5d;
+            margin: 0;
+            font-weight: 600;
+        }
+
+    .detail-row {
+        display: flex;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .detail-label {
+        width: 150px;
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .detail-value {
+        flex: 1;
+    }
+
+    .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+        .compact-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table th {
+            padding: 8px;
+            color: #495057;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            padding: 6px 8px;
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: rgba(0,123,255,0.04);
+        }
+
+    .action-button {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        font-size: 14px;
+        white-space: nowrap;
+        margin-right: 8px;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+            color: white;
+        }
+
+    .btn-danger {
+        background-color: #e53e3e;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #718096;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #4a5568;
+            color: white;
+        }
+
+    .status-true {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+    }
+
+    .status-false {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 3px 6px;
+        border-radius: 12px;
+        font-size: 11px;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .detail-label {
+        width: 120px;
+    }
+
     }
 </style>
 
-<h1>Details</h1>
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Chi tiết hóa đơn</h4>
+        <p>Xem thông tin chi tiết về hóa đơn, bệnh nhân và các sản phẩm.</p>
+    </div>
 
-<div>
-    <h4>Invoice</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalAmount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IssueDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IssueDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPaid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPaid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Patient.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="details-container">
+        <div class="section-header">
+            <h5>Thông tin hóa đơn</h5>
+        </div>
+        <div class="details-content">
+            <div class="detail-row">
+                <div class="detail-label">Tổng tiền</div>
+                    <div class="details-value">
+                        @Model.TotalAmount?.ToString("C0", new CultureInfo("vi-VN"))
+                    </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Ngày lập</div>
+                <div class="detail-value">@Model.IssueDate?.ToString("dd/MM/yyyy")</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Đã thanh toán</div>
+                <div class="detail-value">
+                    @if (Model.IsPaid == true)
+                    {
+                        <span class="status-true">Đã thanh toán</span>
+                    }
+                    else
+                    {
+                        <span class="status-false">Chưa thanh toán</span>
+                    }
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Trạng thái</div>
+                <div class="detail-value">
+                    @if (Model.IsActive == true)
+                    {
+                        <span class="status-true">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span class="status-false">Không hoạt động</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Patient != null)
+    {
+        <div class="details-container">
+            <div class="section-header">
+                <h5>Thông tin bệnh nhân</h5>
+            </div>
+            <div class="details-content">
+                <div class="detail-row">
+                    <div class="detail-label">Họ tên</div>
+                    <div class="detail-value">@Model.Patient.FullName</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Số điện thoại</div>
+                    <div class="detail-value">@Model.Patient.Phone</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">@Model.Patient.Email</div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.User != null)
+    {
+        <div class="details-container">
+            <div class="section-header">
+                <h5>Người tạo hóa đơn</h5>
+            </div>
+            <div class="details-content">
+                <div class="detail-row">
+                    <div class="detail-label">Tên đăng nhập</div>
+                    <div class="detail-value">@Model.User.Username</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">@Model.User.Email</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">SĐT</div>
+                    <div class="detail-value">@Model.User.Phone</div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="details-container">
+        <div class="section-header">
+            <h5>Chi tiết hóa đơn</h5>
+        </div>
+        <div class="details-content">
+            @if (Model.InvoiceDetails != null && Model.InvoiceDetails.Count > 0)
+            {
+                <table class="compact-table">
+                    <thead>
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.InvoiceDetails)
+                        {
+                            <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(detail.Product?.Image))
+                                        {
+                                            <img src="@detail.Product.Image" alt="@detail.Product.ProductName" width="80" height="80" />
+                                        }
+                                        else
+                                        {
+                                            <span>Không có ảnh</span>
+                                        }
+                                    </td>
+                                <td>@detail.Product?.ProductName</td>
+                                <td>@detail.Quantity</td>
+                                <td>@detail.Subtotal?.ToString("C0", new CultureInfo("vi-VN"))</td>
+                                <td>@detail.FinalAmount?.ToString("C0", new CultureInfo("vi-VN"))</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Không có chi tiết hóa đơn.</p>
+            }
+        </div>
+    </div>
+
+    <div style="margin-top: 20px; margin-bottom: 40px;">
+        <a class="action-button btn-primary" asp-action="Edit" asp-route-id="@Model.Id">
+            <i class="fa fa-edit"></i> Sửa
+        </a>
+        <a class="action-button btn-danger" asp-action="Delete" asp-route-id="@Model.Id">
+            <i class="fa fa-trash"></i> Xóa
+        </a>
+        <a class="action-button btn-secondary" asp-action="Index">
+            <i class="fa fa-arrow-left"></i> Trở về danh sách
+        </a>
+    </div>
 </div>

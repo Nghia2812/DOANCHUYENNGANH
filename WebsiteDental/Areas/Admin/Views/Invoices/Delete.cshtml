@@ -1,58 +1,328 @@
 ﻿@model WebsiteDental.Models.Invoice
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Xóa hóa đơn";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<style>
+    body {
+        background-color: white;
+    }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Invoice</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalAmount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IssueDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IssueDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPaid)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPaid)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Patient)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Patient.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-intro {
+        margin-bottom: 15px; /* Khoảng cách với form */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .delete-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .alert-box {
+        background-color: #fff4f5;
+        border-left: 4px solid #dc3545;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+    }
+
+    .alert-title {
+        color: #dc3545;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+        .alert-title i {
+            margin-right: 8px;
+        }
+
+    .alert-message {
+        margin-bottom: 0;
+        color: #555;
+    }
+
+    .invoice-info {
+        display: flex;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .invoice-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+        margin-right: 20px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .invoice-header {
+        flex: 1;
+    }
+
+    .invoice-number {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1a3b5d;
+        margin-bottom: 5px;
+    }
+
+    .invoice-date {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .invoice-status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .status-paid {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-unpaid {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .status-active {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-inactive {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .info-summary {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #666;
+        width: 150px;
+        flex-shrink: 0;
+    }
+
+    .info-value {
+        color: #333;
+        flex: 1;
+    }
+
+    .action-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
+    .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+    }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            color: #212529;
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .invoice-info {
+        flex-direction: column;
+    }
+
+    .invoice-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .info-item {
+        flex-direction: column;
+    }
+
+    .info-label {
+        width: 100%;
+        margin-bottom: 3px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Xác nhận xóa hóa đơn</h4>
+        <p>Xem lại và xác nhận thông tin hóa đơn trước khi xóa khỏi hệ thống</p>
+    </div>
+
+    <div class="delete-container">
+        <div class="alert-box">
+            <div class="alert-title">
+                <i class="fa fa-exclamation-triangle"></i>
+                Cảnh báo
+            </div>
+            <p class="alert-message">Bạn đang chuẩn bị xóa hóa đơn này khỏi hệ thống. Hành động này không thể hoàn tác.</p>
+        </div>
+
+        <!-- Thông tin tổng quan của hóa đơn -->
+        <div class="invoice-info">
+            <div class="invoice-icon">
+                <i class="fa fa-file-invoice" style="font-size: 30px; color: #aaa;"></i>
+            </div>
+            <div class="invoice-header">
+                <h2 class="invoice-number">Hóa đơn #@Model.Id</h2>
+                <div class="invoice-date">Ngày phát hành: @Model.IssueDate?.ToString("dd/MM/yyyy")</div>
+                @if (Model.IsPaid == true)
+                {
+                    <div class="invoice-status status-paid">Đã thanh toán</div>
+                }
+                else
+                {
+                    <div class="invoice-status status-unpaid">Chưa thanh toán</div>
+                }
+
+                @if (Model.IsActive == true)
+                {
+                    <div class="invoice-status status-active">Hoạt động</div>
+                }
+                else
+                {
+                    <div class="invoice-status status-inactive">Đã hủy</div>
+                }
+                <div>
+                    <small>Mã HĐ: <strong>@Model.Id</strong></small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin tóm tắt -->
+        <div class="info-summary">
+            <div class="info-item">
+                <div class="info-label">Tổng số tiền</div>
+                <div class="info-value">@string.Format("{0:N0} đ", Model.TotalAmount)</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Trạng thái thanh toán</div>
+                <div class="info-value">
+                    @if (Model.IsPaid == true)
+                    {
+                        <span style="color: #2e7d32;">Đã thanh toán</span>
+                    }
+                    else
+                    {
+                        <span style="color: #c62828;">Chưa thanh toán</span>
+                    }
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Bệnh nhân</div>
+                <div class="info-value">@(Model.Patient)</div>
+            </div>
+          
+            <div class="info-item">
+                <div class="info-label">Ngày phát hành</div>
+                    <div class="info-value">@Model.IssueDate?.ToString("dd/MM/yyyy")</div>
+
+            </div>
+            <div class="info-item">
+                <div class="info-label">Trạng thái</div>
+                <div class="info-value">
+                    @if (Model.IsActive == true)
+                    {
+                        <span style="color: #2e7d32;">Hoạt động</span>
+                    }
+                    else
+                    {
+                        <span style="color: #c62828;">Đã hủy</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Form xác nhận xóa -->
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Xác nhận xóa
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
