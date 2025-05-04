@@ -10,30 +10,20 @@
     }
 
     .content-wrapper {
-        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
-        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
-    }
-
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 5px; /* Giảm margin bottom */
-        padding-bottom: 5px; /* Giảm padding bottom */
-        border-bottom: 1px solid #e0e0e0;
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
     }
 
     .page-intro {
-        margin-bottom: 5px; /* Giảm khoảng cách */
+        margin-bottom: 5px;
     }
 
         .page-intro h4 {
-            margin-top: 0; /* Loại bỏ margin top */
-            margin-bottom: 5px; /* Giảm margin bottom */
+            margin-top: 0;
+            margin-bottom: 5px;
         }
 
         .page-intro p {
-            margin-top: 0;
             margin-bottom: 10px;
         }
 
@@ -69,7 +59,6 @@
         padding: 8px 12px;
         border: 1px solid #ced4da;
         border-radius: 4px;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
         .form-control:focus {
@@ -91,8 +80,6 @@
         padding: 8px 16px;
         font-size: 14px;
         border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.15s ease-in-out;
     }
 
         .btn-primary:hover {
@@ -100,104 +87,337 @@
             border-color: #2c5282;
         }
 
-    .back-link {
-        display: inline-block;
-        color: #1a3b5d;
+    .btn-danger {
+        color: white;
+    }
+
+    .btn-secondary {
+        margin-right: 10px;
+    }
+
+    .summary-section {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 15px;
         margin-top: 15px;
-        text-decoration: none;
-        font-size: 14px;
+        border: 1px solid #e0e0e0;
     }
 
-        .back-link:hover {
-            text-decoration: underline;
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dashed #e0e0e0;
+    }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
         }
 
-        .back-link i {
-            margin-right: 5px;
-        }
-
-    /* Đáp ứng thiết bị di động */
-    @@media (max-width: 992px) {
-        .content-wrapper
-
-    {
-        margin-left: 0;
+    .shipping-options {
+        margin-top: 15px;
         padding: 10px;
+        background-color: #f0f7ff;
+        border-radius: 5px;
+        border: 1px solid #cce5ff;
     }
 
+    .shipping-option {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid transparent;
     }
-</style>
 
-<div class="content-wrapper">
-    <div class="page-intro">
-        <h4>Tạo đơn hàng mới</h4>
-        <p>Nhập thông tin chi tiết để tạo hóa đơn mới cho bệnh nhân.</p>
+        .shipping-option:hover {
+            background-color: #e6f2ff;
+        }
+
+        .shipping-option.selected {
+            background-color: #e6f2ff;
+            border-color: #1a3b5d;
+        }
+
+    .shipping-price {
+        font-weight: bold;
+        float: right;
+    }
+
+    @@media(max - width: 992px) {
+            .content-wrapper {
+                margin-left: 0;
+                padding: 10px;
+            }
+        }
+    </style>
+
+    <div class="content-wrapper">
+        <div class="page-intro">
+            <h4>Tạo đơn hàng mới</h4>
+            <p>Nhập thông tin chi tiết để tạo hóa đơn mới cho bệnh nhân.</p>
+        </div>
+
+        <div class="form-container">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label class="control-label">Tên người tạo đơn</label>
+                    <input name="Username" class="form-control" placeholder="Nhập tên người dùng..." />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Số điện thoại</label>
+                    <input name="Phone" class="form-control" placeholder="Nhập số điện thoại..." />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input name="Email" class="form-control" placeholder="Nhập email..." />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Địa chỉ</label>
+                    <input name="Address" class="form-control" placeholder="Nhập địa chỉ người dùng..." />
+                </div>
+
+                <div class="form-group">
+                    <label>Sản phẩm</label>
+                    <table class="table" id="productTable">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select name="InvoiceDetails[0].ProductId" class="form-control product-select">
+                                        @foreach (var product in (SelectList)ViewBag.Products)
+                                        {
+                                            <option value="@product.Value">@product.Text</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="InvoiceDetails[0].Quantity" type="number" class="form-control quantity" value="1" min="1" />
+                                </td>
+                                <td>
+                                    <input name="InvoiceDetails[0].UnitPrice" type="number" class="form-control unit-price" value="0" readonly />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-remove">X</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button type="button" id="addRow" class="btn btn-secondary">+ Thêm sản phẩm</button>
+                    <button type="button" id="calculateTotal" class="btn btn-success">= Tính tiền</button>
+                </div>
+
+                <!-- PHẦN PHÍ VẬN CHUYỂN -->
+                <div class="form-group shipping-options">
+                    <label><strong>Phương thức vận chuyển</strong></label>
+                    <div class="shipping-option selected" data-price="30000">
+                        <input type="radio" name="ShippingMethod" value="standard" checked />
+                        <span>Giao hàng tiêu chuẩn (2-3 ngày)</span>
+                        <span class="shipping-price">30,000 đ</span>
+                    </div>
+                    <div class="shipping-option" data-price="50000">
+                        <input type="radio" name="ShippingMethod" value="express" />
+                        <span>Giao hàng nhanh (1-2 ngày)</span>
+                        <span class="shipping-price">50,000 đ</span>
+                    </div>
+                    <div class="shipping-option" data-price="100000">
+                        <input type="radio" name="ShippingMethod" value="same-day" />
+                        <span>Giao hàng trong ngày</span>
+                        <span class="shipping-price">100,000 đ</span>
+                    </div>
+                    <input type="hidden" name="ShippingFee" id="shippingFee" value="30000" />
+                </div>
+
+                <!-- PHẦN TỔNG KẾT -->
+                <div class="summary-section">
+                    <div class="summary-row">
+                        <span>Tạm tính:</span>
+                        <span id="subtotal">0 đ</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Phí vận chuyển:</span>
+                        <span id="shipping-display">30,000 đ</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tổng cộng:</span>
+                        <span id="grandTotal">30,000 đ</span>
+                    </div>
+                    <input type="hidden" id="totalAmount" name="TotalAmount" value="30000" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="IssueDate" class="control-label">Ngày phát hành</label>
+                    <input asp-for="IssueDate" class="form-control" type="date" />
+                    <span asp-validation-for="IssueDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="IsPaid" value="true" /> Đã thanh toán
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" asp-for="IsPaid" value="false" /> Chưa thanh toán
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-save"></i> TẠO ĐƠN HÀNG
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <a asp-action="Index" class="back-link">
+            <i class="fa fa-arrow-left"></i> Quay lại danh sách
+        </a>
     </div>
 
-    <div class="form-container">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @section Scripts {
+        <script>
+            // Thiết lập ngày mặc định
+            document.addEventListener('DOMContentLoaded', function () {
+                var today = new Date().toISOString().split('T')[0];
+                document.querySelector('input[type="date"]').value = today;
 
-            <div class="form-group">
-                <label asp-for="PatientId" class="control-label">Bệnh nhân</label>
-                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
-                <span asp-validation-for="PatientId" class="text-danger"></span>
-            </div>
+                // Kích hoạt tùy chọn vận chuyển mặc định
+                updateShippingSelection(document.querySelector('.shipping-option'));
+            });
 
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label">Tổng tiền</label>
-                <input asp-for="TotalAmount" class="form-control" placeholder="Nhập tổng tiền..." />
-                <span asp-validation-for="TotalAmount" class="text-danger"></span>
-            </div>
+            let rowIndex = 1;
 
-            <div class="form-group">
-                <label asp-for="IssueDate" class="control-label">Ngày phát hành</label>
-                <input asp-for="IssueDate" class="form-control" type="date" />
-                <span asp-validation-for="IssueDate" class="text-danger"></span>
-            </div>
+            // Thêm dòng
+            document.getElementById("addRow").addEventListener("click", function () {
+                const table = document.getElementById("productTable").querySelector("tbody");
+                const newRow = table.rows[0].cloneNode(true);
 
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label">Nhân viên</label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+                newRow.querySelectorAll("select, input").forEach(function (element) {
+                    if (element.name.includes("ProductId")) {
+                        element.name = `InvoiceDetails[${rowIndex}].ProductId`;
+                    }
+                    if (element.name.includes("Quantity")) {
+                        element.name = `InvoiceDetails[${rowIndex}].Quantity`;
+                        element.value = 1;
+                    }
+                    if (element.name.includes("UnitPrice")) {
+                        element.name = `InvoiceDetails[${rowIndex}].UnitPrice`;
+                        element.value = 0;
+                    }
+                });
 
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsPaid" /> Đã thanh toán
-                    </label>
-                </div>
-            </div>
+                table.appendChild(newRow);
+                rowIndex++;
+            });
 
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsActive" checked /> Kích hoạt
-                    </label>
-                </div>
-            </div>
+            // Xóa dòng
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("btn-remove")) {
+                    const row = e.target.closest("tr");
+                    const table = row.closest("tbody");
+                    if (table.rows.length > 1) {
+                        row.remove();
+                    }
+                }
+            });
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save"></i> Lưu hóa đơn
-                </button>
-            </div>
-        </form>
-    </div>
+            // Cập nhật đơn giá theo sản phẩm
+            document.addEventListener("change", function (e) {
+                if (e.target.classList.contains("product-select")) {
+                    const productId = e.target.value;
+                    const productPrices = @Html.Raw(Json.Serialize(ViewBag.ProductPrices));
+                    const unitPrice = productPrices[productId] || 0;
+                    const row = e.target.closest("tr");
+                    row.querySelector(".unit-price").value = unitPrice;
+                }
 
-    <a asp-action="Index" class="back-link">
-        <i class="fa fa-arrow-left"></i> Quay lại danh sách
-    </a>
-</div>
+                // Xử lý khi thay đổi phương thức vận chuyển
+                if (e.target.name === "ShippingMethod") {
+                    updateShippingSelection(e.target.closest('.shipping-option'));
+                    calculateFinalTotal();
+                }
+            });
 
+            // Chọn phương thức vận chuyển
+            document.querySelectorAll('.shipping-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    // Chọn radio button trong option này
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
 
+                    updateShippingSelection(this);
+                    calculateFinalTotal();
+                });
+            });
 
-    <script>
-        // Thiết lập giá trị mặc định cho ngày phát hành là ngày hiện tại
-        document.addEventListener('DOMContentLoaded', function() {
-            var today = new Date().toISOString().split('T')[0];
-            document.querySelector('input[type="date"]').value = today;
-        });
-    </script>
-}
+            function updateShippingSelection(selectedOption) {
+                // Bỏ chọn tất cả các option
+                document.querySelectorAll('.shipping-option').forEach(function(option) {
+                    option.classList.remove('selected');
+                });
+
+                // Chọn option hiện tại
+                selectedOption.classList.add('selected');
+
+                // Cập nhật giá trị phí vận chuyển
+                const shippingPrice = selectedOption.getAttribute('data-price');
+                document.getElementById('shippingFee').value = shippingPrice;
+                document.getElementById('shipping-display').textContent = parseInt(shippingPrice).toLocaleString('vi-VN') + ' đ';
+            }
+
+            // Tính tổng tiền sản phẩm
+            function calculateSubtotal() {
+                let subtotal = 0;
+                document.querySelectorAll("#productTable tbody tr").forEach(function (row) {
+                    const quantity = parseInt(row.querySelector(".quantity").value) || 0;
+                    const price = parseFloat(row.querySelector(".unit-price").value) || 0;
+                    subtotal += quantity * price;
+                });
+                return subtotal;
+            }
+
+            // Tính tổng tiền cuối cùng (bao gồm phí vận chuyển)
+            function calculateFinalTotal() {
+                const subtotal = calculateSubtotal();
+                const shippingFee = parseInt(document.getElementById('shippingFee').value) || 0;
+                const grandTotal = subtotal + shippingFee;
+
+                // Cập nhật hiển thị
+                document.getElementById('subtotal').textContent = subtotal.toLocaleString('vi-VN') + ' đ';
+                document.getElementById('grandTotal').textContent = grandTotal.toLocaleString('vi-VN') + ' đ';
+                document.getElementById('totalAmount').value = grandTotal;
+
+                return grandTotal;
+            }
+
+            // Tính tổng tiền khi nhấn nút
+            document.getElementById("calculateTotal").addEventListener("click", function () {
+                calculateFinalTotal();
+            });
+
+            // Theo dõi thay đổi số lượng để tính lại tổng tiền
+            document.addEventListener("change", function(e) {
+                if (e.target.classList.contains("quantity")) {
+                    calculateFinalTotal();
+                }
+            });
+        </script>
+    }

@@ -54,43 +54,90 @@ namespace WebsiteDental.Areas.Admin.Controllers
         }
 
 
+      
         // GET: Admin/Invoices/Create
         public IActionResult Create()
         {
-            ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["Products"] = new SelectList(_context.Products, "Id", "ProductName"); // Dropdown cho Products
+            var products = _context.Products.ToList();
+
+            // Truyền thông tin bệnh nhân, người dùng và sản phẩm vào View
+            ViewBag.PatientId = new SelectList(_context.Patients, "Id", "Id");
+            ViewBag.UserId = new SelectList(_context.Users, "Id", "Id");
+            ViewBag.Products = new SelectList(products, "Id", "ProductName");
+
+            // Truyền bảng giá sản phẩm cho View
+            ViewBag.ProductPrices = products.ToDictionary(p => p.Id, p => p.Price);
+
             return View();
         }
+
 
         // POST: Admin/Invoices/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PatientId,TotalAmount,IssueDate,IsPaid,IsActive,UserId, InvoiceDetails")] Invoice invoice)
+        public async Task<IActionResult> Create(
+            [Bind("Id,PatientId,TotalAmount,IssueDate,IsPaid,IsActive,InvoiceDetails")] Invoice invoice,
+            string Username, string Phone, string Email, string Address)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(invoice);
+                // Tạo người dùng mới
+                var newUser = new User
+                {
+                    Username = Username,
+                    Phone = Phone,
+                    Email = Email,
+                    Address = Address,
+                    // Cần thêm Password
+                    Password = "123" // hoặc lấy từ form, hoặc sinh ngẫu nhiên
+                };
+
+                _context.Users.Add(newUser);
                 await _context.SaveChangesAsync();
 
-                // Xử lý thêm các chi tiết hóa đơn
+                // Gán UserId vào hóa đơn
+                invoice.UserId = newUser.Id;
+
+                // Lưu hóa đơn
+                _context.Invoices.Add(invoice);
+                await _context.SaveChangesAsync(); // Lưu hóa đơn trước khi tạo chi tiết hóa đơn
+
+                // Lưu chi tiết hóa đơn nếu có
+                // Lưu chi tiết hóa đơn nếu có
                 if (invoice.InvoiceDetails != null && invoice.InvoiceDetails.Count > 0)
                 {
                     foreach (var detail in invoice.InvoiceDetails)
                     {
+                        // Xóa Id nếu có (tránh lỗi insert vào identity column)
+                        detail.Id = 0;
+
+                        // Gán InvoiceId cho chi tiết hóa đơn
                         detail.InvoiceId = invoice.Id;
-                        _context.InvoiceDetails.Add(detail);
+
+                        // Kiểm tra các thông tin chi tiết hóa đơn
+                        if (detail.ProductId == 0 || detail.Quantity <= 0 || detail.FinalAmount <= 0)
+                        {
+                            ModelState.AddModelError("", "Chi tiết hóa đơn không hợp lệ. Vui lòng kiểm tra lại thông tin.");
+                            return View(invoice); // Trả về nếu có lỗi
+                        }
+
+                        // Tạo mới chi tiết hóa đơn
+                        _context.InvoiceDetails.Add(detail); // Thêm chi tiết hóa đơn vào DbContext
                     }
-                    await _context.SaveChangesAsync();
+
+                    await _context.SaveChangesAsync(); // Lưu các thay đổi vào cơ sở dữ liệu
                 }
 
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index)); // Điều hướng đến trang danh sách hóa đơn
             }
+
+            // Nếu model không hợp lệ, trả về view để chỉnh sửa
             ViewData["PatientId"] = new SelectList(_context.Patients, "Id", "Id", invoice.PatientId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", invoice.UserId);
-            ViewData["Products"] = new SelectList(_context.Products, "Id", "ProductName"); // Cập nhật lại dropdown cho Products
+            ViewData["Products"] = new SelectList(_context.Products, "Id", "ProductName");
             return View(invoice);
         }
+
 
 
         // GET: Admin/Invoices/Edit/5
