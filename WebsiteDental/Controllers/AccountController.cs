@@ -48,7 +48,6 @@ namespace WebsiteDental.Controllers
             }
         }
 
-        // Xử lý Đăng Ký
         [HttpPost]
         public IActionResult Register(string username, string email, string phone, string password, string confirmPassword, string address)
         {
@@ -69,7 +68,7 @@ namespace WebsiteDental.Controllers
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO Users (username, email, phone, password, address, created_at) VALUES (@Username, @Email, @Phone, @Password, @Address, GETDATE())";
+                string query = "INSERT INTO Users (username, email, phone, password, address, role_id, created_at) VALUES (@Username, @Email, @Phone, @Password, @Address, @RoleId, GETDATE())";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", username);
@@ -77,6 +76,7 @@ namespace WebsiteDental.Controllers
                     cmd.Parameters.AddWithValue("@Phone", phone);
                     cmd.Parameters.AddWithValue("@Password", hashedPassword);
                     cmd.Parameters.AddWithValue("@Address", address);
+                    cmd.Parameters.AddWithValue("@RoleId", 2); // Đặt role_id = 1 cho tài khoản khách hàng
                     cmd.ExecuteNonQuery();
                 }
             }

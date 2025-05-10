@@ -1,6 +1,7 @@
-﻿@model IEnumerable<WebsiteDental.Models.Invoice>
+﻿@model IEnumerable<WebsiteDental.Models.User>
+
 @{
-    ViewData["Title"] = "Danh sách hoá đơn";
+    ViewData["Title"] = "Danh sách người dùng";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -137,22 +138,11 @@
         white-space: nowrap;
     }
 
-    .status-paid {
-        background-color: #e8f5e9;
-        color: #2e7d32;
-        padding: 3px 6px;
-        border-radius: 12px;
-        font-size: 11px;
-        white-space: nowrap;
-    }
-
-    .status-unpaid {
-        background-color: #ffebee;
-        color: #c62828;
-        padding: 3px 6px;
-        border-radius: 12px;
-        font-size: 11px;
-        white-space: nowrap;
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
     }
 
     /* Đáp ứng thiết bị di động */
@@ -169,41 +159,29 @@
 
 <div class="content-wrapper">
     <div class="page-intro">
-        <h4>Quản lý thông tin hoá đơn một cách dễ dàng và hiệu quả</h4>
-        <p>Theo dõi hoá đơn, trạng thái thanh toán và thông tin bệnh nhân nhanh chóng.</p>
+        <h4>Quản lý người dùng</h4>
+        <p>Xem và quản lý thông tin tài khoản, phân quyền và trạng thái người dùng.</p>
     </div>
 
     <div class="table-container">
         <div class="table-header">
-            <h5>Danh sách hoá đơn</h5>
+            <h5>Danh sách người dùng</h5>
             <a asp-action="Create" class="create-btn">
                 <i class="fa fa-plus-circle"></i> Thêm mới
             </a>
         </div>
-        <div style="margin-bottom: 10px;">
-            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm..." onkeyup="filterTable()" style="width: 100%; padding: 6px; border: 1px solid #ced4da; border-radius: 4px;">
-        </div>
         <table class="compact-table">
             <thead>
                 <tr>
-                        <th>
-                            Người đặt
-                        </th>
-
-                        <th>
-                            Tổng tiền
-                        </th>
-                        <th>
-                            Ngày phát hành
-                        </th>
-                        <th>
-                           Trạng thái đơn hàng
-                        </th>
-                        <th>
-                            Sản phẩm
-                        </th>
-                       
-
+                    <th>Tên người dùng</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Ảnh đại diện</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày cập nhật</th>
+                    <th>Trạng thái</th>
+                    <th>Vai trò</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -211,39 +189,49 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.Username)
-                            </td>
-                            
                         <td>
-                                @item.TotalAmount?.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                            <div style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                @Html.DisplayFor(modelItem => item.Username)
+                            </div>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IssueDate)
+                            <div style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </div>
                         </td>
                         <td>
-                            @if (item.IsPaid == true)
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Avatar))
                             {
-                                <span class="status-paid">Đã thanh toán</span>
+                                <img src="@item.Avatar" alt="@item.Username" class="user-avatar" />
                             }
                             else
                             {
-                                <span class="status-unpaid">Chưa thanh toán</span>
+                                <span>N/A</span>
                             }
                         </td>
-                            <td>
-                                @if (item.InvoiceDetails != null && item.InvoiceDetails.Any())
-                                {
-                                    <ul>
-                                        @foreach (var detail in item.InvoiceDetails)
-                                        {
-                                            <li>@detail.Product?.ProductName</li>
-                                        }
-                                    </ul>
-                                }
-                            </td>
-                       
-                        
+                        <td>
+                            <div style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </div>
+                        </td>
+                        <td>@(item.CreatedAt?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                        <td>@(item.UpdatedAt?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                        <td>
+                            @if (item.IsActive == true)
+                            {
+                                <span class="status-active">Hoạt động</span>
+                            }
+                            else
+                            {
+                                <span class="status-inactive">Ngừng hoạt động</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role.RoleName)
+                        </td>
                         <td class="action-links">
                             <a asp-action="Edit" asp-route-id="@item.Id" title="Chỉnh sửa">
                                 <i class="fa fa-edit"></i>
@@ -251,9 +239,9 @@
                             <a asp-action="Details" asp-route-id="@item.Id" title="Chi tiết">
                                 <i class="fa fa-eye"></i>
                             </a>
-                           @*  <a asp-action="Delete" asp-route-id="@item.Id" title="Xóa">
+                            <a asp-action="Delete" asp-route-id="@item.Id" title="Xóa">
                                 <i class="fa fa-trash"></i>
-                            </a> *@
+                            </a>
                         </td>
                     </tr>
                 }
@@ -261,35 +249,3 @@
         </table>
     </div>
 </div>
-
-<script>
-    function filterTable() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.querySelector(".compact-table");
-        tr = table.getElementsByTagName("tr");
-
-        // Bắt đầu từ i = 1 để bỏ qua hàng tiêu đề
-        for (i = 1; i < tr.length; i++) {
-            var found = false;
-            // Tìm kiếm trong tất cả các cột (trừ cột thao tác cuối cùng)
-            for (var j = 0; j < tr[i].getElementsByTagName("td").length - 1; j++) {
-                td = tr[i].getElementsByTagName("td")[j];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        found = true;
-                        break;
-                    }
-                }
-            }
-
-            if (found) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-</script>

@@ -1,0 +1,266 @@
+﻿@model WebsiteDental.Models.User
+@{
+    ViewData["Title"] = "Chi tiết người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px;
+        padding: 15px 20px 0 20px;
+    }
+
+    .page-intro {
+        margin-bottom: 15px;
+    }
+
+        .page-intro h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #1a3b5d;
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #6c757d;
+        }
+
+    .details-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+        .details-container h5 {
+            color: #1a3b5d;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+    .details-section {
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .details-section-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #1a3b5d;
+    }
+
+    .details-group {
+        margin-bottom: 15px;
+    }
+
+    .details-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+        color: #495057;
+    }
+
+    .details-value {
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #1a3b5d;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #2c5282;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 15px;
+        color: #1a3b5d;
+        text-decoration: none;
+    }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    .user-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+    }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>Quản lý người dùng</h4>
+        <p>Xem thông tin chi tiết của người dùng trong hệ thống.</p>
+    </div>
+
+    <div class="details-container">
+        <h5>Chi tiết người dùng</h5>
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Thông tin cơ bản -->
+                <div class="details-section">
+                    <div class="details-section-title">Thông tin cơ bản</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="details-group">
+                                <label class="details-label">@Html.DisplayNameFor(model => model.Username)</label>
+                                <div class="details-value">@Html.DisplayFor(model => model.Username)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="details-group">
+                                <label class="details-label">@Html.DisplayNameFor(model => model.Email)</label>
+                                <div class="details-value">@Html.DisplayFor(model => model.Email)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="details-group">
+                                <label class="details-label">@Html.DisplayNameFor(model => model.Phone)</label>
+                                <div class="details-value">@Html.DisplayFor(model => model.Phone)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="details-group">
+                                <label class="details-label">@Html.DisplayNameFor(model => model.Address)</label>
+                                <div class="details-value">@Html.DisplayFor(model => model.Address)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bảo mật và quyền truy cập -->
+                <div class="details-section">
+                    <div class="details-section-title">Bảo mật và quyền truy cập</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="details-group">
+                                <label class="details-label">@Html.DisplayNameFor(model => model.Role)</label>
+                                <div class="details-value">@Html.DisplayFor(model => model.Role.Id)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="details-group">
+                                <label class="details-label">@Html.DisplayNameFor(model => model.IsActive)</label>
+                                <div class="details-value">
+                                    @if (Model.IsActive == true)
+                                    {
+                                        <span class="badge bg-success">Đang hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Đã vô hiệu hóa</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Ảnh đại diện -->
+                <div class="details-section">
+                    <div class="details-section-title">Ảnh đại diện</div>
+                    <div class="text-center mb-3">
+                        @if (!string.IsNullOrEmpty(Model.Avatar))
+                        {
+                            <img src="@Model.Avatar" class="user-avatar" alt="Avatar" />
+                        }
+                        else
+                        {
+                            <img src="/images/default-avatar.png" class="user-avatar" alt="Avatar" />
+                        }
+                    </div>
+                    <div class="details-group">
+                        <label class="details-label">@Html.DisplayNameFor(model => model.Avatar)</label>
+                        <div class="details-value">@Html.DisplayFor(model => model.Avatar)</div>
+                    </div>
+                </div>
+
+                <!-- Thông tin thời gian -->
+                <div class="details-section">
+                    <div class="details-section-title">Thông tin thời gian</div>
+                    <div class="details-group">
+                        <label class="details-label">@Html.DisplayNameFor(model => model.CreatedAt)</label>
+                        <div class="details-value">@Html.DisplayFor(model => model.CreatedAt)</div>
+                    </div>
+                    <div class="details-group">
+                        <label class="details-label">@Html.DisplayNameFor(model => model.UpdatedAt)</label>
+                        <div class="details-value">@Html.DisplayFor(model => model.UpdatedAt)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Quay lại danh sách
+            </a>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                <i class="fa fa-edit"></i> Chỉnh sửa
+            </a>
+        </div>
+    </div>
+</div>
