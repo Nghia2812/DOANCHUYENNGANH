@@ -73,11 +73,11 @@
                     <div class="dropdown-menu dropdown-menu-end">
                         @if (!string.IsNullOrEmpty(username))
                         {
-                            <div class="p-2 text-center">
-                                <strong>Xin chào, @username!</strong>
-                                <hr>
-                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger w-100 mb-2">Đăng xuất</a>
-
+                            <div class="p-2 text-center user-menu">
+                                <strong class="user-greeting">Xin chào, @username!</strong>
+                                <hr class="menu-divider">
+                                <a href="/Profile/Index" class="btn btn-primary w-100 mb-2 btn-sm">Xem hồ sơ</a>
+                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger w-100 btn-sm">Đăng xuất</a>
                             </div>
                         }
                         else
@@ -107,3 +107,68 @@
     </div>
 </div>
 <!-- Navbar & Hero End -->
+<style>
+    .user-menu {
+        min-width: 150px;
+        max-width: 200px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .user-greeting {
+        font-size: 14px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .menu-divider {
+        margin: 5px 0;
+    }
+
+    .btn-sm {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+    /* CSS cho dropdown menu với nút bấm nhỏ hơn */
+    .dropdown-menu {
+        padding: 15px;
+        min-width: 250px;
+    }
+
+        .dropdown-menu .cart-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+            .dropdown-menu .cart-header h6 {
+                font-size: 14px;
+                margin-bottom: 0;
+            }
+
+        /* Làm cho các nút bấm nhỏ hơn */
+        .dropdown-menu .btn {
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .dropdown-menu .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .dropdown-menu .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        /* Khoảng cách giữa các nút */
+        .dropdown-menu .gap-2 {
+            gap: 0.5rem !important;
+        }
+
+        /* Margin trên phần nút bấm */
+        .dropdown-menu .mt-3 {
+            margin-top: 10px !important;
+        }
+</style>
