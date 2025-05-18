@@ -30,6 +30,8 @@ namespace WebsiteDental.Areas.Admin.Controllers
             return View();
         }
 
+
+        //doanh thu đơn hàng
         private decimal GetDailyRevenue()
         {
             decimal totalRevenue = 0;
@@ -54,6 +56,9 @@ namespace WebsiteDental.Areas.Admin.Controllers
             return totalRevenue;
         }
 
+
+
+        //doanh thu số liệu đặt lịch hẹn
         private int GetTotalAppointmentsToday()
         {
             int totalAppointments = 0;
@@ -73,5 +78,8 @@ namespace WebsiteDental.Areas.Admin.Controllers
             }
             return totalAppointments;
         }
+
+        //lưu vào bảng doanh thu
+
     }
 }

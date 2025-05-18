@@ -1,0 +1,189 @@
+﻿@using System.Data
+@{
+    ViewData["Title"] = "Doanh thu hàng ngày";
+    var data = ViewBag.RevenueData as DataTable;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-color: white;
+    }
+
+    .content-wrapper {
+        margin-left: 230px; /* Đẩy nội dung sang phải để tránh thanh sidebar */
+        padding: 15px 20px 0 20px; /* Giảm padding phía trên */
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin bottom */
+        padding-bottom: 5px; /* Giảm padding bottom */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .page-intro {
+        margin-bottom: 5px; /* Giảm khoảng cách */
+    }
+
+        .page-intro h4 {
+            margin-top: 0; /* Loại bỏ margin top */
+            margin-bottom: 5px; /* Giảm margin bottom */
+        }
+
+        .page-intro p {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px; /* Giảm margin */
+    }
+
+        .table-header h5 {
+            margin: 0; /* Loại bỏ margin mặc định */
+        }
+
+    .table-container {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 10px; /* Giảm padding */
+        margin-bottom: 20px;
+        overflow-x: auto;
+    }
+
+    .compact-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+        .compact-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .compact-table th {
+            padding: 8px; /* Giảm padding */
+            color: #495057;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            white-space: nowrap;
+        }
+
+        .compact-table td {
+            padding: 6px 8px; /* Giảm padding */
+            vertical-align: middle;
+            border-bottom: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .compact-table tbody tr:hover {
+            background-color: rgba(0,123,255,0.04);
+        }
+
+    /* Đáp ứng thiết bị di động */
+    @@media (max-width: 992px) {
+        .content-wrapper
+
+    {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    }
+
+    .search-box {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .revenue-amount {
+        font-weight: 600;
+        color: #2e7d32;
+    }
+
+    .order-count {
+        font-weight: 500;
+        color: #1a3b5d;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="page-intro">
+        <h4>@ViewData["Title"]</h4>
+        <p>Theo dõi doanh thu và số đơn hàng hàng ngày</p>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <h5>Báo cáo doanh thu</h5>
+        </div>
+
+        @if (data == null || data.Rows.Count == 0)
+        {
+            <p>Không có dữ liệu để hiển thị.</p>
+        }
+        else
+        {
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm..." onkeyup="filterTable()">
+            </div>
+
+            <table class="compact-table" id="revenueTable">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Tổng Tiền</th>
+                        <th>Số Đơn Hàng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in data.Rows)
+                    {
+                        <tr>
+                            <td>@(row["date"] == DBNull.Value ? "" : Convert.ToDateTime(row["date"]).ToString("dd/MM/yyyy"))</td>
+                            <td class="revenue-amount">@string.Format("{0:N0} đ", row["total_amount"])</td>
+                            <td class="order-count">@row["total_orders"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<script>
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("revenueTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Bắt đầu từ i = 1 để bỏ qua hàng tiêu đề
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // Tìm theo cột ngày
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
